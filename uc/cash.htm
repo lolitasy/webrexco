@@ -1,0 +1,251 @@
+<% include ../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>摆渡星空-账户主页</title>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/uc/common.css"/>
+    <link rel="stylesheet" href="/webrexco/static/css/uc/style.css"/>
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+</head>
+<body style="background: #fff;height: auto;">
+    <% include ../cmn/header.ejs %>
+    <% include ../cmn/user_banner.ejs %>
+    <div class="m-con clearfix">
+        <div class="m-leftNav">
+            <% include ../cmn/user_left.ejs %>
+        </div>
+        <div class="user_right"> 
+            <div class="user_right_menu">
+                <ul id="tab" class="list-tab clearfix">
+                    <li class="tabactive">
+                        <a class="titleover u-tit">提现</a> 
+                    </li>
+                </ul>
+            </div>
+            <div class="m-form-cash">
+                <form name="form1" id="form1" autocomplete="off">
+                    <div class="m-info-cash f-cf">
+                        <div class="m-left-cash f-fl">
+                            <p>真实姓名</p>
+                        </div>
+                        <div class="m-right-cash f-fl">
+                            <p id="realName"></p>
+                        </div>
+                        <div class="f-cb"></div>
+                        <div class="m-left-cash f-fl">
+                            <p>基金总额</p>
+                        </div>
+                        <div class="m-right-cash f-fl">
+                            <p class="u-red" id="availMoney2"></p>
+                        </div>
+                        <div class="f-cb"></div>
+                        <div class="m-left-cash f-fl">
+                            <p>冻结金额</p>
+                        </div>
+                        <div class="m-right-cash f-fl">
+                            <p class="u-red" id="freezeDeposit"></p>
+                        </div>   
+                    </div> 
+                    <div class="m-info-cash m-pay-cash">
+                        <div class="m-left-cash f-fl">
+                            <p>可提现金额</p>
+                        </div>
+                        <div class="m-right-cash f-fl">
+                            <p class="u-red" id="availMoney"></p>
+                        </div>
+                        <div class="f-cb"></div>
+                        <label>提现金额</label>
+                        <input type="text" name="" placeholder="请输入提现金额" onkeypress="return myNumberic(event)" id="money" val="">
+                        <span class="">提示：禁止信用卡套现</span>
+                    </div> 
+                    <div class="m-info-cash">
+                        <span>提现的银行</span>
+                        <img src="" id="bankUrl">
+                        <span>(尾号：<em id=bankCard></em>)</span> 
+                    </div> 
+                    <div class="m-info-cash m-pay-cash" style="border-bottom: none;">
+                        <label>支付密码</label>
+                        <input type="password" name="" placeholder="请输入支付密码" id="payPassWord" val=""><em class="J_clean"></em>
+                        <span><a href="/webrexco/uc/changePayPwd.htm">忘记支付密码？</a></span>
+                    </div>  
+                    <div class="m-btn-cash">
+                        <p id="submit">确认提交</p>
+                    </div> 
+                </form>
+                <div class="m-remark-cash">
+                    <p>注：</p>
+                    <p>1、确保您的银行帐号的姓名和您的网站上的真实姓名一致。</p>
+                    <p>2、请输入您要取出金额,我们将在1至2个工作日(国家节假日除外)之内处理您提交的提现申请。资金将在24小时内到达您的账上。请用户务必于每个工作日的15点30分(以最新公告时间为准)之前提交提现申请，每个工作日15:30(以最新公告时间为准)之后提交的提现申请在当天将不会得到及时处理; </p>
+                    <p>3、用户每月有一次免费提现，超过则按照2元/笔收取。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% include ../cmn/footer.ejs %>
+    <script type="text/javascript" src="/webrexco/static/js/uc/index.js"></script>
+    <script type="text/javascript">
+        $().ready(function(){
+            accountInfo();
+            $(".J_clean").click(function(){
+                $("#payPassWord").val("");
+            });
+            $("#money").change(function(){
+                $(".m-btn-cash").addClass("bgColor");
+            });
+            $("#submit").click(function(){
+                var bgColor=$(".bgColor");
+                if(bgColor){
+                    var payPassWord=$("#payPassWord").val();
+                    var money=$("#money").val();
+                    if(money==""){
+                        util.tipsModal(2,"请输入提现金额");
+                        return;
+                    }else if(payPassWord==""){
+                        util.tipsModal(2,"请输入支付密码");
+                        return;
+                    }else{
+                        accountCash();
+                    }
+                }else{
+                    util.tipsModal(2,"请输入提现金额");
+                    return;
+                }
+                
+            })
+        })
+        function myNumberic(e,len) {
+            var obj=e.srcElement || e.target;
+            var dot=obj.value.indexOf(".");//alert(e.which);
+            len =(typeof(len)=="undefined")?2:len;
+            var  key=e.keyCode|| e.which;
+            if(key==8 || key==9 || key==46 || (key>=37  && key<=40))//这里为了兼容Firefox的backspace,tab,del,方向键
+                return true;
+            if (key<=57 && key>=48) { //数字
+                if(dot==-1)//没有小数点
+                    return true;
+                else if(obj.value.length<=dot+len)//小数位数
+                    return true;
+                } else if((key==46) && dot==-1){//小数点
+                    return true;
+            }       
+            return false;
+        } 
+        function accountInfo(){
+            baseModel.get({
+                url:"/webrexco/uc/data/accountInfo.cgi",
+                success:function(rslt){
+                    if(rslt.code!=0&&rslt.code!=401){
+                        util.tipsModal(2,rslt.message);
+                    }else if(rslt.code==401){
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else{
+                        var availMoney=toDecimal2(rslt.account.availMoney);
+                        var freezeDeposit=toDecimal2(rslt.account.freezeDeposit);
+                        $("#realName").text(rslt.user.realName);
+                        $("#availMoney2").text(availMoney+"元");
+                        $("#availMoney").text(availMoney+"元");
+                        $("#freezeDeposit").text(freezeDeposit+"元");
+                        $("#bankCard").text(rslt.defaultAccountBank.bankCardNo.substring(rslt.defaultAccountBank.bankCardNo.length-4,rslt.defaultAccountBank.bankCardNo.length));
+                        $("#bankCard").attr("data-card",rslt.defaultAccountBank.bankCardNo)
+                        switch (rslt.defaultAccountBank.bankName)
+                            {
+                            case "工商银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0801020000.png");
+                                break;
+                            case "农业银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0801030000.png");
+                                break;
+                            case "中国银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0801040000.png");
+                                break;
+                            case "建设银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0801050000.png");
+                                break;
+                            case "交通银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0803010000.png");
+                                break;
+                            case "中信银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0803020000.png");
+                                break;
+                            case "光大银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0803030000.png");
+                                break;
+                            case "华夏银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0803040000.png");
+                                break;
+                            case "民生银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0803050000.png");
+                                break;
+                            case "广发银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0803060000.png");
+                                break;
+                            case "平安银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0804105840.png");
+                                break;
+                            case "招商银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0803080000.png");
+                                break;
+                            case "兴业银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0803090000.png");
+                                break;
+                            case "浦发银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0803100000.png");
+                                break;
+                            case "邮政银行":
+                                $("#bankUrl").attr("src","/webrexco/static/img/uc/0801000000.png");
+                                break;
+                            }
+
+                    }
+                    
+                }
+            });
+        }
+        function accountCash(){
+            var bankCard=$("#bankCard").attr("data-card");
+            var payPassWord=$("#payPassWord").val();
+            var money=$("#money").val();
+            baseModel.post({
+                url:"/webrexco/uc/data/accountCash.cgi",
+                data:{"bankCard":bankCard,"payPassWord":payPassWord,"money":money},
+                success:function(rslt){
+                    if(rslt.code!=0&&rslt.code!=401){
+                        util.tipsModal(2,rslt.message);
+                    }else if(rslt.code==401){
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else{
+                        util.tipsModal(1,rslt.message,function(){history.go(-1);},3000);
+                        ;
+                    }
+                    
+                }
+            });
+        }
+        function toDecimal2(x) {    
+            var f = parseFloat(x);    
+            if (isNaN(f)) {    
+                return false;    
+            }    
+            var f = Math.round(x*100)/100;    
+            var s = f.toString();    
+            var rs = s.indexOf('.');    
+            if (rs < 0) {    
+                rs = s.length;    
+                s += '.';    
+            }    
+            while (s.length <= rs + 2) {    
+                s += '0';    
+            }    
+            return s;    
+        }
+    </script>
+</body>
+</html>

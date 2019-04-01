@@ -1,0 +1,36 @@
+extends ../space/template.pug
+
+block title
+    - var title = "我的收藏"
+
+block style
+    +style("uc/common")
+    +style("uc/collection")
+    +style("video-js.min")
+    script window.tplObj = { data: { menuMap: { "0": 2 } } };
+
+block header
+    | 
+    | <% include ../cmn/user_banner.ejs %>
+    
+block content
+    .m-leftNav
+        | 
+        | <% include ../cmn/user_left.ejs %>
+
+    .list
+        .title
+            p= title
+
+        .container
+
+        .pager
+
+block script
+    +script("uc/index")
+    +script("cmn/pager")
+    +script("video/videojs-ie8.min")
+    +script("video/video.min")
+    script videojs.options.flash.swf = "/webrexco/static/js/video/video-js.swf"
+    script: include collection.part.js
+    script: include collection.js

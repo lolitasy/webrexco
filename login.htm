@@ -1,0 +1,405 @@
+<% include ./cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>登录_摆渡星空</title>
+    <meta name="keywords" content="摆渡星空账户登录" />
+    <meta name="description" content="摆渡星空为企业及高管实现经营目标提供供应链金融服务、创客项目路演、Fintech、泛娱乐等项目资本解决方案，具有特色的体验空间和摆渡空间线上平台" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" type="text/css" href="/webrexco/static/css/index.css">
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <style type="text/css" media="screen">
+        .m-con{
+            width:100%;
+            height: 680px;
+            background: url(/webrexco/static/img/login/banner.png) no-repeat;
+            position: relative;
+        }
+        .m-main {
+            width: 294px;
+            height: 476px;
+            background: #fff;
+            border-radius: 5px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top: -278px;
+            margin-left: 222px;
+            padding: 10px 38px 38px;
+        }
+        .coninput{
+            width: 255px;
+            height: 40px;
+            line-height: 40px;
+            margin-top: 28px;
+            border: 1px solid #d3d3d3;
+            font-size: 14px;
+            border-radius: 3px;
+           /* text-indent: 38px;*/
+            background: #fff;
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+        }
+        input[type="text"] {
+             padding-left: 38px; 
+        }
+        input[type="password"] {
+             padding-left: 38px; 
+        }
+        .u-phone{
+            width: 15px;
+            height: 18px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat -19px -21px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .u-password{
+             width: 15px;
+            height: 16px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat -1px -20px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .u-phoneCode{
+             width: 15px;
+            height: 16px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat -1px -52px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .u-valiCode{
+             width: 15px;
+            height: 16px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat -1px -36px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .tips {
+            position: absolute;
+            font-size: 12px;
+            color: #c8a676;
+            line-height: 30px;
+            text-indent: 15px;
+        }
+        .proving{
+            position: absolute;
+            top: 28px;
+            left: 188px;
+            width: 107px;
+            height: 40px;
+            line-height: 35px;
+            text-align: center;
+            background: #f5f5f5;
+            color: #999;
+            text-decoration: none;
+            border: 1px solid #d3d3d3;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+        .proving img{
+            width: 100%;
+            height:100%;
+        }
+        .short {
+            width: 140px;
+            height: 40px;
+        }
+        .submit{
+            cursor: pointer;
+            width: 296px;
+            height: 42px;
+            line-height: 42px;
+            margin-top:28px;
+            margin-bottom: 25px;
+            text-align: center;
+            background: #c8a676;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: 4px;
+            border-radius: 3px;
+        }
+        .protocol {
+            position: absolute;
+            clear: both;
+            width: 294px;   
+            margin-top: -5px;
+        }
+        .protocol p{
+            float: left;
+            color: #666;
+        }
+        .protocol p a{
+            color: #c8a676;
+        }
+        .f-forget{
+            float: right;
+        }
+        .u-share{
+            width: 370px;
+            height: 156px;
+            position: absolute;
+            background: #c8a676;
+            bottom: 0;
+            left: 0;
+            border-radius: 0px 0px 5px 5px;
+        }
+        .u-share-title{
+            color:#fff;
+            font-size: 16px;
+            text-align: center;
+            line-height: 70px;
+            font-weight: none;
+        }
+        .u-share-title span{
+            width: 90px;
+            height: 1px;
+            display: block;
+            background: #fff;
+        }
+        .leftSolid{
+            position: absolute;
+            left: 35px;
+            top: 37px;
+        }
+        .rightSolid{
+            position: absolute;
+            right: 35px;
+            top: 37px;
+        }
+        .threeLogin{
+            margin-left: 16px;
+        }
+        .threeLogin a{
+            width: 50px;
+            height: 50px;
+            float: left;
+            margin-left: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .qq{
+            background: url(/webrexco/static/img/login/three-icon.png) no-repeat;
+        }
+        .weixin{
+            background: url(/webrexco/static/img/login/three-icon.png) no-repeat -54px 0px;
+        }
+        .weibo{
+            background: url(/webrexco/static/img/login/three-icon.png) no-repeat -110px 0px;
+        }
+        .qq:hover{
+            background: url(/webrexco/static/img/login/three-icon.png) no-repeat -226px 0px;
+        }
+        .weixin:hover{
+            background: url(/webrexco/static/img/login/three-icon.png) no-repeat -284px 0px;
+        }
+        .weibo:hover{
+            background: url(/webrexco/static/img/login/three-icon.png) no-repeat -167px 0px;
+        }
+    </style>
+</head>
+<body>
+    <% include ./cmn/header.ejs %>
+    <div class="m-con">
+        <div class="m-main">
+            <div class="g-register">
+            <form id="loginForm">
+                <div class="f-pr">
+                    <span class="u-phone"></span>
+                    <input type="text" name="username" id="username" class="coninput" placeholder="用户名">
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="f-pr">
+                    <span class="u-password"></span>
+                    <input type="password" name="password" id="password" class="coninput" placeholder="登录密码">
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="f-pr">
+                    <span class="u-valiCode"></span>
+                    <input type="text" name="valiCode" id="valiCode" placeholder="请输入图形验证码" class="short coninput">
+                    <a href="javascript:;" class="proving"><img id="validimg" class="codeimg" src="login.cci?w=160&amp;h=40&amp;f=34&amp;o=60&amp;q=60" alt="点击刷新" onclick="this.src='login.cci?w=160&amp;h=40&amp;f=34&amp;o=60&amp;q=60&amp;t=' + Math.random();" align="absmiddle"></a>
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="submit J_btnSubmit">登&nbsp;录</div>
+                <div class="protocol">
+                    <p>没有账号？<a href="/webrexco/register.htm">立即注册</a></p>
+                    <a  class="f-forget" href="/webrexco/forgetPwd.htm">忘记密码？</a>
+                </div>
+                <div class="u-share">
+                    <div class="u-share-title">
+                        <span class="leftSolid"></span>
+                        <h1>第三方登录</h1>
+                        <span class="rightSolid"></span>
+                    </div>
+                    <div class="threeLogin">
+                         <a class="qq oauth-qq" href="#"></a>
+                         <a class="weixin oauth-weixin" href="#"></a>
+                         <a class="weibo oauth-weibo" href="#"></a>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>   
+    <% include ./cmn/footer.ejs %>
+    <script src="/webrexco/static/js/oauth.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("body").keydown(function(e) {
+                if (event.keyCode == "13") {//keyCode=13是回车键
+                    $('.J_btnSubmit').click();
+                }
+            });
+            $(".f-pr input").mousedown(function(){
+                $(this).css('border', '1px solid #c8a676');
+                $(this).css('background-color', '#fff');
+            });
+            $(".f-pr input").blur(function(){
+                $(this).css('border', '1px solid #d3d3d3');
+                $(this).css('background-color', '#fff');
+            });
+            //验证手机格式
+            $("#username").keyup(function(){
+                var verif=this.value;
+                if(verif.length==11){
+                    checkUserName();
+                }
+            });
+            $("#username").blur(function(){
+                checkUserName();
+            });
+            //密码验证
+            $("#password").blur(function(){
+                var value=$("#password").val();
+                if(value == ""||undefined == value){
+                    $(this).siblings(".tips").children("span").html("请输入密码");
+                        return;
+                }
+                $(this).siblings(".tips").children().html("");
+            });
+            //验证码
+            $('#valiCode').keyup(function(){
+                var verif=this.value;
+                if(verif.length==4){
+                    checkVerifyCode();
+                }
+            });
+            $('#valiCode').blur(function(){
+                checkVerifyCode();
+            });
+            $("#validimg").click(function(){
+                $('#valiCode').val("");
+            });
+            $(".J_btnSubmit").click(function(){
+                checkUserName();
+                checkVerifyCode();
+                var value=$("#password").val();
+                if(value == ""||undefined == value){
+                    $('#password').siblings(".tips").children("span").html("请输入密码");
+                        return;
+                }
+                $('#password').siblings(".tips").children().html("");
+                if(($("#username").siblings(".tips").children("span").html().length)>0&&($("#password").siblings(".tips").children("span").html().length)>0&&($("#valiCode").siblings(".tips").children("span").html().length)>0){
+                    return;
+                }
+                loginSubmit();
+            });
+        });
+        //检查手机是否被注册
+        function checkUserName(){
+            var value=$("#username").val();
+            if(value == ""||undefined == value){
+                $("#username").siblings(".tips").children("span").html("用户名不能为空");
+                return;
+            }
+            $("#username").siblings(".tips").children("span").html("");
+        };
+        //注册图形验证码
+        function checkVerifyCode(){
+            var verifyCode =$('#valiCode').val();
+            if(undefined == verifyCode||"" == verifyCode){
+                $('#valiCode').siblings(".tips").children("span").html("验证码输入错误");
+                return;
+            }
+            var data={
+                "verifyCode":verifyCode
+            };
+            $.ajax({
+                type: "get",
+                url:"/webrexco/regist/checkVerifyCode.cgi",
+                data:data,
+                cache:false,
+                success:function(rslt){
+                    if(rslt.code!=0){//图形验证码错误,验证码刷新
+                        $('#valiCode').siblings(".tips").children("span").html("验证码输入错误");
+                        $('#validimg').attr('src',"login.cci?w=160&h=40&f=34&o=60&q=60&t=" + Math.random());//验证失败验证码刷新
+                        $('#valiCode').val("");
+                    }else{
+                        $('#valiCode').siblings(".tips").children().html("");
+                    }
+                }
+            });
+        }
+        //验证码倒计时
+        function countDown(cd){
+            var cd =cd || 60;
+            timer =setInterval(function(){
+                if(cd>0){
+                    $('.valcode').text((--cd) +'s');
+                }else{
+                    window.clearInterval(timer);
+                    $('.valcode').html('获取验证码');
+                }
+            },1000);
+        }
+        function loginSubmit(){
+            $(".J_btnSubmit").text('登录中...');
+            var data=$("#loginForm").serialize();
+            $.ajax({
+                type:"get",
+                url:'/webrexco/login.cgi',
+                data:data,
+                cache:false,
+                success:function(rslt){
+                    if(rslt.code!=0){
+                        var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+                        alert(errMsg);
+                        $('#validimg').attr('src',"login.cci?w=160&h=40&f=34&o=60&q=60&t=" + Math.random());
+                        return;
+                    }
+                    
+                    login();
+                },
+                complete:function(rslt){
+                     $(".J_btnSubmit").text('登录'); 
+                }
+            })
+        }
+
+        // 授权登录完毕回调
+        function login() {
+            backUrl = util.getQueryString('backUrl')?util.getQueryString('backUrl'):"/webrexco/uc/account.htm";
+            window.location.href=backUrl;
+        }
+    </script>
+</body>
+</html>

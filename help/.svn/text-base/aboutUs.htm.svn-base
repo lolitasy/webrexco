@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="公司介绍,摆渡星空简介">
+    <meta name="description" content="摆渡星空为企业及高管实现经营目标提供供应链金融服务、创客项目路演、Fintech、泛娱乐等项目资本解决方案，具有特色的体验空间和摆渡空间线上平台">
+    <title>公司介绍_摆渡星空简介</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#232323">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" sizes="192x192" href="/webrexco/static/img/ideal/icon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/webrexco/static/img/ideal/icon-120.png">
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/space/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/help/aboutUs.css">
+  </head>
+  <body>
+     
+    <% include ../cmn/header.ejs %>
+    <div class="content">
+      <div class="header">
+        <div class="triangle"></div>
+        <div class="title">关于我们</div>
+      </div>
+      <h1>摆渡星空</h1>
+      <p>一个打造极致用户体验和孵化场景的综合服务产品，</p>
+      <p>一个“创咖—众创空间—‘孵化器’园区—加速器”园区的物理空间生态闭环，</p>
+      <p>一个让生活更美好的筑梦空间。</p>
+      <div class="images">
+        <div class="image image-1"></div>
+        <div class="image image-2"></div>
+        <div class="image image-3"></div>
+      </div>
+      <div class="block-1">摆渡星空不仅仅让“智本”与资本有效融合，激发高层次人才身上蕴含的创业和创新潜能，更是集合多方资源打通创业瓶颈的创客孵化器，为轻资产的创业团队提供了一个拎包入驻的办公空间，又让一群关注杭州互联网创业的人们有了聚会沟通、思想碰撞的场所，张扬着自由和开放的气息，兼具创业的活力和咖啡馆的文化氛围。</div>
+      <h2>/ 我们做什么 /</h2>
+      <p>一方面给予创新创业者更加便利、开放和更低成本的工作空间、社交空间、资源共享空间，</p>
+      <p>另一方面提供创新与创业、线上与线下、相结合的创业服务。</p>
+      <p>众创空间搭平台，创新资源聚拢来，摆渡星空最终要实现资本与技术、项目的无缝对接。一样的筑梦空间，不一样的孵化理念，</p>
+      <p>这更像是一群对互联网创业有着执着热爱的人，在做着一件带着理想主义色彩的事情。</p>
+      <p>停留片刻，不忘初心，摆渡星空不仅是创业的港湾，更是人生的驻足处，心灵的港湾，摆渡星空，让生活更美好。</p>
+      <h2>/ 我们的希冀 /</h2>
+      <p>心无界，梦无疆，强者，把梦想变成构想，把构想变成理想。</p>
+      <p>梦想之所以珍贵，并不仅仅是赋予情怀，而是从现在起，赋予行动！</p>
+      <p>在这场行动中，我们能给你的，是独一无二的私享秘密，是一场思想与资本的碰撞，是胜利在握的人生较量！理想永不息，追梦赤子心，每一个拥有创业理想的追梦人都是一颗闪亮的明星，在无垠的蓝海中遨游。</p>
+      <p>作为“创业梦”的积极践行者，摆渡星空，旨在携手广大创业者，各方资本以及各大行业菁英，抓住互联网商业机遇，打造一个孕育创业者的摇篮，汇集企业家的聚集地，抢占媒体资本制高点，让每一家资本都成为创业者的摆渡人，助创业者抵达成功的彼岸。</p>
+      <p>摆渡星空创建的宗旨是让每一家资本都有可延展的广阔空间，让每一个梦想都有舞台可展示，让每一家优质的企业都可享受极致的金融服务体验。</p>
+      <div class="block-2">摆渡星空诚邀您的加入，与我们一起共创未来，闪耀梦想，摆渡人生！</div>
+    </div>
+     
+    <% include ../cmn/footer.ejs %>
+    <script src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script src="/webrexco/static/js/header.js"></script>
+  </body>
+</html>

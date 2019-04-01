@@ -1,0 +1,434 @@
+<% include ./../../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>实名认证</title>
+	<link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/uc/common.css"/>
+    <link rel="stylesheet" href="/webrexco/static/css/uc/style.css"/>
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/uc/index.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/uc/realName/area.js"></script>
+	<style type="text/css">
+	 	/**步骤效果**/
+	 	.findpwdTips{
+	 		font-size:16px;
+	 		line-height:86px; 
+	 		width: 910px; 
+	 		margin: 0 auto;
+	 		margin-top: 60px;
+	 	}
+	 	.findpwdTips .setpShort{
+	 		float: left;
+		    display: inline-block;
+		    width: 105px;
+		    height: 10px;
+		    margin-top: 38px;
+		    background: url(/webrexco/static/img/uc/realname.png) no-repeat -472px -48px;
+		}
+		.unsetpShort{
+	 		float: left;
+		    display: inline-block;
+		    width: 105px;
+		    height: 10px;
+		    margin-top: 38px;
+		    background: url(/webrexco/static/img/uc/realname.png) no-repeat -472px -30px;
+		}
+		.J_line3{
+			 background: url(/webrexco/static/img/uc/realname.png) no-repeat -472px -30px;
+		}
+		.findpwdTips .setpLong{
+			float: left;
+			display: inline-block;
+			width: 168px;
+			height: 10px;
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -472px -1px;
+			margin-top: 38px;
+        }
+        .findpwdTips .unsetpLong{
+			float: left;
+			display: inline-block;
+			width: 168px;
+			height: 10px;
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -472px -15px;
+			margin-top: 38px;
+        }
+        .findpwdTips .realstep{
+        	float: left;
+			display: inline-block;
+			width: 80px;
+			height: 86px;
+			margin: 0 20px;
+        }
+        .findone{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -186px -0px;
+		}
+		.findtwo{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -279px -0px;
+		}
+		.findthree{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -370px -0px;
+		}
+		.findone{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -186px -0px;
+		}
+		.finduntwo{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -0px -0px;
+		}
+		.findunthree{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -92px -0px;
+		}
+        .findpwd-title{font-size:24px;line-height:86px;border-bottom:2px solid #ccc;}
+        .findpwdProcess{padding:23px 82px;}
+        
+        .findpwdTips1{color:#333;font-size:16px;}
+		.findPwdStepOne, .findPwdStepTwo, .findPwdStepThree{width:400px;margin:36px auto;text-align: center;}
+		.coninput {
+		    width: 286px;
+		    height: 40px;
+		    line-height: 40px;
+		    padding-left: 15px;
+		    border: 1px solid #d3d3d3;
+		    font-size: 14px;
+		    border-radius: 3px;
+		    background: #fff;
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+		}
+		.f-pr{
+			position: relative;
+			margin: 30px 0 0 0;
+		}
+		.u-input{
+			float: left;
+			line-height: 40px;
+			width: 98px;
+			height: 40px;
+			text-align: right;
+			padding-right: 20px;
+		}
+		.short {
+		    width: 154px;
+		    height: 40px;
+		}
+		.proving {
+		    position: absolute;
+		    left: 292px;
+		    width: 118px;
+		    height: 40px;
+		    line-height: 35px;
+		    text-align: center;
+		    background: #f5f5f5;
+		    color: #999;
+		    text-decoration: none;
+		    border: 1px solid #d3d3d3;
+		    border-radius: 3px;
+		    font-size: 16px;
+		}
+		.m-phone{
+			width: 417px;
+    		margin: 0 auto;
+    		margin-top: 120px;
+		}
+		.m-idCard{
+			width: 417px;
+			margin: 0 auto;
+    		margin-top: 120px;
+		}
+		.m-onCard{
+			width: 417px;
+			margin: 0 auto;
+			margin-top: 76px; 
+		}   
+		.nextbtn{
+			width: 298px;
+			height: 40px;
+			background: #c8a676;
+			line-height: 40px;
+			border-radius: 3px;
+			border: 0px;
+			color: #fff;
+			font-size: 18px;
+			float: right;
+			cursor: pointer;
+			text-align: center;
+		}
+		.u-red{
+			color:#fd2337;
+		}
+		.tips {
+            position: absolute;
+            font-size: 12px;
+            color: #c8a676;
+            line-height: 30px;
+            text-indent: 15px;
+            margin-left: 114px;
+        }
+        .f-pr #province,.f-pr #city{
+        	width: 145px;
+		    height: 40px;
+		    line-height: 40px;
+		    padding-left: 15px;
+		    border: 1px solid #d3d3d3;
+		    font-size: 14px;
+		    border-radius: 3px;
+		    appearance:none;
+			-moz-appearance:none; /* Firefox */
+			-webkit-appearance:none; /* Safari 和 Chrome */
+			background:url(/webrexco/static/img/uc/down.png) no-repeat 116px center;
+        }
+        .f-pr #bank{
+        	width: 298px;
+		    height: 40px;
+		    line-height: 40px;
+		    padding-left: 15px;
+		    border: 1px solid #d3d3d3;
+		    font-size: 14px;
+		    border-radius: 3px;
+		    appearance:none;
+			-moz-appearance:none; /* Firefox */
+			-webkit-appearance:none; /* Safari 和 Chrome */
+			background:url(/webrexco/static/img/uc/down.png) no-repeat 270px center;
+        }
+        .f-pr span{
+        	line-height: 40px;
+        }
+	</style>
+	<script type="text/javascript">
+        window.tplObj={
+            "data":{
+                "menuMap":{"0":0}
+            }
+        };
+    </script>
+</head>
+<body style="background: #fff;height: auto;">
+	<div class='g-hd'>
+		<% include ../../cmn/header.ejs %>
+	</div>
+	<div class='g-bd'>
+		<% include ../../cmn/user_banner.ejs %>
+		<div class="m-con clearfix">
+	        <div class="m-leftNav">
+	            <% include ../../cmn/user_left.ejs %>
+	        </div>
+	        <div class="user_right"> 
+	           	<div class='findpwdTips f-cf'>
+                    <b class='setpShort'></b>
+                    <span class='realstep findone'></span>
+                    <b class='unsetpLong'></b>
+                    <span class='realstep finduntwo'></span>
+                    <b class='unsetpLong'></b>
+                    <span class='realstep findunthree'></span>
+                    <b class='unsetpShort'></b>
+                </div>
+                <!--手机验证-->
+                <div class="m-phone">
+                    <form class="phonerealfrom">
+                        <div class="f-pr clearfix">
+                            <span class="u-input m-p-text">手机号</span>
+                            <input type="text" name="phone" id="phone" placeholder="请输入您的手机号码" class="coninput" />
+                            <div class="tips">
+	                            <span></span>
+	                        </div>
+                        </div>
+                        <div class="f-pr clearfix">
+                            <span class="u-input">短信验证码</span>
+	                        <input type="text" name="phoneCode" id="phoneCode" placeholder="请输入手机验证码" class="short coninput">
+	                        <a href="javascript:;" class="valcode proving">短信验证码</a>
+	                        <div class="tips">
+	                            <span></span>
+	                        </div>
+                        </div>
+                        <div class="f-pr clearfix">
+                        	<span class="nextbtn" id="btnPhone">下一步</span>
+                        </div>
+                    </form>
+                </div>
+        	</div> 
+	    </div> 
+	</div>
+	<div class='g-ft'>
+		<% include ../../cmn/footer.ejs %>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("body").keydown(function(e) {
+                if (event.keyCode == "13") {//keyCode=13是回车键
+                    $('.btnPhone').click();
+                }
+            });
+		    $(".f-pr input").mousedown(function(){
+		        $(this).css('border', '1px solid #c8a676');
+		        $(this).css('background-color', '#fff');
+		    });
+		    $(".f-pr input").blur(function(){
+		        $(this).css('border', '1px solid #d3d3d3');
+		        $(this).css('background-color', '#fff');
+		    });
+		    //验证手机格式
+		    $("#phone").keyup(function(){
+		        var verif=this.value;
+		        if(verif.length==11){
+		            checkphone();
+		        }
+		    });
+		    $("#phone").blur(function(){
+		        checkphone();
+		    });
+		    //验证码
+            $('#phoneCode').keyup(function(){
+                var verif=this.value;
+                if(verif.length==4){
+                    phoneCode();
+                }
+            });
+            $('#phoneCode').blur(function(){
+                phoneCode();
+            });
+		    $('.valcode').click(function(){
+		        if($(this).html().indexOf('验证码')>0){
+		            $("#phoneCode").val("");
+		            checkphone();
+		            if(($("#phone").siblings(".tips").children("span").html().length)>0){
+		                return;
+		            }
+		            sendPhoneCode();
+		        }
+		    });
+		    $('#btnPhone').click(function(){
+		        checkphone();
+		        if(($("#phone").siblings(".tips").children("span").html().length>0 )&&( $('#phoneCode').val().length<=0)){
+		            return;
+		        }
+		        mobileSubmit();
+		    });
+		    getPhone();
+		});
+	    //获取验证码js
+	    function sendPhoneCode(){
+	        var phone=$('#phone').val();
+	        var data =  {
+	            "phone":phone,
+	            "type":3
+	        };
+	        $.ajax({
+	            type: "get",
+	            url:"/webrexco/phoneCodeApp.cgi",
+	            data:data,
+	            cache:false,
+	            success: function(rslt){
+	                if (rslt.code!=0) {
+	                    var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+	                   $("#phoneCode").siblings(".tips").children("span").html(errMsg);
+	                }
+	                if(rslt.code==200){
+	                	var cd = 60;
+	                	$(".valcode").html(cd +'s');
+	                	countDown(cd);
+	                }
+	            }
+	        });
+	    }
+	     //验证码倒计时
+	    function countDown(cd){
+	        var cd =cd || 60;
+	        timer =setInterval(function(){
+	            if(cd>0){
+	                $('.valcode').text((--cd) +'s');
+	            }else{
+	                window.clearInterval(timer);
+	                $('.valcode').html('获取验证码');
+	            }
+	        },1000);
+	    }
+	    //查看手机格式
+	    function checkphone(){
+	        var value=$("#phone").val();
+	        var reg = /^1[3|4|5|7|8]\d{9}$/;//手机格式验证
+	        if(value == ""){
+	            $("#phone").siblings(".tips").children("span").html("手机号码不能为空");
+	            return;
+	        }
+	        if(undefined == value||!util.isPhoneNumber(value) ||!reg.test(value) ) {
+	            $("#phone").siblings(".tips").children("span").html("手机号码格式不正确");
+	            return;
+	        }else{
+	            $("#phone").siblings(".tips").children("span").html("");
+	        }
+	    };
+	    function mobileSubmit(){
+	        var userphone = $("#phone").val();
+	        var phoneCode = $("#phoneCode").val();
+	        var data={
+	            "phone":userphone,
+	            "phoneCode":phoneCode
+	        };
+	        $.ajax({
+	            type:"get",
+	            url:'/webrexco/uc/data/mobileSubmit.cgi',
+	            data:data,
+	            cache:false,
+	            success:function(rslt){
+	                if(rslt.code==0){
+	                	setTimeout(function(){top.location.href="/webrexco/uc/realName/realName.htm";},1000);
+	                    return;
+	                }else if(rslt.code==401){
+	                	var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+	                    baseModel.errorCode(rslt.code,rslt.message);
+	                    return;
+	                }else{
+	                    var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+	                    $("#phoneCode").siblings(".tips").children("span").html(errMsg);
+	                    $("#phoneCode").val("");
+	                    return;
+	                }
+	            }
+	        })
+	    }
+	    function getPhone(){
+	        $.ajax({
+	            type:"get",
+	            url:'/webrexco/uc/data/getPhone.cgi',
+	            cache:false,
+	            success:function(rslt){
+	                if(rslt.code==0){
+	                    if (rslt.phoneStatus==1||rslt.phoneStatus==2) {
+	                    	util.tipsModal(1,"手机已认证，无需再认证",function(){
+            					location.href="/webrexco/uc/realName/realName.htm";
+            				});
+            				$('.u-modalClose').click(function(){
+            					location.href="/webrexco/uc/account.htm";
+            				});
+	                    }
+	                    if (rslt.phoneStatus==0) {
+	                    	return;
+	                    }
+	                }else if(rslt.code==401){
+						var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+	                    baseModel.errorCode(rslt.code,rslt.message);
+	                    return;
+	                }else{
+	                    var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+	                    console.log(errMsg);
+	                    return;
+	                }
+	            }
+	        })
+	    }
+	    //手机验证码检验
+        function phoneCode(){
+            var phoneCode=$("#phoneCode").val();
+            if(phoneCode == ""||undefined == phoneCode){
+                $("#phoneCode").siblings(".tips").children("span").html('请输入手机验证码');
+            }else{
+                $("#phoneCode").siblings(".tips").children("span").html('');
+            }
+        }
+	</script>
+</body>
+</html>

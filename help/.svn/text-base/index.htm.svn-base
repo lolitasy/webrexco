@@ -1,0 +1,329 @@
+﻿<% include ../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>用户帮助中心_摆渡星空</title>
+	<meta name="keywords" content="摆渡星空用户帮助中心" />
+	<meta name="description" content="摆渡星空为企业及高管实现经营目标提供供应链金融服务、创客项目路演、Fintech、泛娱乐等项目资本解决方案，具有特色的体验空间和摆渡空间线上平台" />
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+<!--     <link rel="stylesheet" href="/webrexco/static/css/uc/common.css"/> -->
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+     <script src="/webrexco/static/js/cmn/pager.js"></script>
+    <style type="text/css" media="screen">
+        a{
+            text-decoration: none;
+        }
+        .m-con{
+		    width: 1200px;
+		    margin: 0 auto;
+		    margin-top:32px;
+		    clear:both;
+		}
+		.m-leftNav{
+		    width: 190px;
+		    height: 620px;
+		    background: #fff;
+		    float:left;
+		}
+		.m-leftNav .nav-menu>li {
+		    width: 190px;
+		    line-height: 55px;
+		}
+		.isActive{
+		   color: #c8a676; 
+		}
+		.menu-title {
+		    position: relative;
+			width: 190px;
+		    height: 60px;
+		    line-height:60px;
+		    font-size:18px;
+		    font-weight: normal;
+		    text-align: left;
+		    cursor: pointer;
+		    text-indent: 40px;
+		    border-bottom: 1px solid #e6e6e6;
+		}
+		.nav-title{
+			width: 190px;
+		    height: 60px;
+		    line-height:60px;
+		    font-size:18px;
+		    font-weight: normal;
+		    text-align: left;
+		    cursor: pointer;
+		    text-indent: 40px;
+		    border-bottom: 1px solid #e6e6e6;
+		}
+		.m-leftNav .menu-title .title-indexIcon {
+		    float: left;
+		    width: 22px;
+		    height: 22px;
+		    margin-left: -24px;
+		    margin-top: 20px;
+		    position: absolute;
+		}
+		.news{
+		    background: url(/webrexco/static/img/uc/bgicon.png) no-repeat -14px -8px;
+		}
+		.u-icon{
+		    width: 4px;
+		    height: 60px;
+		    background: #c8a676;
+		    position: absolute;
+		}
+		.user_right{
+		    width:965px;
+		    float: left;
+		    margin-left: 15px;
+		    background: #fff;
+		}
+		.form1{
+			display:none;
+		}
+		.form2,.form1{
+			padding: 14px 14px 28px 14px;
+			min-height: 576px;
+			position: relative;
+		}
+		.dream-list{
+			border-bottom: 1px dotted #e3e3e3;
+		}
+
+		.dream-list p{
+			width: 900px;
+		}
+		.u-maincen{
+			line-height: 26px;
+			padding:0px 28px 20px;
+			color: #999;
+			display: none;
+			overflow: hidden;
+		}
+		.dream-title{
+			line-height: 48px;
+			text-indent: 28px;
+			font-size: 16px;
+			background: url(/webrexco/static/img/help/p-cion.png) no-repeat 10px center;
+			background-size: 4px 4px;
+			color: #333;
+			display:inline-block;
+			width:700px;
+		}
+		.u_icon{
+			width: 15px;
+			height: 15px;
+			display: inline-block;
+			float: right;
+			margin-right: 34px;
+			margin-top: 16px;
+			cursor: pointer;
+		}
+		.open_icon{
+			background: url(/webrexco/static/img/help/help_icon.png) no-repeat -1px 0px;
+		}
+		.colse_icon{
+			background: url(/webrexco/static/img/help/help_icon.png) no-repeat -20px 0px;
+		}
+		.nolist{
+			width: 135px;
+			height: 82px;
+			background: url(/webrexco/static/img/search/nosearch.png) no-repeat;
+			background-size: 135px 82px;
+			display: block;
+			margin: 0 auto;
+			margin-top: 150px;
+			margin-bottom: 25px;
+		}
+		.pager,.pager2{
+			margin: 30px 0;
+    		text-align: center;
+    		/*position: absolute;
+    		left: 500px;
+    		bottom: 220px;*/
+		}
+		/*.from2-img,.from1-img{
+			display: none;
+		}*/
+		/**翻页**/
+		/*.help-content-page{height:auto; margin:0 auto; overflow: hidden; padding: 80px 0 0 0;display:none;}
+		.help-content-page ul{float: right;}
+		.help-content-page ul li{ float: left; }
+		.help-content-page ul li a{ padding:5px 15px; display: block;  border:#ddd solid 1px; font-size:14px;  color: #000; }
+		.help-content-page ul li a.active,.help-content-page ul li a:hover{ color: #1cd4c6; border:#1cd4c6 solid 1px; }
+		.help-content-page ul li a.disable{ color: #999; }
+		.help-content-page ul li a.disable:hover{ border-color: #ddd }*/
+
+
+    </style>
+</head>
+<body>
+    <% include ../cmn/header.ejs %>
+    <div class="m-con clearfix">
+        <div class="m-leftNav">
+        	<div class="nav-title"><span class="f-con"></span><h3 class="menu-title"><span class="title-indexIcon news"></span>帮助中心</h3></div>
+        	<ul class="nav-menu">
+				<li class="m-space spacebtn">
+				    <span class="f-con u-icon"></span><h3 class="menu-title isActive">星空会</h3>
+				</li>
+				<li class="m-space dreambtn">
+				    <span class="f-con"></span><h3 class="menu-title">疯巢</h3>
+				</li>
+			</ul>
+        </div>
+        <div class="user_right"> 
+            <div class="user_right_main">
+                <div class="u-tab form1">
+                	<div class="dream-main"></div>
+					<div class="from1-img">
+						<div class="nolist">
+							
+						</div>
+						<p style="text-align: center;font-size: 18px;">空空如也~</p>
+					</div>
+					 <div class="pager"></div>
+                </div>
+                <div class="u-tab form2"> 
+                	<div class="space-main"></div>
+					<div class="pager2"></div>
+					<div class="from2-img">
+						<div class="nolist">	
+						</div>
+						<p style="text-align: center;font-size: 18px;">空空如也~</p>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% include ../cmn/footer.ejs %>
+    <script type="text/template" id="tpl_list_dream">  
+        <# for(var i=0; i<data.list.length; i++) { #>
+            <# var item = data.list[i]; #>
+               	<div class="dream-list clearfix" data-id="<#= item.id #>">
+					<a class="dream-title f-tof"><#= item.title #></a><span class="u_icon open_icon"></span>
+					<div class="u-maincen"></div>
+				</div>
+        <# } #>
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+        	var index;
+  	     	var pageIndex = 1;
+  	     	var pageIndextwo = 1;
+  	     	$('body').on('click','.dreambtn',function() {
+  	     		JumpPage(1);
+  	     	});
+  	     	$('body').on('click','.spacebtn',function() {
+  	     		JumpPage(0);
+  	     	})
+			index=util.getQueryString('data-id');
+			JumpPage(index);
+		    function JumpPage(index){
+		    	if (index==1) {
+					$('.dreambtn').children('.f-con').addClass('u-icon');
+			    	$('.dreambtn').children('.menu-title').addClass('isActive');
+			    	$('.dreambtn').siblings().children('.f-con').removeClass('u-icon');
+			   	 	$('.dreambtn').siblings().children('.menu-title').removeClass('isActive');
+			    	$('.form2').hide();
+		    		$('.form1').show();
+		    		getdreamMessage(22,pageIndex);
+		    	}else{	
+		    		$('.spacebtn').children('.f-con').addClass('u-icon');
+			    	$('.spacebtn').children('.menu-title').addClass('isActive');
+			    	$('.spacebtn').siblings().children('.f-con').removeClass('u-icon');
+			   	 	$('.spacebtn').siblings().children('.menu-title').removeClass('isActive');
+			    	$('.form1').hide();
+		    		$('.form2').show();
+		    		getdreamMessage(23,pageIndex);
+		    	}
+		    }
+		 	$('body').on('click','.dream-list',function() {
+				if ($(this).children('.u_icon').hasClass('open_icon')) {
+					$(this).children('.dream-title').css('color','#c8a676');
+					$(this).children('.u_icon').removeClass('open_icon').addClass('colse_icon');
+					var $detail=$(this).children('.u-maincen');
+					var id=$(this).attr("data-id");
+					baseModel.get({
+		                url: "helpDetails.cgi",
+		                data:{id:id},
+		                success: function(rslt){
+		                    if(rslt.code==0) {
+		                    	$detail.html(rslt.data.content);
+		                    	$detail.stop().slideDown("slow");
+		                        return;
+		                    }else {
+		                        var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+		                        alert(errMsg);
+		                        return;
+		                    }
+		                }
+		            });
+				}else{
+					$(this).children('.dream-title').css('color','#333');
+					$(this).children('.u_icon').removeClass('colse_icon').addClass('open_icon');
+					$(this).children('.u-maincen').stop().slideUp('slow');
+				}
+			});
+			getdreamMessage(23,pageIndextwo);
+			
+        });
+        //获取列表 22疯巢 23星空会
+        function getdreamMessage(type,pageIndex){
+            var data={
+                "pageSize": 10,
+                "pageIndex": pageIndex,
+                "type":type
+            };
+            baseModel.get({
+                url: "helpList.cgi",
+                data:data,
+                success: function(rslt){
+                    if(rslt.code==0) {
+                    	if (rslt.data.pageList.list.length>0) {
+                    		var type=rslt.data.pageList.list[0].siteId;
+	                    	var page=rslt.data.pageList.page;
+	                    	var current=rslt.data.pageList.page.currentPage;
+	                    	if (type==22) {
+	                    		baseView.render("#tpl_list_dream",rslt.data.pageList,".dream-main");
+	                    		if (page.pages) {
+	                    			$('.from1-img').css("display","none");
+									$(".pager").empty().pager({
+										current:pageIndex,
+										total:page.pages
+									}).on("page", function (e, current) {
+										getdreamMessage(22,current);
+									});
+								} else {
+									$(".pager").hide();
+								}
+	                    	}
+	                        if (type==23) {
+	                        	if (page.pages) {
+	                        		$('.from2-img').css("display","none");
+									$(".pager2").empty().pager({
+										current:pageIndex,
+										total:page.pages
+									}).on("page", function (e, current) {
+										getdreamMessage(23,current);
+									});
+								} else {
+									$(".pager2").hide();
+								}
+	                    		baseView.render("#tpl_list_dream",rslt.data.pageList,".space-main");
+	                    	}
+                    	}
+                        return;
+                    }else {
+                        var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+                        alert(errMsg);
+                        return;
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<% include ../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>摆渡星空-账户主页</title>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/uc/common.css"/>
+    <link rel="stylesheet" href="/webrexco/static/css/uc/style.css"/>
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/uc/index.js"></script>
+    <style type="text/css" media="screen">
+        .list-tab li a{
+            width:100px;
+        }
+        .m-accountlist{
+            width: 888px;
+            height: 98px;
+            border: 1px solid #e0e0e0;
+            margin-top: 28px;
+        }
+        .accounLeft{
+            float: left;
+            margin-top: 18px;
+            margin-left: 30px;
+        }
+        .accounLeft .m-u-accTitle{
+            font-size: 20px;
+        }
+        .accounLeft .m-u-accon{
+            margin-top: 10px;
+            font-size: 16px;
+            color: #999;
+        }
+        .accountBtn{
+            width: 100px;
+            height: 38px;
+            background: #c8a676;
+            color: #fff;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 38px;
+            font-size: 18px;
+            cursor: pointer;
+            float: right;
+            margin-right: 42px;
+            margin-top: 30px;
+        }
+        .user_right{
+            padding-bottom: 40px;
+        }
+    </style>
+    <script type="text/javascript">
+        window.tplObj={
+            "data":{
+                "menuMap":{"0":0}
+            }
+        };
+    </script>
+</head>
+<body style="background: #fff;height:auto;">
+    <% include ../cmn/header.ejs %>
+    <% include ../cmn/user_banner.ejs %>
+    <div class="m-con clearfix">
+        <div class="m-leftNav">
+            <% include ../cmn/user_left.ejs %>
+        </div>
+        <div class="user_right"> 
+            <div class="user_right_menu">
+                <ul id="tab" class="list-tab clearfix">
+                    <li class="tabactive">
+                        <a class="titleover u-tit">账号管理</a> 
+                    </li>
+                </ul>
+            </div>
+            <div class="m-main">
+                <div class="m-accountlist">
+                     <div class="accounLeft">
+                        <div class="m-u-accTitle">手机认证</div>
+                     </div>
+                     <a class="accountBtn phoneStatus" href="/webrexco/uc/realName/mobile.htm">
+                        未认证
+                     </a>
+                </div>
+                <div class="m-accountlist">
+                     <div class="accounLeft">
+                        <div class="m-u-accTitle">身份证认证</div>
+                     </div>
+                     <a class="accountBtn realStatus">
+                        未认证
+                     </a>
+                </div>
+                <div class="m-accountlist">
+                     <div class="accounLeft">
+                        <div class="m-u-accTitle">银行卡绑卡</div>
+                     </div>
+                     <a class="accountBtn bankCardStatus">
+                        未认证
+                     </a>
+                </div>
+                <div class="m-accountlist">
+                     <div class="accounLeft">
+                        <div class="m-u-accTitle">登录密码</div>
+                        <div class="m-u-accon">用于保护账号信息和登录安全</div>
+                     </div>
+                     <a class="accountBtn" href="/webrexco/uc/changePwd.htm">
+                        修改
+                     </a>
+                </div>
+                <div class="m-accountlist">
+                     <div class="accounLeft">
+                        <div class="m-u-accTitle">支付密码</div>
+                        <div class="m-u-accon">用于保护支付安全</div>
+                     </div>
+                     <a class="accountBtn" href="/webrexco/uc/changePayPwd.htm">
+                        修改
+                     </a>
+                </div>
+                <div class="m-accountlist">
+                     <div class="accounLeft">
+                        <div class="m-u-accTitle">微信<span class="weixinName"></span></div>
+                        <div class="m-u-accon">微信帐号授权登录</div>
+                     </div>
+                     <a class="accountBtn wechatWarrant">
+                        授权登录
+                     </a>
+                </div>
+                <div class="m-accountlist">
+                     <div class="accounLeft">
+                        <div class="m-u-accTitle">QQ<span class="qqName"></span></div>
+                        <div class="m-u-accon">QQ帐号授权登录</div>
+                     </div>
+                     <a class="accountBtn QQwarrant">
+                        授权登录
+                     </a>
+                </div>
+                <div class="m-accountlist">
+                     <div class="accounLeft">
+                        <div class="m-u-accTitle">微博<span class="weiboName"></span></div>
+                        <div class="m-u-accon">微博帐号授权登录</div>
+                     </div>
+                     <a class="accountBtn weiboWarrant">
+                        授权登录
+                     </a>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <% include ../cmn/footer.ejs %>
+    <script type="text/javascript">
+        getPhone();
+        function getPhone(){
+            $.ajax({
+                type:"get",
+                url:'/webrexco/uc/data/getPhone.cgi',
+                cache:false,
+                success:function(rslt){
+                    if(rslt.code==0){
+                        
+                    }else{
+                        var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+                        console.log(errMsg);
+                        return;
+                    }
+                },
+                complete:function(rslt){
+                   getRealName();
+                }
+            })
+        }
+        //检验是否已绑卡
+        function getBank(){
+            $.ajax({
+                type:"get",
+                url:'/webrexco/uc/data/getBank.cgi',
+                cache:false,
+                success:function(rslt){
+                    if(rslt.code==0){
+                       
+                    }else{
+                        var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+                        console.log(errMsg);
+                        return;
+                    }
+                },
+                complete:function(rslt){
+                    info();
+                }
+            })
+        }
+        function getRealName(){
+            $.ajax({
+                type:"get",
+                url:'/webrexco/uc/data/getRealName.cgi',
+                cache:false,
+                success:function(rslt){
+                    if(rslt.code==0){
+                        
+                    }else{
+                        var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+                        console.log(errMsg);
+                        return;
+                    }
+                },
+                complete:function(rslt){
+                    getBank();
+                }
+            });
+        }
+        function info(){
+            baseModel.get({
+                url:"/webrexco/uc/data/bannerUserInfo.cgi",
+                success:function(rslt){
+                    if(rslt.code==0){
+                        $('.userName').html(rslt.user.userName);
+                        $('.availMoney').html(util.numFormat(rslt.availMoney,2));
+                        $('.freezeDeposit').html(util.numFormat(rslt.freezeDeposit,2));
+                        $('.weixinName').html(rslt.user.wechatNick);
+                        $('.qqName').html(rslt.user.qqNick);
+                        $('.weiboName').html(rslt.user.weiboNick);
+                        $('.user-pic').css('background',"url(http://adtp.cnaidai.com/data/avatar/'+rslt.user.userId+'_avatar_middle.jpg)no-repeat");
+                        $('.realStatus').on("click",function(){
+                            location.href="/webrexco/uc/realName/realName.htm"
+                             return;
+                        });
+                        $(".bankCardStatus").on("click",function() {
+                            location.href="/webrexco/uc/realName/onCard.htm"
+                            return;
+                        });
+                        if (rslt.msgCount>0) {
+                            $('.myMessage').css('display', 'block');
+                        }
+                        if (rslt.user.idealStatus==1&&rslt.user.idealLevel>1) {
+                            $('.m-rank-ideal').removeClass('u-idimg').addClass('u-spimg');
+                        }//理想主
+                        if (rslt.user.ventureStatus==1&&rslt.user.ventureLevel>1) {
+                            $('.m-rank-venture').removeClass('u-idimg').addClass('u-spimg');
+                            $('.myMessage').css('display', 'block');
+                        }//星空会
+                        if (rslt.user.qqOpenid) {
+                            $('.QQwarrant').html('已授权');
+                        }else{
+                            $(".QQwarrant").click(function () {
+                            window.open("/webrexco/oauth/data/getQQAppId.cgi?state=bind");
+                            });
+                        }
+                        if (rslt.user.weiboOpenid) {
+                            $('.weiboWarrant').html('已授权');
+                        }else{
+                            $(".weiboWarrant").click(function () {
+                                window.open("/webrexco/oauth/data/getWeiboAppid.cgi?state=bind");
+                            });
+                        }
+                        if (rslt.user.wechatOpenid) {
+                            $('.wechatWarrant').html('已授权');
+                        }else{
+                            $(".wechatWarrant").click(function () {
+                                window.open("/webrexco/oauth/data/getWeichatAppid.cgi?state=bind");
+                            });
+                        }
+                        if (rslt.user.phoneStatus) {
+                            $('.phoneStatus').html('已绑定');
+                            $(".phoneStatus").on("click",function(){
+                                return false;
+                            });
+                        }else{
+                            $('.realStatus').click(function() {
+                                 util.tipsModal(2,"请先绑定手机号");
+                                 return;
+                            });
+                        }
+                        if (rslt.user.realStatus==1) {
+                            $('.realStatus').html('已认证');
+                            $(".realStatus").off("click");
+                            
+                        }else{
+                            $('.bankCardStatus').click(function() {
+                                 util.tipsModal(2,"请先实名认证");
+                                 return;
+                            });
+                        }
+                        if (rslt.user.bankCardStatus) {
+                            $('.bankCardStatus').html('已绑定');
+                            $(".bankCardStatus").off("click");
+                        }    
+                    }else if (rslt.code==401) {
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else{//其他错误
+                        errorMsg = rslt.message || "返回数据错误，请刷新重试!";
+                        console.log(errorMsg);
+                        return;
+                    }
+                }
+            });
+        }
+
+        function login() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

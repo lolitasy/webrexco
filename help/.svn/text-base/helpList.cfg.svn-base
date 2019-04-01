@@ -1,0 +1,89 @@
+var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js');
+
+exports.itfconf = function() {
+	return new CurrentAPI().conf();
+}
+
+exports.itfleft = function(req,res,fld,fle) {
+	return new CurrentAPI().output(req,res,fld,fle);
+}
+
+var CurrentAPI = gapi.BaseAPI.extend({
+    conf: function() { return { auth: false,
+        	type: "json",
+        	itfs: [
+	            {
+	                host: ghost.dscm.makercenter.addr,
+	                port: ghost.dscm.makercenter.port,
+	                iurl: "/pcHelpCenter?actn=helpList",
+	                uuid: "pcHelpCenter",
+	                meth: "post",
+	                type: "sdcm",
+	                next: [],
+	                func: function(req,res,fld,fle){
+	                	return new CurrentAPI("pcHelpCenter").
+	                		callFunc(req,res,fld,fle);
+	                }
+	            }
+        	]
+    	};
+    },
+
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		/*校验参数*/
+	    var ip = gapi.getIPv4(req.user.addr);
+	    var currentPage = gapi.getParameter(req, "pageIndex"),
+	    	type = gapi.getParameter(req, "type"),
+			pageSize = gapi.getParameter(req, "pageSize");
+		ghost.getLogger().info("[doCallFunc]IP：%s, service: helpList, dc: pcHelpCenter.helpList, message: 'param ', param:currentPage=%s,pageSize=%s,type=%s", ip,currentPage,pageSize,type);
+	   	return {
+	       "claz" : "['java.lang.Integer','java.lang.Integer','java.lang.Integer']",
+	       "json" : [currentPage ,pageSize, type]
+	    };
+		// req.uuid["moc"] = true;
+		// return null;
+	},
+
+	doOutput: function(req, res, fld, fle) {
+	    var ip = gapi.getIPv4(req.user.addr);
+		if(!req.rslt['pcHelpCenter']){
+			ghost.getLogger().error("[doOutput]IP：%s, service: helpList, dc: pcHelpCenter.helpList, message: 'rslt is null', rslt: %s", ip, JSON.stringify(req.rslt['pcHelpCenter']));
+			return gapi.toResult(500, "系统异常");
+		}
+		return gapi.toResult(null, null, req.rslt['pcHelpCenter']);
+		// var output = {
+		// 	"code" : 0,
+		// 	"message" : "success",
+		// 	"data": {
+		// 		'pageList':{
+		// 			"list":[{
+		// 				"id":"1",
+		// 				"title":"主题",
+		// 				"siteId":22
+		// 			},{
+		// 				"id":2,
+		// 				"title":"主题2222222222222222222222",
+		// 				"siteId":22
+		// 			},{
+		// 				"id":3,
+		// 				"title":"主题333333333333333333333",
+		// 				"siteId":22
+		// 			},{
+		// 				"id":4,
+		// 				"title":"主题4444444444444444444",
+		// 				"siteId":22
+		// 			}
+		// 			],
+		// 			"page":{
+		// 				"currentPage":1,
+		// 				"pages":2,
+		// 				"pernum":5,
+		// 				"total":20
+		// 			}
+		// 		}
+		// 	}
+		// };
+		// return gapi.toResult(null, null,output);
+	}
+});

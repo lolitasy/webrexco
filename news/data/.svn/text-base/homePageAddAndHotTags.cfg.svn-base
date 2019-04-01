@@ -1,0 +1,50 @@
+var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js');
+
+exports.itfconf = function() {
+	return new CurrentAPI().conf();
+}
+
+exports.itfleft = function(req,res,fld,fle) {
+	return new CurrentAPI().output(req,res,fld,fle);
+}
+
+var CurrentAPI = gapi.BaseAPI.extend({
+    conf: function() { return { auth: true,
+        	type: "json",
+        	itfs: [
+	            {
+	                host: ghost.dscm.makercenter.addr,
+	                port: ghost.dscm.makercenter.port,
+	                iurl: "/pcIndex?actn=getHomePageAd",
+	                uuid: "pcIndex",
+	                meth: "post",
+	                type: "sdcm",
+	                next: [],
+	                func: function(req,res,fld,fle){
+	                	return new CurrentAPI("pcIndex").
+	                		callFunc(req,res,fld,fle);
+	                }
+	            }
+        	]
+    	};
+    },
+
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		var ip = gapi.getIPv4(req.user.addr);
+		ghost.getLogger().info("[doCallFunc]IP：%s, service: news.data.homePageAddAndHotTags, dc: pcIndex.getHomePageAd, message: 'param', param: ", ip);
+		return {
+	        "claz" : "[]",
+	        "json" : []
+	    };
+	},
+
+	doOutput: function(req, res, fld, fle) {
+		var ip = gapi.getIPv4(req.user.addr);
+		if(!req.rslt['pcIndex']){
+			ghost.getLogger().error("[doOutput]IP：%s, service: news.data.homePageAddAndHotTags, dc: pcIndex.getHomePageAd, message: 'rslt is null', rslt: %s", ip, JSON.stringify(req.rslt['pcIndex']));
+			return gapi.toResult(500, "系统异常");
+		}
+		return gapi.toResult(null, null, req.rslt['pcIndex']);
+	}
+});

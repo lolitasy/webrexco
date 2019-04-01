@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#232323">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" sizes="192x192" href="/webrexco/static/img/ideal/icon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/webrexco/static/img/ideal/icon-120.png">
+    <title>错误 - 摆渡星空</title>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <style>
+        body {
+            background-color: #f9f9f9;
+        }
+
+        .content {
+            width: 1200px;
+            margin: 100px auto 0;
+            background-color: #FFF;
+
+            padding:100px 0;
+        }
+
+        .icon-error {
+            display: block;
+            width: 135px;
+            height: 82px;
+
+            margin: 60px auto;
+
+            background-image: url("/webrexco/static/img/uc/notice.png");
+            background-repeat: no-repeat;
+            background-size: 135px 82px;
+        }
+
+        .text {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <% include cmn/header.ejs %>
+
+    <div class="content">
+        <i class="icon icon-error"></i>
+        <div class="text">该页面已被删除~</div>
+    </div>
+    
+    <% include cmn/footer.ejs %>
+
+    <script src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script src="/webrexco/static/js/header.js"></script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<% include ../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>修改登录密码</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/uc/common.css"/>
+    <link rel="stylesheet" href="/webrexco/static/css/uc/style.css"/>
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/uc/index.js"></script>
+    <style type="text/css" media="screen">
+        .list-tab li a{
+            width:86px;
+        }
+        .coninput{
+            width: 282px;
+            height: 40px;
+            line-height: 40px;
+            margin: 30px 0 0 0px;
+            padding-left: 15px;
+            border: 1px solid #d3d3d3;
+            font-size: 14px;
+            border-radius: 3px;
+            background: #fff;
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+        }
+        .g-login{
+            width:408px;
+            margin:0 auto;
+            margin-top: 144px;
+        }
+        .tips {
+            position: absolute;
+            font-size: 12px;
+            color: #c8a676;
+            line-height: 30px;
+            text-indent: 15px;
+            margin-left: 100px;
+        }
+        
+        .u-password{
+            padding-left: 14px;
+        }
+        .u-passwordt{
+            padding-left: 28px;
+        }
+        .u-input{
+            padding-right: 28px;
+        }
+        .proving{
+            position: absolute;
+            top: 30px;
+            left: 273px;
+            width: 118px;
+            height: 40px;
+            line-height: 35px;
+            text-align: center;
+            background: #f5f5f5;
+            color: #999;
+            text-decoration: none;
+            border: 1px solid #d3d3d3;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+        .proving img{
+            width: 100%;
+            height:100%;
+        }
+        .short {
+            width: 154px;
+            height: 40px;
+        }
+        .submit {
+            cursor: pointer;
+            width: 300px;
+            height: 42px;
+            line-height: 42px;
+            margin-top:28px;
+            margin-bottom: 20px;
+            text-align: center;
+            background: #c8a676;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: 4px;
+            border-radius: 3px;
+            margin-left: 102px;
+        }
+        .checkbox{
+            width: 18px;
+            height: 18px;
+            opacity: 0;
+            position: absolute;
+            left: -16px;
+            top: -26px;
+        }
+        .protocol{
+            position: absolute;
+            clear: both;
+            width: 200px;
+            margin-left: 16px;
+            margin-top: -5px;
+        }
+        .entry-icon{
+            width: 14px;
+            height: 14px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 5px;
+            left: -18px;
+        }
+        .protocol a{
+            color: #999;
+            font-size: 14px;
+        }
+        .uncheck{
+             background: url(/webrexco/static/img/uc/icon.png) no-repeat -19px 0px;
+            
+        }
+        .check{
+           background: url(/webrexco/static/img/uc/icon.png) no-repeat -36px 0px;
+        }
+    </style>
+    <script type="text/javascript">
+        window.tplObj={
+            "data":{
+                "menuMap":{"0":0}
+            }
+        };
+    </script>
+</head>
+<body style="background:#fff;height: 120%;">
+    <% include ../cmn/header.ejs %>
+    <% include ../cmn/user_banner.ejs %> 
+          <div class="m-con clearfix">
+        <div class="m-leftNav">
+            <% include ../cmn/user_left.ejs %>
+        </div>
+        <div class="user_right"> 
+            <div class="user_right_menu">
+                <ul id="tab" class="list-tab clearfix">
+                    <li class="tabactive">
+                        <a class="titleover">登录密码</a> 
+                    </li>
+                </ul>
+            </div>
+            <div class="g-login">
+                <form id="loginForm">
+                    <div class="f-pr">
+                        <span class="u-password u-input">原始密码</span>
+                        <input type="password" name="oldpassword" id="oldpassword" class="coninput">
+                        <div class="tips">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="f-pr">
+                        <span class="u-passwordt u-input">新密码</span>
+                        <input type="password" name="newpassword" id="newpassword" class="coninput">
+                        <div class="tips">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="f-pr">
+                        <span class="u-input">确认新密码</span>
+                        <input type="password" name="newpasswordtwo" id="newpasswordtwo" class="coninput">
+                        <div class="tips">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="submit btnChangePwd">确认提交</div>
+                </form>
+            </div>
+        </div>    
+    </div>
+    <% include ../cmn/footer.ejs %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".f-pr input").mousedown(function(){
+                $(this).css('border', '1px solid #c8a676');
+                $(this).css('background-color', '#fff');
+            });
+            $(".f-pr input").blur(function(){
+                $(this).css('border', '1px solid #d3d3d3');
+                $(this).css('background-color', '#fff');
+            });
+            $("#oldpassword").blur(function(){
+                oldinto();
+            });
+            //当重新输入密码
+            $("#newpassword").blur(function(){
+                newinto();
+            });
+            $("#newpasswordtwo").blur(function(){
+                newAgain();
+            });
+            $(".btnChangePwd").click(function(){
+                oldinto();
+                newinto();
+                newAgain();
+                var data={
+                    "oldpassword":$("#oldpassword").val(),
+                    "newpassword":$("#newpassword").val(),
+                    "newpasswordtwo":$("#newpasswordtwo").val()
+                };
+                 baseModel.get({
+                    url:"/webrexco/uc/data/loginPassWord.cgi",
+                    data:data,
+                    success:function(rslt){
+                        if(rslt.code==401){
+                            baseModel.errorCode(rslt.code,rslt.message);
+                            return;
+                        }else if(rslt.code==500){
+                            baseModel.errorCode(rslt.code,rslt.message);
+                            return;
+                        }else if(rslt.code==0){
+                            util.tipsModal(2,'密码修改成功，请重新登录!');
+                            setTimeout(function(){location.href='/webrexco/login.htm';},3000);
+                            return;
+                        }else if(rslt.code==1){//旧密码输入有误
+                            $('#oldpassword').siblings(".tips").children("span").html(rslt.message);
+                            return;
+                        }else if(rslt.code==2){//新密码输入有误
+                            $('#newpassword').siblings(".tips").children("span").html(rslt.message)
+                            return;
+                        }else{//其他错误
+                            errorMsg = rslt.message || "返回数据错误，请刷新重试!";
+                            alert(errorMsg);
+                            return;
+                        }
+                    }
+                });
+            });
+        });
+        function newAgain(){
+            var newAgain=$("#newpasswordtwo").val();
+            var newpassword=$('#newpassword').val();
+            if(newAgain==''||undefined==newAgain){
+                $("#newpasswordtwo").siblings(".tips").children("span").html("请输入新密码");
+            }else if(!checkPassword('#newpasswordtwo')){
+                $("#newpasswordtwo").siblings(".tips").children("span").html("请输入8~16个字母和数字");
+                return;
+            }else if(newAgain!=newpassword){
+                $("#newpasswordtwo").siblings(".tips").children("span").html("两次输入密码不一致");
+            }else{
+                $("#newpasswordtwo").siblings(".tips").children("span").html("");
+            }
+        }
+        function newinto(){
+            var confirmpsd=$('#newpassword').val();
+            var newpassword=$('#oldpassword').val();
+            if(confirmpsd==''||undefined==confirmpsd){
+                $('#newpassword').siblings(".tips").children("span").html("请输入新密码");
+            }else if(!checkPassword('#newpassword')){
+                $('#newpassword').siblings(".tips").children("span").html("请输入8~16个字母和数字");
+                return;
+            }else if(confirmpsd==newpassword){
+                $('#newpassword').siblings(".tips").children("span").html('新密码不能与原始密码一样 ');
+            }else{
+                $('#newpassword').siblings(".tips").children("span").html("");
+            }
+        }
+        function oldinto(){
+            var this_T=$('#oldpassword');
+            if(!checkPassword('#oldpassword')){
+                this_T.siblings(".tips").children("span").html("请输入8~16个字母和数字");
+                return;
+            }
+            this_T.siblings(".tips").children().html("");
+        }
+         //检查密码格式
+        function checkPassword(value){
+            var value = $(value).val();
+            var reg=/[a-zA-Z]+[0-9]+/img;
+            var reg2=/[0-9]+[a-zA-Z]+/img;
+            if (value.length < 8 || value.length > 16) {
+                return false;
+            }
+            if(!reg.test(value)&&!reg2.test(value)){
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

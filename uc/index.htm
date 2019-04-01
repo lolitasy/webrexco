@@ -1,0 +1,499 @@
+<% include ../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>账户主页 - 摆渡星空</title>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/uc/common.css"/>
+    <link rel="stylesheet" href="/webrexco/static/css/uc/style.css"/>
+    <style type="text/css">
+        .g-bd{ position: relative; }
+        .messageList{ width: 886px; }
+        .m-messageBoxNow{height: 128px; margin-top: 20px;margin-bottom: 20px; background-color: #fff; border: 1px solid #B39161;position: relative;}
+        .m-messageBox .hd img{margin:35px 25px 0 20px;width: 66px;border-radius: 66px;}
+        .m-messageBox .hd .name{margin-top: 35px;font-size: 18px;color: #333;}
+        .m-messageBox .hd .time{ float: right; margin: 60px 30px 0 0;color: #666;font-size: 16px;}
+        .m-messageBox .bd{  }
+
+        .m-messageBox .bd .cnt{position: absolute;top:70px;left:110px; color: #999;font-size: 18px;display: block;width: 200px;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+        .m-messageBox .bd .cnt .num{ float: right; display: block; width: 22px; height: 22px; border-radius: 50%; background-color: #f44; color: #fff; text-align: center; }
+        .m-messageBox .bd .cnt img{max-width: 50px;max-height:50px;}
+        .m-messageBox .bd .ctrlBar{ padding-bottom: 10px; }
+        .m-chatWnd { position: absolute; left: 0;top:0; width: 883px; height:785px;}
+        .m-chatWnd .hd{ height: 30px; line-height: 30px; padding: 10px; font-size: 18px; background-color: #5ab2d7; }
+        .m-chatWnd .hd .receiver{ margin: 0 8px; color: #f99; }
+        .m-chatWnd .hd .close{ color: #fff; }
+        .m-chatWnd .bd{ height: 500px; overflow: auto;}
+        .m-chatWnd .bd .sep{ text-align: center; color: #999; }
+        .m-chatWnd .ft{  }
+        .m-chatWnd .ft .msgContent{margin-left:80px;height: 125px; width: 780px; border-width: 1px 0; padding: 10px; background-color: #f7f7f7;border-radius: 6px;border: 1px solid #e0e0e0;}
+        .m-chatWnd .ft .sendMsg{display: block;float: right; width: 200px;line-height: 45px; height: 45px; cursor: pointer;color: #fff;font-size: 20px;background-color: #1cd4c6;border-radius: 5px; border:none;margin-top:10px;}
+        .u_reply{position: absolute;top:0;left: 0px;width: 886px;height: 128px;}
+        .u-message{font-size: 18px;color: #000;background-color: #e6f8f7;border-radius: 5px;margin-top: 10px;max-width:400px;padding: 5px 8px;margin-bottom: 15px;display: inline-block;text-align: left;word-wrap: break-word;}
+        .u-message img{max-width:300px;max-height:300px;}
+        .u-message2{background-color: #f5f7f6;}
+        .close{width: 94px;height: 50px;position: absolute;top: -59px;left: -10px;}
+        .m-msgBox{width:860px;margin-top: 10px;position: relative;}
+        .m-leftHd img{width: 50px;border-radius: 50px;}
+        .m-rightCon{margin-left: 30px;margin-right: 30px;}
+        .m-rightCon2{text-align: right;}
+        .u-arrow1{position: absolute;top:30px;left: 60px;}
+        .u-arrow2{position: absolute;top:30px;right: 60px;}
+        .u-user{font-size: 16px;color: #999;}
+        .u-user span{font-size: 12px;margin-left: 10px;}
+    </style>
+</head>
+
+<body style="background: #fff;height: auto;">
+    <% include ../cmn/header.ejs %>
+    <% include ../cmn/user_banner.ejs %>
+    <div class="m-con clearfix">
+        <div class="m-leftNav">
+            <% include ../cmn/user_left.ejs %>
+        </div>
+        <div class="user_right"> 
+            <div class="user_right_menu">
+                <ul id="tab" class="list-tab clearfix">
+                    <li class="tabactive">
+                        <a class="one titleover">我的消息</a> 
+                    </li>
+                    <li>
+                        <a class="two">对话消息</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="user_right_main">
+                <div class="m-noticelist J_noticelist">
+                    <div class="J_recommendTpl"></div>
+                    <div class="J_noticebox">
+                    </div>    
+                </div>
+                <div class="recommend-notice" style="display: none;">
+                    <p class="u-back J_back"><em>&lt;&lt;</em>返回</p>
+                    <div class="J_recommendlist"></div>
+                </div>
+            </div>
+            <div class="g-wp">
+                <div class="g-bd">
+                    <input type="hidden" id="fromUser" value="">
+                    <input type="hidden" id="fromUserName" value="">
+                    <div class="messageList J_messageList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% include ../cmn/footer.ejs %>
+    <div class="m-mask" style="display: none;">
+        <div class="m-card">
+            <img src="/webrexco/static/img/uc/close.png" class="u-close">
+            <img src="/webrexco/static/img/uc/hd-icon.png" class="u-hdimg">
+            <p class="u-tit" id="userName"></p>
+            <div class="m-con-card f-cf">
+                <p>公司名称：<span id="companyName"></span></p>
+                <p>注册资本：<span id="registeredCapital"></span></p>
+                <p>行业类型：<span id="industryType"></span></p>
+                <p>姓名：<span id="realName"></span></p>
+                <p>性别：<span id="gender"></span></p>
+                <p>职位：<span id="position"></span></p>
+                <p>名片：</p>
+                <img src="" class="f-fl" id="namecardPath">
+                <img src="" class="f-fl" id="namecardPathOpposite">
+                <div class="f-cb"></div>
+                <div class="J_reply1" style="display: none;">
+                    <p class="u-reply f-fl">回复</p> 
+                    <ul class="u-reply u-select f-fl">
+                        <li class="J_agree2">同意<span class="arrow"></span></li>
+                        <li class="J_deny2">拒绝</li>
+                    </ul>
+                </div>
+                <div class="J_agree1" style="display: none;">
+                    <p class="u-reply f-fl">发消息</p> 
+                    <ul class="u-reply f-fl">
+                        <li>已同意</li>
+                    </ul> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script type="text/template" id="tpl_recommend">
+        <# var item = data.data;#>
+        <div class="m-recommend-notice f-cf J_recommend">
+            <div class="notice-left f-fl">
+                <img src="/webrexco/static/img/uc/hd-icon.png" class="f-fl" data-id="<#-item.userId#>" data-status="<#-item.status#>">
+                <div class="m-notice-con f-fl">
+                    <p class="u-notice">引荐消息</p>
+                    <p class="u-name"><#-item.userName#> 请求您的引荐</p>
+                </div>
+            </div>
+            <div class="notice-right f-fr">
+                <p class="u-agree"><#-item.createDate#></p>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="tpl_msgBox">
+        <# var item = data; #>
+        <div class="m-messageBox m-messageBoxNow" data-roomId="<#-item.roomId#>" data-uid="<#-item.userId#>">
+            <div class="hd f-cf">
+                <img src="http://adtp.cnaidai.com/data/avatar/<#-item.userId#>_avatar_middle.jpg" class="f-fl J_card" data-id="<#-item.userId#>" data-status="<#-item.status#>">
+                <p class="name f-fl"><#-item.userName#></p>
+                <p class="time J_time"><#-util.dateFormat(item.date,"MM-dd hh:mm:ss")#></p>
+            </div>
+            <div class="bd">
+                <div class="cnt J_message"><#if(item.type==1){#><#-item.content#><#}else{#>[图片]<#}#><!-- <span class="num J_unreadNum"><#-item.count#></span> --></div>
+                <div class="ctrlBar">
+                    <a href="javascript:;" class="u-linkBtn u_reply J_reply"><!-- 回复 --></a>
+                    <a href="javascript:;" class="u-linkBtn J_agree"><!-- 同意 --></a>
+                    <a href="javascript:;" class="u-linkBtn J_deny"><!-- 拒绝 --></a>
+                </div>
+                <div class="m-chatWnd J_chatWnd" style="display: none;"></div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="tpl_chatWnd">
+        <div><!-- 与<i class="receiver"><#-data.fromUserName#></i>对话中 --> <span class="u-linkBtn close f-fr J_close"><!-- 关闭 --></span></div>
+        <div class="bd">
+            <div class="J_chatLog" data-form="<#-data.userList#>">
+                <# for(var j=data.msgList.length-1;j>=0;j--) { #>
+                    <# if(data.userList==data.msgList[j].userId){#>
+                    <div class="m-msgBox f-cf">
+                        <div class="m-leftHd f-fl">
+                            <img src="http://adtp.cnaidai.com/data/avatar/<#-data.msgList[j].userId#>_avatar_middle.jpg" data-uuid="<#-data.msgList[j].userId#>">
+                        </div>
+                        <div class="m-rightCon f-fl">
+                            <p class="u-user"><#- data.msgList[j].userName #><span><#-util.dateFormat(data.msgList[j].createDate,"MM-dd hh:mm:ss")#></span></p>
+                            <#if(data.msgList[j].type==1){#>
+                                <p class="u-message u-message2"><#- data.msgList[j].content #></p>
+                            <#}else{#>
+                                <div class="u-message u-message2">
+                                    <img src="<#-data.msgList[j].content#>">
+                                </div>
+                            <#}#>
+                            <!-- <p class="u-message u-message2"><#- data.msgList[j].content #></p> -->
+                            <img src="/webrexco/static/img/uc/jiaojiao.png" class="u-arrow1">
+                        </div>
+                    </div> 
+                    <#}else{#> 
+                    <div class="m-msgBox f-cf">
+                        <div class="m-leftHd f-fr">
+                            <img src="http://adtp.cnaidai.com/data/avatar/<#-data.msgList[j].userId#>_avatar_middle.jpg" data-uuid="<#-data.msgList[j].userId#>">
+                        </div>
+                        <div class="m-rightCon m-rightCon2 f-fr">
+                            <p class="u-user"><#- data.msgList[j].userName #><span><#-util.dateFormat(data.msgList[j].createDate,"MM-dd hh:mm:ss")#></span></p>
+                            <#if(data.msgList[j].type==1){#>
+                                <p class="u-message"><#- data.msgList[j].content #></p>
+                            <#}else{#>
+                                <div class="u-message">
+                                    <img src="<#-data.msgList[j].content#>">
+                                </div>
+                            <#}#>
+                            <!-- <p class="u-message"><#- data.msgList[j].content #></p> -->
+                            <img src="/webrexco/static/img/uc/jiaojiao3.png" class="u-arrow2">
+                        </div>
+                    </div>   
+                    <#}#>  
+                <# } #>
+            </div>
+        </div>
+        <div class="ft f-cf m-btnbox">
+            <textarea class="msgContent J_msgContent"></textarea>
+            <input type="button" class="sendMsg J_sendMsg" value="提交">
+            <input type="hidden" class="J_toUser" value="<#-data.userList[0]#>">
+            <div class="m-upload f-fr">
+                <label for="upload"></label>
+                <form id="fileForm">
+                    <input type="file" name="pic" id="upload" onchange="handleFiles(this.files)">
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="tpl_recommendlist">
+        <# for(var i=0;i<data.list.length;i++) { #>
+            <# var item = data.list[i]; #>
+            <div class="m-recommend-notice f-cf">
+                <div class="notice-left f-fl">
+                    <img src="http://adtp.cnaidai.com/data/avatar/<#-item.userId#>_avatar_middle.jpg" class="f-fl J_card" data-id="<#-item.userId#>" data-status="<#-item.status#>">
+                    <div class="m-notice-con f-fl">
+                        <p class="u-name"><#-item.userName#></p>
+                        <p class="u-notice u-hd f-fl"><#-item.content#></p>
+                        <div class="m-detail f-fl">
+                            <#if(item.content.length>27){#><span class="u-state J_detail">详情</span><#}#><# if(item.status==0){#><span class="u-state J_backToUser" data-roomId="<#-item.roomId#>">回复</span><#}#>
+                        </div>
+                        <div class="m-up f-cb" style="display: none;">
+                            <span class="u-state J_up">收起</span><#if(item.status==0){#><span class="u-state J_backToUser" data-roomId="<#-item.roomId#>">回复</span><#}#>
+                        </div>
+                    </div>
+                </div>
+                <div class="notice-right f-fr">
+                    <#if(item.status==0){#>
+                    <ul class="u-select" data-id="<#-item.id#>">
+                        <li class="J_agree" data-roomId="<#-item.roomId#>">同意<span class="arrow"></span></li>
+                        <li class="J_deny" data-roomId="<#-item.roomId#>">拒绝</li>
+                    </ul>
+                    <#}else if(item.status==1){#>
+                        <p class="u-agree">已同意</p>
+                    <#}else if(item.status==2){#>
+                        <p class="u-agree">已拒绝</p>
+                    <#}#>
+                </div>
+                <div class="J_sendToUser" data-id="<#-item.userId#>"></div>
+                <div class="J_roomId" data-roomId="<#-item.roomId#>"></div>
+            </div>
+        <#}#>
+    </script>
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+
+    <script type="text/javascript" src="/webrexco/static/js/cmn/socket.io.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/uc/indexChat.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/uc/index.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <script type="text/javascript">
+        window.tplObj.data={
+            "menuMap":{"0":4}
+        };
+    </script>
+    <script type="text/javascript">
+        $().ready(function(){
+            getCount();
+            //返回主页
+            $(".J_back").click(function(){
+                $(".recommend-notice").hide();
+                $(".J_noticelist").show();
+                $(".m-messageBox").show();
+            });
+            $(".one").click(function(){
+                list();
+            })
+        })
+        function list(){
+            $(".user_right_main").show();
+            $(".J_chatWnd").siblings().show();
+            $(".J_chatWnd").parent().siblings(".hd").show();
+            $(".J_chatWnd").parent().parent().addClass("m-messageBoxNow");
+            $(".J_chatWnd").hide();
+            $(".one").addClass("titleover");
+            $(".two").removeClass("titleover");
+        }
+        function getCount(){
+            baseModel.get({
+                url:"/webrexco/uc/data/getLastApplyAndCount.cgi",
+                success:function(rslt){
+                    if(rslt.code!=0&&rslt.code!=401){
+                        util.tipsModal(2,rslt.message);
+                    }else if(rslt.code==401){
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else if(rslt.data.userId!=""){
+                        baseView.render("#tpl_recommend",rslt,".J_recommendTpl");
+                        //进入引荐消息
+                        $(".J_recommend").click(function(){
+                            getApplyList();
+                            $(".J_noticelist").hide();
+                            $(".recommend-notice").show();
+                            $(".m-messageBox").hide();
+                        });
+                        //个人资料展示
+                        $(".u-close").click(function(){
+                            $(".m-mask").hide();
+                        });
+                        // $(".J_card").click(function(){
+                        //     var id=$(this).attr("data-id");
+                        //     var status=$(this).attr("data-status");
+                        //     getBusinessInfoForIdeal(id,status);
+                        // });
+                    }
+                    
+                }
+            });
+        }
+        function getBusinessInfoForIdeal(id,status){
+            if(status=="0"){
+                $(".J_reply1").show();
+            }else if(status=="1"){
+                $(".J_reply1").hide();
+                $(".J_agree1").show();
+            }else if(status=="2"){
+                $(".J_reply1").hide();
+                $(".J_agree1").hide();
+            }
+            baseModel.get({
+                url:"/webrexco/uc/data/getBusinessInfoForIdeal.cgi",
+                data:{"userId":id},
+                success:function(rslt){
+                    if(rslt.code!=0&&rslt.code!=401){
+                        util.tipsModal(2,rslt.message);
+                        return;
+                    }else if(rslt.code==401){
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else{
+                        $("#companyName").text(rslt.data.companyName);
+                        $("#gender").text(rslt.data.gender);
+                        $("#industryType").text(rslt.data.industryType);
+                        $("#namecardPath").attr("src",rslt.data.namecardPath);
+                        $("#namecardPathOpposite").attr("src",rslt.data.namecardPathOpposite);
+                        $("#position").text(rslt.data.position);
+                        $("#realName").text(rslt.data.realName);
+                        $("#registeredCapital").text(rslt.data.registeredCapital);
+                        $("#userName").text(rslt.data.userName);
+                        $(".m-mask").show();
+                        $(".J_agree2").click(function(){
+                            confirmApply(id,1);
+                        });
+                        $(".J_deny2").click(function(){
+                            confirmApply(id,2);
+                        });
+
+
+                    }
+                    
+                }
+            });
+        }
+        function getApplyList(){
+            baseModel.get({
+                url:"/webrexco/uc/data/getApplyList.cgi",
+                success:function(rslt){
+                    if(rslt.code!=0&&rslt.code!=401){
+                        util.tipsModal(2,rslt.message);
+                    }else if(rslt.code==401){
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else{
+                        baseView.render("#tpl_recommendlist",rslt.data,".J_recommendlist");
+                        //同意拒绝展示
+                        $(".u-select").mouseover(function(){
+                            $(this).css("height","80px");
+                            $(".arrow").addClass("arrow-up");
+                        });
+                        $(".u-select").mouseleave(function(){
+                            $(this).css("height","40px");
+                            $(".arrow").removeClass("arrow-up");
+                        });
+                        //详情展开
+                        $(".J_detail").click(function(){
+                            $(this).parent(".m-detail").siblings(".u-notice").removeClass("u-hd");
+                            $(this).parent(".m-detail").hide().siblings(".m-up").show();
+                        });
+                        $(".J_up").click(function(){
+                            $(this).parent(".m-up").siblings(".u-notice").addClass("u-hd");
+                            $(this).parent(".m-up").hide().siblings(".m-detail").show();
+                        });
+                        $(".J_agree").click(function(){
+                            var id=$(this).parent().attr("data-id");
+                            var room=$(this).attr("data-roomId");
+                            confirmApply(id,1,room);
+                        });
+                        $(".J_deny").click(function(){
+                            var id=$(this).parent().attr("data-id");
+                            var room=$(this).attr("data-roomId");
+                            confirmApply(id,2,room);
+                        });
+                        $(".J_backToUser").click(function(){
+                            $(".m-messageBox").show();
+                            $(".hd").hide();
+                            var roomId=$(this).attr("data-roomId");
+                            var roomIdBox=$(".m-messageBox").length;
+                            for(var i=0;i<roomIdBox;i++){
+                                var roomIdList=$(".m-messageBox").eq(i).attr("data-roomId");
+                                if(roomId==roomIdList){
+                                    var $getHtml=$("div[data-roomId="+roomIdList+"]");
+                                    var a=$getHtml.find(".u_reply");
+                                    a.click();
+                                }
+                            }
+                            console.log(roomId);
+                        })
+                        // $(".J_card").click(function(){
+                        //     var id=$(this).attr("data-id");
+                        //     var status=$(this).attr("data-status");
+                        //     console.log(status);
+                        //     getBusinessInfoForIdeal(id,status);
+                        // });
+
+                    }
+                    
+                }
+            });
+        }
+        function confirmApply(id,status,room){
+            var room=room?room:""
+            baseModel.get({
+                url:"/webrexco/uc/data/confirmApply.cgi",
+                data:{"id":id,"status":status},
+                success:function(rslt){
+                    if(rslt.code!=0&&rslt.code!=401){
+                        util.tipsModal(2,rslt.message);
+                    }else if(rslt.code==401){
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else{
+                        getApplyList();
+                        if(status==1){
+                           var $agree=$(".J_agreeToUser"); 
+                           var str="您好，很高兴做你的引荐人";
+                           sendMsg3(str,room);
+                        }
+                        if(status==2){
+                           var $deny=$(".J_denyToUser"); 
+                           var str="抱歉，不能成为您的引荐人";
+                           sendMsg3(str,room);
+                        }
+                    }
+                    
+                }
+            });
+        }
+        function handleFiles(files) {
+            var file = files[0];
+            if(file.size>2*1024*1024){
+                util.tipsModal(2,"请选择低于2兆的图片");
+                $("#upload").replaceWith($("#upload").val('').clone(true));
+                return;
+            }
+            var imageType = /^image\//;
+            if (!imageType.test(file.type)) {
+                util.tipsModal(2,"请选择低于2兆的图片");
+                return;
+            }else{
+                submit(); 
+            }
+
+            
+        }
+        function submit(){
+            var data = new FormData($("form")[0]);
+            baseModel.post({
+
+                url:"/webrexco/uc/data/imageFile.cfi",
+                contentType: false,
+                data:data,
+                processData: false,
+                success:function(rslt){
+                    if(rslt.code!=0&&rslt.code!=401){
+                        util.tipsModal(2,rslt.message);
+                    }else if(rslt.code==401){
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else{
+                        var $upload=$(".m-upload");
+                        var str="";
+                        str+='http://adtp.cnaidai.com/'+rslt.pic;
+                        setTimeout(function(){sendMsg2($upload,str);},1000);
+                        ;
+                    }
+                    
+                }
+            });
+        }
+    </script>
+</body>
+</html>

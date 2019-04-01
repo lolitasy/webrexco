@@ -1,0 +1,68 @@
+var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js');
+
+exports.itfconf = function() {
+	return new CurrentAPI().conf();
+}
+exports.itfleft = function(req,res,fld,fle) {
+	return new CurrentAPI().output(req,res,fld,fle);
+}
+var CurrentAPI = gapi.AuthorizeAPI.extend({
+    conf: function() { return { auth: true,
+        	type: "json",
+        	itfs: [
+	            {
+	                host: ghost.dscm.makercenter.addr,
+	                port: ghost.dscm.makercenter.port,
+	                iurl: "/pcMemberGradeRights?actn=getShowList",	
+	                uuid: "pcMemberGradeRights",            
+	                meth: "post",
+	                type: "sdcm",
+	                next: [],
+	                func: function(req,res,fld,fle){
+	                	return new CurrentAPI("pcMemberGradeRights").
+	                		callFunc(req,res,fld,fle);
+	                }
+	            }      		
+        	]
+    	};
+    },
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		var userId = req.session.user.userId;
+		var type = gapi.getParameter(req,"type");
+		var ip = gapi.getIPv4(req.user.addr);
+		ghost.getLogger().info("[doCallFunc]IP：%s, service: uc.data.getMemberRights, dc: pcMemberGradeRights.getShowList, message: 'param', param: userId=%s, type=%s", ip, userId, type);
+	    return {
+	       "claz" : "['java.lang.Long','java.lang.Integer']",
+	       "json" : [userId,type]
+	    };
+	},
+		    
+	doOutput: function(req, res, fld, fle) {
+		var ip = gapi.getIPv4(req.user.addr);
+		var type = gapi.getParameter(req,"type");
+		if(!req.rslt['pcMemberGradeRights']){
+			ghost.getLogger().error("[doOutput]IP：%s, service: uc.data.getMemberRights, dc: pcMemberGradeRights.getShowList, message: 'rslt is null', rslt: %s", ip, JSON.stringify(req.rslt['pcMemberGradeRights']));
+			return gapi.toResult(500, "系统异常");
+		}
+		if(gapi.emptyNoequal(req.rslt['pcMemberGradeRights'].code, 0)) {
+			//这里根据后端服务返回的code值不同提示信息不同
+			if(gapi.emptyEqual(req.rslt['pcMemberGradeRights'].message, "")) {
+				req.rslt['pcMemberGradeRights'].message = "获取信息失败";
+			}
+			ghost.getLogger().error("[doOutput]IP：%s, service: uc.data.getMemberRights, dc: pcMemberGradeRights.pcMemberGradeRights, message: 'rslt error', rslt: %s", ip, JSON.stringify(req.rslt['pcMemberGradeRights']));
+			return gapi.toResult(1, req.rslt['pcMemberGradeRights'].message);
+		}
+		req.rslt['pcMemberGradeRights'].username = req.session.user.userName;
+		req.rslt['pcMemberGradeRights'].userId = req.session.user.userId;
+		if(type == 0){
+			req.rslt['pcMemberGradeRights'].level = req.session.user.ventureLevel;
+			req.rslt['pcMemberGradeRights'].status = req.session.user.ventureStatus;
+		}else if(type == 1){
+			req.rslt['pcMemberGradeRights'].level = req.session.user.idealLevel;
+			req.rslt['pcMemberGradeRights'].status = req.session.user.idealStatus;
+		}
+		return gapi.toResult(null, null, req.rslt['pcMemberGradeRights']);
+		
+	}
+});

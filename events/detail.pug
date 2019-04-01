@@ -1,0 +1,86 @@
+//- pug -E htm -P detail.pug
+
+extends ../space/template.pug
+
+block title
+    - var title = "活动详情"
+    meta#keywords(name="keywords")
+    meta#description(name="description")
+
+block style
+    +style("ideal/swiper.min")
+    +style("events/events")
+
+block content
+    .main
+        
+    .side
+        .header.border 活动地点
+        #map
+        .line
+
+        .header 报名记录
+        .list
+            // Slider main container
+            .swiper-container.swiper-container-vertical
+                // Additional required wrapper
+                .swiper-wrapper
+
+    .mask
+        .popup
+            .title 活动报名
+            .close
+            form
+                - var id = ""
+
+                input#input-activity-id(type="hidden" name="activityId")
+
+                .input
+                    - id = "input-name"
+                    label.label(for=id) 姓名
+                    input(id=id type="text" data-name="姓名" placeholder="必填" name="name" required)
+                    
+                    - id = "input-anonymous"
+                    input.checkbox(id=id type="checkbox" name="isAnonymous" value="true")
+                    label(for=id) 匿名
+
+                .input
+                    - id = "input-company"
+                    label.label(for=id) 公司名称
+                    input(id=id type="text" data-name="公司名称" placeholder="必填" name="companyName" required)
+
+                .input
+                    - id = "input-position"
+                    label.label(for=id) 职位
+                    input(id=id type="text" data-name="职位" name="job")
+
+                .input
+                    - id = "input-phone"
+                    label.label(for=id) 手机号
+                    input(id=id type="text" inputmode="tel" pattern="1[34578]\\d{9}" maxlength="11" data-name="您的手机号码" placeholder="必填" name="phone" required)
+
+                .input
+                    - id = "input-mail"
+                    label.label(for=id) 邮箱
+                    input(id=id type="text" data-name="邮箱" name="email")
+
+                .input
+                    - id = "input-weixin"
+                    label.label(for=id) 微信号
+                    input(id=id type="text" data-name="微信号" name="weixinNum")
+
+            .buttons
+                #submit.button 提交报名
+
+    .g-fixedIcon
+        //- a.u-connectQQ(target="_blank" href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODA1MzQwN180NDgwMTdfNDAwMDU5MDE4OF8yXw")
+        .u-toBodyTop
+
+block script
+    +script("cmn/jquery.placeholder")
+    +script("cmn/jquery-qrcode.min")
+    +script("ideal/swiper.jquery")
+    script(src="/webrexco/activity/login/show.js")
+    script: include detail.part.js
+    script(src="https://map.qq.com/api/js?v=2.exp")
+    script: include detail.js

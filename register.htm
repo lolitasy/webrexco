@@ -1,0 +1,703 @@
+<% include ./cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>注册账号_摆渡星空</title>
+    <meta name="keywords" content="摆渡星空注册账号" />
+    <meta name="description" content="摆渡星空为企业及高管实现经营目标提供供应链金融服务、创客项目路演、Fintech、泛娱乐等项目资本解决方案，具有特色的体验空间和摆渡空间线上平台" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" type="text/css" href="/webrexco/static/css/index.css">
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <style type="text/css" media="screen">
+        .m-con{
+            width: 1200px;
+            height: 566px;
+            background: #fff;
+            margin: 62px auto;
+            border-radius: 5px;
+            box-shadow: 3px 3px 3px 0 #e4e6e5;
+        }
+        .m-title{
+            width: 100%;
+            height: 76px;
+            border-bottom:1px solid #d3d3d3; 
+        }
+        .m-title h1{
+            margin-top: 25px;
+            margin-left: 40px;
+            width: 150px;
+            height: 50px;
+            line-height: 50px;
+            float: left;
+            color: #201747;
+            font-size: 16px;
+            border-bottom: 3px solid #c8a676;
+        }
+        .m-title .link{
+            margin-top: 25px;
+            margin-right: 40px;
+            line-height: 50px;
+            float: right;
+            color: #c8a676;
+            font-size: 14px;
+        }
+        .m-title .link a{
+            color:#c8a676;
+        }
+        .m-main{
+            width: 330px;
+            height: 384px;
+            margin:0 auto;
+        }
+            *{
+            margin: 0;
+            padding: 0;
+        }
+        input[type="text"] {
+            padding-left: 38px;
+        }
+        input[type="password"] {
+            padding-left: 38px;
+        }
+        .coninput{
+            width: 268px;
+            height: 40px;
+            line-height: 40px;
+            margin: 30px 0 0 0px;
+            padding-left: 10px;
+            border: 1px solid #d3d3d3;
+            font-size: 14px;
+            border-radius: 3px;
+            background: #fff;
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+        }
+        .u-phone{
+            width: 15px;
+            height: 18px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat 0px 0px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .u-password{
+             width: 15px;
+            height: 16px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat -1px -20px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .u-phoneCode{
+             width: 15px;
+            height: 16px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat -1px -52px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .u-valiCode{
+             width: 15px;
+            height: 16px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat -1px -36px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .close:hover{
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+        .tips {
+            position: absolute;
+            font-size: 12px;
+            color: #c8a676;
+            line-height: 30px;
+            text-indent: 15px;
+        }
+        .tips{
+            /*display: none;*/
+        }
+        .proving{
+            position: absolute;
+            top: 30px;
+            left: 188px;
+            width: 118px;
+            height: 40px;
+            line-height: 35px;
+            text-align: center;
+            background: #f5f5f5;
+            color: #999;
+            text-decoration: none;
+            border: 1px solid #d3d3d3;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+        .proving img{
+            width: 100%;
+            height:100%;
+        }
+        .short {
+            width: 140px;
+            height: 40px;
+        }
+        .submit {
+            cursor: pointer;
+            width: 310px;
+            height: 42px;
+            line-height: 42px;
+            margin-top:28px;
+            margin-bottom: 20px;
+            text-align: center;
+            background: #c8a676;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: 4px;
+            border-radius: 3px;
+        }
+        .checkbox{
+            width: 18px;
+            height: 18px;
+            opacity: 0;
+            position: absolute;
+            left: -19px;
+            top: 3px;
+            cursor: pointer;
+        }
+        .protocol {
+            position: absolute;
+            clear: both;
+            width: 200px;
+            margin-left: 16px;
+            margin-top: -5px;
+        }
+        .entry-icon{
+            width: 14px;
+            height: 14px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 5px;
+            left: -18px;
+        }
+        .protocol a{
+            color: #999;
+            font-size: 14px;
+        }
+        .uncheck{
+             background: url(/webrexco/static/img/uc/icon.png) no-repeat -19px 0px;
+            
+        }
+        .check{
+           background: url(/webrexco/static/img/uc/icon.png) no-repeat -36px 0px;
+        }
+        .u-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.5);
+            display: block;
+            z-index: 20;
+            display: none;
+        }
+        .u-accord{
+            font-size: 14px;
+            width: 580px;
+            height: 526px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -310px;
+            margin-top: -283px;
+            background: #fff;
+            z-index: 30;
+            padding: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+        .u-title {
+            font-size: 16px;
+            text-align: left;
+            color: #333;
+            border-bottom: 1px solid #ccc;
+            line-height: 46px;
+        }
+        .u-title h2{
+            margin-left:40px;
+            display: block;
+            line-height: 40px;
+            height: 40px;
+            width: 34px;
+            border-bottom: 3px solid #c8a676;
+            color: #201747;
+        }
+        .m-part {
+            padding: 0px 25px 10px 40px;
+            overflow-y: auto;
+            height: 450px;
+        }
+        .m-part span{
+            width: 515px;
+            height:65px;
+            display: block;
+            text-align: center;
+            line-height: 65px;
+            color: #333;
+            font-weight: bold;
+        }
+        .m-close{
+            position: absolute;
+            top: 28px;
+            right: 20px;
+            width: 15px;
+            height: 15px;
+            background: url(static/img/uc/close.png) no-repeat;
+            background-size: 15px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body style="background:url(static/img/uc/bg.png);">
+    <% include ./cmn/header.ejs %>  
+    <div class="m-con">
+        <div class="m-title">
+            <h1>摆渡心灵，遇见自己</h1>
+            <p class="link"><a href="/webrexco/login.htm">若有账户请前往登录</a></p>
+        </div>
+        <div class="m-main">
+            <div class="g-register">
+            <form id="registerForm">
+                <div class="f-pr">
+                    <span class="u-phone"></span>
+                    <input type="text" name="username" id="username" class="coninput" placeholder="请输入手机号码">
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="f-pr">
+                    <span class="u-password"></span>
+                    <input type="password" name="password" id="password" class="coninput" placeholder="请输入8-16位字母和数字">
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="f-pr">
+                    <span class="u-valiCode"></span>
+                    <input type="text" name="valiCode" id="valiCode" placeholder="请输入图形验证码" class="short coninput" size="4">
+                    <a href="javascript:;" class="proving"><img id="validimg" class="codeimg" src="login.cci?w=160&amp;h=40&amp;f=34&amp;o=60&amp;q=60" alt="点击刷新" onclick="this.src='login.cci?w=160&amp;h=40&amp;f=34&amp;o=60&amp;q=60&amp;t=' + Math.random();" align="absmiddle"></a>
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="f-pr">
+                    <span class="u-phoneCode"></span>
+                    <input type="text" name="phoneCode" id="phoneCode" placeholder="请输入手机验证码" class="short coninput">
+                    <a href="javascript:;" class="valcode proving">短信验证码</a>
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="submit J_btnSubmit">注&nbsp;册</div>
+                <div class="protocol">
+                    <i class="entry-icon check"></i>
+                    <input type="checkbox" checked="checked" class="checkbox" id="checkbox">
+                    <a href="javascript:;">摆渡星空服务协议</a>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    <div class="u-mask"></div>
+    <div class="u-accord">
+        <div class="u-title">
+            <h2>协议</h2>
+        </div>
+        <div class="m-part"> 
+            <span>摆渡星空用户注册协议</span>
+            <p>尊敬的用户：</p>
+            <p>欢迎阅读摆渡星空用户注册协议（下称“本协议”），您应当在使用服务之前认真阅读本协议全部内容，如果您对本协议任何条款表示异议，您可以选择不使用摆渡星空的服务。点击“立即注册”按钮，则意味着您自愿遵守本协议。</p>
+            <p>本协议阐述之条款和条件适用于用户使用摆渡星空网站（所涉域名为：www.laixiangke.com、laixiangke.com以及laixiangke.com相关子域名）及其APP客户端、WAP端、微信端等所提供的各种在线服务和衍生的线下服务。</p>
+            <p>第1条 服务条款的确认</p>
+            <p>1.1本站的各项电子服务的所有权和运作权归摆渡星空所有。用户同意所有注册协议条款并完成注册程序，才能成为本站的正式用户。用户确认：本协议条款是处理双方权利义务的契约，始终有效，法律另有强制性规定或双方另有特别约定的，依其规定。</p>
+            <p>1.2用户点击同意本协议的，即视为用户确认自己具有享受本站服务、下单购物等相应的权利能力和行为能力，能够独立承担法律责任。</p>
+            <p>1.3如果您在18周岁以下，您只能在父母或监护人的监护参与下才能使用本站。</p>
+            <p>1.4摆渡星空保留在中华人民共和国大陆地区法施行之法律允许的范围内独自决定拒绝服务、关闭用户账户、清除或编辑内容或取消订单的权利。</p>
+            <p>第2条 用户的信息要求</p>
+            <p>2.1用户应诚信向本站提供注册资料，用户同意其提供的注册资料真实、准确、完整、合法有效，用户注册资料如有变动的，应及时更新其注册资料。如果用户提供的注册资料不合法、不真实、不准确、不详尽的，用户需承担因此引起的相应责任及后果，并且摆渡星空保留终止用户使用摆渡星空各项服务的权利。</p>
+            <p>2.2用户注册成功后，将产生用户名和密码等账户信息，您可以根据本站规定改变您的密码。用户应谨慎合理的保存、使用其用户名和密码。用户若发现任何非法使用用户账号或存在安全漏洞的情况，请立即通知本站并向公安机关报案。</p>
+            <p>2.3用户不得将在本站注册获得的账户借给他人使用，否则用户应承担由此产生的全部责任，并与实际使用人承担连带责任。</p>
+            <p>2.4用户同意，摆渡星空有权使用用户的注册信息、用户名、密码等信息，登录进入用户的注册账户，进行证据保全，包括但不限于公证、见证等。</p>
+            <p>第3条 用户依法言行义务</p>
+            <p>本协议依据国家相关法律法规规章制定，用户同意严格遵守以下义务：</p>
+            <p>用户保证通过摆渡星空发布的信息是真实、合法的，用户发布的信息不能含有任何违反国家有关法律、法规及中华人民共和国承认或加入的国际条约的内容，包括但不限于危害国家安全、淫秽色情、虚假、侮辱、诽谤、恐吓或骚扰、蓄意毁坏、恶意干扰、秘密地截取或侵占任何系统、数据等侵犯他人知识产权、人身权或其他合法权益以及有违社会公序良俗的内容或指向这些内容的链接。</p>
+            <p>用户应不时关注并遵守本站不时公布或修改的各类合法规则规定。</p>
+            <p>本站保有删除站内各类不符合法律政策或不真实的信息内容而无须通知用户的权利。</p>
+            <p>若用户未遵守以上规定的，本站有权作出独立判断并采取暂停或关闭用户帐号等措施。用户须对自己在网上的言论和行为承担法律责任。</p>
+            <p>第4条 定义</p>
+            <p>会员：在摆渡星空平台上注册的用户成为摆渡星空会员。 摆渡星空作为信息对接平台以及获取各类与投融资相关、创业信息、社交信息的服务信息的地点。摆渡星空并不作为接受服务方或是提供服务方的身份参与交易行为的本身。摆渡星空提醒用户应该通过自己的谨慎判断确定服务及相关信息的真实性、合法性和有效性。</p>
+            <p>第5条 收费</p>
+            <p>5.1摆渡星空的用户可自愿申请成为网站VIP会员，VIP会员收费标准由摆渡星空网站公示，用户支付费用即代表接受摆渡星空的收费标准并享受VIP会员的权利和义务。摆渡星空保留单方面制定及调整服务费用的权利。</p>
+            <p>5.2用户在使用摆渡星空服务过程中可能需要向第三方或其他机构支付一定的费用，具体收费标准详见摆渡星空平台上公布的标准。</p>
+            <p>第6条 用户权利和义务</p>
+            <p>6.1用户有权利拥有在摆渡星空的会员名及登录密码，并有权利使用自己的会员名及密码随时登陆摆渡星空平台。用户不得以任何形式擅自转让或授权他人使用自己的摆渡星空会员名及密码；</p>
+            <p>6.2 用户有权根据本服务协议的规定以及摆渡星空上发布的相关规则利用摆渡星空上信息发布平台查询服务信息、提交信息、参加摆渡星空的有关活动以及有权享受摆渡星空提供的其它的有关服务；</p>
+            <p>6.3 用户在摆渡星空上如与第三方产生纠纷，可以请求摆渡星空从中予以协调。如发现第三方有违法或违反本服务协议的行为，可以向铼享摆渡星空反映和要求处理。</p>
+            <p>6.4用户同意遵守摆渡星空的网站规则，接收来自摆渡星空或摆渡星空合作伙伴发出的邮件或信息。</p>
+            <p>6.5用户应当保证在使用摆渡星空平台进行信息发布过程中遵守诚实信用的原则，不得在发布的信息中包含有反动、暴力、淫秽、毒品、赌博、教唆及有损社会公共道德的内容；不得发布各类违法或违规信息；</p>
+            <p>6.6用户不应在摆渡星空平台上恶意评价其他用户，或采取不正当手段提高自身的信用度或降低其他用户的信用度；</p>
+            <p>6.7用户同意，不对摆渡星空上任何数据作商业性利用，包括但不限于在未经摆渡星空事先书面批准的情况下，以复制、传播等方式使用在摆渡星空网站上展示的任何资料。</p>
+            <p>第7条 摆渡星空的权利义务</p>
+            <p>7.1 摆渡星空在提供本平台服务时，可能会对部分服务收取一定的费用，在此情况下，摆渡星空会在相关页面上做明确的提示。如用户拒绝支付该等费用，则不能使用相关的网络服务。</p>
+            <p>7.2摆渡星空将对用户上传的内容进行人工审核，该审查为规范性审核，无法保证用户上传内容的真实性、准确性、有效性和安全性。但在本平台实施管理活动以及第三方对用户发布信息进行投诉时，本平台会对用户提供的信息进行复核，并可能会要求用户提供相应证据来证明信息的真实性及合法性，在用户无法提供有效证明时，本平台有权删除相关信息或终止服务。</p>
+            <p>7.3 为了更好的服务用户，摆渡星空及其关联机构除对用户提供的资料（包括但不限于文字、图片、视频）拥有合理使用权外，还拥有独家的、全球通用的、免费的许可使用权。许可使用范围包括复制、发行、展览、信息网络传播、改编、翻译、汇编等。用户将前述资料提供给摆渡星空期间，使用权持续有效。若用户发现摆渡星空对用户资料的使用不当时，请及时提出，摆渡星空将尽快改正。</p>
+            <p>7.4摆渡星空有权随时删除含有任何危害国家安全、淫秽色情、虚假、侮辱、诽谤、恐吓或骚扰、侵犯他人知识产权或人身权或其他合法权益等违法或有违社会公序良俗的内容或指向这些内容链接的信息，并有权终止对发布前述信息的用户的服务。</p>
+            <p>7.5 通过摆渡星空服务存储或传送之任何信息、通讯资料和其他内容，如被删除或未予储存，摆渡星空毋须承担任何责任。</p>
+            <p>7.6 摆渡星空可能会提供与其他互联网网站或资源进行链接；用户还可能通过摆渡星空与推广商进行互动，对于前述网站或资源是否可以利用或用户与前述推广商的自主互动而遭受的任何性质的损失或损害，摆渡星空不承担任何责任。</p>
+            <p>7.7 用户所从事的经营业务不得对摆渡星空利益构成任何现实或潜在的损害或冲突，否则摆渡星空有权通知用户立即终止服务，而无需承担其他法律责任和费用补偿。</p>
+            <p>7.8对于系统发生故障影响到本服务的正常运行，摆渡星空承诺及时处理进行修复。但用户因此而产生的经济和精神损失，摆渡星空不承担任何直接或间接的责任。对于摆渡星空有计划的系统维修、保养、升级，摆渡星空将会以网站公告的方式事先通知用户，升级期间，摆渡星空服务将不同程度受到影响，用户因此而产生的损失，摆渡星空不承担任何直接或间接的责任。</p>
+            <p>7.9 用户完全理解并同意，通过摆渡星空可能会收到推广信息及服务信息，凡因接收相应推广信息而与信息发布者或推广商发生交易行为而遭受的任何性质的损失或损害，摆渡星空均不予负责。</p>
+            <p>7.10摆渡星空有权对用户的注册数据及信息发布行为进行查阅，发现注册数据或信息发布行为中存在任何问题或怀疑，均有权向用户发出询问及要求改正的通知或者直接作出删除等处理；</p>
+            <p>7.11经国家生效法律文书或行政处罚决定确认用户存在违法行为，或者摆渡星空有足够事实依据可以认定用户存在违法或违反服务协议行为的，摆渡星空有权在平台及所在网站上以网络发布形式公布用户的违法行为；</p>
+            <p>7.12用户使用摆渡星空服务时，摆渡星空有权接收并记录用户的个人信息，包括但不限于IP地址、网站Cookie中的资料及用户要求取用的网页记录等。</p>
+            <p>第8条 知识产权声明</p>
+            <p>摆渡星空独立拥有或与相关内容提供者共同拥有本平台内相关内容（包括但不限于网络域名、文字、图片、音频、视频资料、设计、商标、标识、网站构架、网站版面的安排、网页设计、软件和全部专有数据库等）的知识产权，包括但不限于著作权、商标权、专利权或其它专属权利等。未经摆渡星空书面许可，任何人不得擅自使用。否则，摆渡星空将依法追究侵权人法律责任。</p>
+            <p>第9条协议的变更、解除和终止</p>
+            <p>9.1变更</p>
+            <p>摆渡星空可以根据客观情况的变化随时进行业务性调整或产品性调整，并变更本协议，变更后的本协议将会在摆渡星空上重新公布。用户可以选择继续使用调整后的业务或产品，但是如果用户对变更后的本协议持有不同意见，可以选择退出摆渡星空，但摆渡星空对此不承担任何法律责任和费用补偿。如果用户继续选择享用摆渡星空，则视为用户已经完全接受本协议及其修改。</p>
+            <p>9.2解除和终止</p>
+            <p>如发生下列任何一种情形，摆渡星空有权随时中断或终止向用户提供服务而无需通知用户：</p>
+            <p>1) 用户提供的个人资料不真实；</p>
+            <p>2) 用户违反法律或者本协议及其修改文本的规定；</p>
+            <p>3) 按照主管部门的要求；</p>
+            <p>4) 摆渡星空发现用户恶意注册帐号；</p>
+            <p>5) 摆渡星空收到第三方投诉；</p>
+            <p>6) 同行业者通过注册账号等行为，获取资金方或项目方联系方式，窃取商业机密；</p>
+            <p>7) 其他摆渡星空认为是符合整体服务需求的特殊情形。</p>
+            <p>第10条 不可抗力</p>
+            <p>10.1 不可抗力是指协议双方不能合理控制、不可预见或即使预见亦无法避免的事件，该事件使任何一方根据本协议履行其全部或部分义务已不可能。该事件包括但不限于政府行为、地震、台风、洪水、火灾或其它天灾、战争或任何其它类似事件。</p>
+            <p>10.2鉴于互联网之特殊性质，不可抗力亦包括下列影响互联网正常运行之情形：1）黑客攻击；2）电信部门技术调整导致之重大影响；3）病毒侵袭等。</p>
+            <p>10.3摆渡星空如遭受不可抗力事件，有权暂停或终止服务，不视为违约。在不可抗力事件影响结束后，应当继续按本协议履行其义务。</p>
+            <p>第11条法律适用及争议解决</p>
+            <p>11.1本协议的订立、生效、解释、执行、管辖、争议的解决均适用中华人民共和国法律。</p>
+            <p>11.2因本协议引起的或与本协议有关的任何争议，应尽最大诚意进行友好协商，如果双方不能协商一致，协议双方向本协议的履行地即服务器所在地有管辖权的人民法院起诉。</p>
+            <p>第12条 其他</p>
+            <p>12.1摆渡星空网站所有者是指在政府部门依法许可或备案的摆渡星空网站经营主体。</p>
+            <p>12.2摆渡星空尊重用户和消费者的合法权利，本协议及本网站上发布的各类规则、声明等其他内容，均是为了更好的、更加便利的为用户和消费者提供服务。本站欢迎用户和社会各界提出意见和建议，摆渡星空将虚心接受并适时修改本协议及本站上的各类规则。</p>
+            <p>12.3本协议内容中以黑体、加粗、下划线、斜体等方式显著标识的条款，请用户着重阅读。</p>
+            <p>12.4您点击本协议下方的"立即注册"按钮即视为您完全接受本协议，在点击之前请您再次确认已知悉并完全理解本协议的全部内容。</p>
+        </div>
+        <div class="m-close"></div>
+    </div>
+    <% include ./cmn/footer.ejs %>
+    <script type="text/javascript">
+        $(function(){
+            $("body").keydown(function(e) {
+                if (event.keyCode == "13") {//keyCode=13是回车键
+                    $('.J_btnSubmit').click();
+                }
+            });
+            $(".f-pr input").mousedown(function(){
+                $(this).css('border', '1px solid #c8a676');
+                $(this).css('background-color', '#fff');
+            });
+            $(".f-pr input").blur(function(){
+                $(this).css('border', '1px solid #d3d3d3');
+                $(this).css('background-color', '#fff');
+            });
+            /*多选框美化*/   
+            $('#checkbox').click(function(){
+                if($('#checkbox').is(':checked')){
+                    $(this).siblings('.entry-icon').removeClass('uncheck').addClass('check');
+                }else{
+                    $(this).siblings('.entry-icon').removeClass('check').addClass('uncheck');
+                }
+            });
+            //验证手机格式
+            $("#username").keyup(function(){
+                var verif=this.value;
+                if(verif.length==11){
+                    checkUserName();
+                }
+            });
+            $("#username").blur(function(){
+                checkUserName();
+            });
+            //密码验证
+            $("#password").blur(function(){
+                if(!checkPassword()){
+                    $(this).siblings(".tips").children("span").html("请输入8~16个字母和数字");
+                        return;
+                }
+                $(this).siblings(".tips").children().html("");
+            });
+            //验证码
+            $('#valiCode').keyup(function(){
+                var verif=this.value;
+                if(verif.length==4){
+                    checkVerifyCode();
+                }
+            });
+            $('#valiCode').blur(function(){
+                checkVerifyCode();
+            });
+            //短信检验
+            $('#phoneCode').keyup(function(){
+                phoneCode();
+            });
+            $('#phoneCode').blur(function(){
+                phoneCode();
+            });
+            $("#validimg").click(function(){
+                $('#valiCode').val("");
+            });
+            // 获取短信验证码
+            $('.valcode').click(function(){
+                checkVerifyCode();
+                var value=$("#username").val();
+                var reg = /^1[3|4|5|7|8]\d{9}$/;//手机格式验证
+                if(value == ""){
+                    $("#username").siblings(".tips").children("span").html("手机号码不能为空");
+                    return;
+                }
+                if(undefined == value||!util.isPhoneNumber(value) ||!reg.test(value) ) {
+                    $("#username").siblings(".tips").children("span").html("手机号码格式不正确");
+                    return;
+                }
+                var data =  {
+                    "username":value
+                };
+                $.ajax({ 
+                    type: "get",
+                    url:"/webrexco/regist/checkUserName.cgi",
+                    data:data,
+                    cache:false,
+                    success: function(rslt){
+                        if(rslt.code==500){
+                            var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+                            console.log(errMsg);
+                        }else if(rslt.code==1){
+                            $("#username").siblings(".tips").removeClass("correct").children("span").html("该手机号已经被注册,请更换手机号");
+                        }else{
+                            $("#username").siblings(".tips").children().html("");
+                            if($('.valcode').html().indexOf('验证码')>0){
+                                $("#phoneCode").val("");
+                                if(($("#username").siblings(".tips").children("span").html().length==0)&&($("#valiCode").siblings(".tips").children("span").html().length==0)){
+                                    sendPhoneCode();
+                                }
+                            }
+                        }
+                        
+                    }
+                });
+            });
+            
+                var flag = true;
+                $(".J_btnSubmit").click(function () {
+                    if (flag == false) 
+                        return;
+                    flag = false;
+
+                    var value = $("#username").val();
+                    var reg = /^1[3|4|5|7|8]\d{9}$/;//手机格式验证
+                    if (value == "") {
+                        $("#username").siblings(".tips").children("span").html("手机号码不能为空");
+                        flag = true;
+                        return;
+                    }
+                    if (undefined == value || !util.isPhoneNumber(value) || !reg.test(value)) {
+                        $("#username").siblings(".tips").children("span").html("手机号码格式不正确");
+                        flag = true;
+                        return;
+                    }
+
+                    checkPassword();
+
+                    phoneCode();
+
+                    if ($("#phoneCode").siblings(".tips").children("span").html().length == 0 &&
+                        $("#username").siblings(".tips").children("span").html().length == 0 &&
+                        $("#password").siblings(".tips").children("span").html().length == 0 &&
+                        !$(".entry-icon").hasClass("uncheck")) {
+                        registerSubmit();
+                    } else {
+                        flag = true;
+                    }
+                });
+
+            // 协议
+            $(".protocol a").click(function(){
+                $(".u-mask").show();
+                $(".u-accord").show();
+            });
+            $(".u-mask").click(function(e){
+                var e =e.target;
+                if($(e).hasClass("u-mask")){
+                    $(".u-mask").hide();
+                    $(".u-accord").hide();
+                }
+            });
+            $(".m-close").click(function(){
+                $(".u-mask").hide();
+                $(".u-accord").hide();
+            });
+            //channelVisit();
+        });
+        //检查手机是否被注册
+        function checkUserName(){
+            var value=$("#username").val();
+            var reg = /^1[3|4|5|7|8]\d{9}$/;//手机格式验证
+            if(value == ""){
+                $("#username").siblings(".tips").children("span").html("手机号码不能为空");
+                return;
+            }
+            if(undefined == value||!util.isPhoneNumber(value) ||!reg.test(value) ) {
+                $("#username").siblings(".tips").children("span").html("手机号码格式不正确");
+                return;
+            }
+            var data =  {
+                "username":value
+            };
+            $.ajax({ 
+                type: "get",
+                url:"/webrexco/regist/checkUserName.cgi",
+                data:data,
+                cache:false,
+                success: function(rslt){
+                    if(rslt.code==500){
+                        var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+                        console.log(errMsg);
+                    }else if(rslt.code==1){
+                        $("#username").siblings(".tips").removeClass("correct").children("span").html("该手机号已经被注册,请更换手机号");
+                    }else{
+                        $("#username").siblings(".tips").children().html("");
+                    }
+                    
+                }
+            });
+        };
+
+            // 检查密码格式
+            function checkPassword() {
+                var value = $("#password").val();
+                var reg = /[a-zA-Z]+[0-9]+/img;
+                var reg2 = /[0-9]+[a-zA-Z]+/img;
+                if (value.length < 8 || value.length > 16) {
+                    return false;
+                }
+                if (!reg.test(value) && !reg2.test(value)) {
+                    return false;
+                }
+                return true;
+            }
+
+        //注册图形验证码
+        function checkVerifyCode(){
+            var verifyCode =$('#valiCode').val();
+            if(undefined == verifyCode||"" == verifyCode){
+                $('#valiCode').siblings(".tips").children("span").html("验证码输入错误");
+                return;
+            }
+            var data={
+                "verifyCode":verifyCode
+            };
+            $.ajax({
+                type: "get",
+                url:"/webrexco/regist/checkVerifyCode.cgi",
+                data:data,
+                cache:false,
+                success:function(rslt){
+                    if(rslt.code!=0){//图形验证码错误,验证码刷新
+                        $('#valiCode').siblings(".tips").children("span").html("验证码输入错误");
+                        $('#validimg').attr('src',"login.cci?w=160&h=40&f=34&o=60&q=60&t=" + Math.random());//验证失败验证码刷新
+                        $('#valiCode').val("");
+                    }else{
+                        $("#valiCode").siblings(".tips").children("span").html("");
+                    }
+                }
+            });
+        }
+        //获取验证码js
+        function sendPhoneCode(){
+            var username = $("#username").val();
+            var data =  {
+                "username": username
+            };
+            $.ajax({
+                type: "get",
+                url:"/webrexco/regist/sendCodeForRegist.cgi",
+                data:data,
+                cache:false,
+                success: function(rslt){
+                     if(rslt.code!=0){
+                        var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+                        $('#phoneCode').siblings(".tips").children().html(errMsg);
+                     }
+                    if(rslt.code==200){
+                        var cd = 60;
+                        $(".valcode").html(cd +'s');
+                        countDown(cd);
+                     }
+                }
+            });
+        }
+        //验证码倒计时
+        function countDown(cd){
+            var cd =cd || 60;
+            timer =setInterval(function(){
+                if(cd>0){
+                    $('.valcode').text((--cd) +'s');
+                }else{
+                    window.clearInterval(timer);
+                    $('.valcode').html('获取验证码');
+                }
+            },1000);
+        }
+
+        function registerSubmit(){
+            $(".J_btnSubmit").text('注册中...');
+            
+            var data=$("#registerForm").serialize();
+            $.ajax({
+                type:"get",
+                url:'/webrexco/regist/register.cgi',
+                data:data,
+                cache:false,
+                success:function(rslt){
+                    if (rslt.code==0) {
+                        setTimeout(function(){top.location.href="/webrexco/uc/account.htm";},1000);
+                    }else{
+                        var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+                        $('#phoneCode').siblings(".tips").children("span").html(errMsg);
+                        $('#validimg').attr('src',"login.cci?w=160&h=40&f=34&o=60&q=60&t=" + Math.random());
+                        return;
+                    }
+                },
+                complete:function(rslt){
+                     $(".J_btnSubmit").text('注册'); 
+                }
+            })
+        }
+            //手机验证码检验
+            function phoneCode() {
+                var phoneCode = $("#phoneCode").val();
+                if (phoneCode == "" || undefined == phoneCode) {
+                    $("#phoneCode").siblings(".tips").children("span").html('请输入手机验证码');
+                } else {
+                    $("#phoneCode").siblings(".tips").children("span").html("");
+                }
+            }
+    </script>
+</body>
+</html>

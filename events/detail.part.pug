@@ -1,0 +1,68 @@
+- var imageCss = "url(" + poster + ")"
+- var imageFilter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + poster + "', sizingMethod='scale');"
+.image(style="background-image: " + imageCss + "; filter: " + imageFilter)
+.info
+    #title= title
+
+    div
+        .i-clock
+        span= startTime + " - " + endTime
+
+    div
+        .i-address
+        span= address
+
+    div
+        .i-people
+        span= people
+
+        .i-host
+        span= host
+
+    div
+        case status
+            when 0
+                .button.red.disable 审核中
+            when 1
+                if signed
+                    .button.red.disable 已报名
+                else
+                    .button.red#sign 我要报名
+            when 2
+                .button.red.disable 审核失败
+            when 3
+                if signed
+                    .button.red.disable 已报名
+                else
+                    .button.red#sign 进行中
+            when 4
+                if signed
+                    .button.red.disable 已报名
+                else
+                    .button.red.disable 名额已满
+            when 5
+                .button.red.disable 活动结束
+
+.detail-header 活动内容
+.detail!= detail
+
+- if (share)
+    .share
+        .weixin(title="分享到微信")
+            .weixin-popup
+                .qrcode
+                .triangle
+        a.qzone(target="_blank" title="分享到 QQ 空间" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=" + encodeURIComponent(link) + "&title=" + encodeURIComponent(title) + "&desc=" + encodeURIComponent(title) + "&summary=&site=")
+        a.weibo(target="_blank" title="分享到新浪微博" href="http://service.weibo.com/share/share.php?url=" + encodeURIComponent(link) + "&title=" + encodeURIComponent(title) + "&appkey=&searchPic=")
+        .like.normal(data-type=1 title="点赞")
+        .favorite.normal(data-type=0 title="收藏")
+        .top(title="返回顶部'")
+
+script.
+    (function() {
+        var s  = document.createElement("link");
+        s.type = "text/css";
+        s.rel  = "stylesheet";
+        s.href = "/webrexco/static/css/events/detail.css";
+        document.getElementsByTagName("head")[0].appendChild(s);
+    })();

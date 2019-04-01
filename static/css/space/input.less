@@ -1,0 +1,87 @@
+
+@label-width: 100px;
+
+.label {
+    display: inline-block;
+    vertical-align: top;
+    width: @label-width;
+    margin-right: 25px;
+    line-height: 40px;
+    font-weight: bolder;
+    font-size: 18px;
+    color: #666666;
+    text-align: right;
+
+    .wide & {
+        width: 150px;
+    }
+}
+
+label.wan {
+    position: absolute;
+
+    top: 0;
+    right: 20px;
+    bottom: 0;
+    
+    line-height: 40px;
+    font-size: 18px;
+}
+
+input {
+    color: #333333;
+}
+
+input[type="text"] {
+    box-sizing: border-box;
+    width: 410px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 20px;
+    font-family: DengXian, sans-serif;
+    font-size: 16px;
+    outline: none;
+    border: 1px solid #DDDDDD;
+    border-radius: 2px;
+
+    &:focus {
+        outline: none;
+        border: 1px solid #c8a676;
+    }
+
+    &.wan {
+        padding-right: 80px;
+    }
+}
+
+select {
+    display: none;
+}
+
+.checkbox {
+    display: none;
+    width: 0;
+    height: 0;
+    display: ~"inline\0/"; // For IE8
+
+    & + label {
+        display: inline-block;
+        margin-right: 45px;
+        height: 40px;
+        font-size: 18px;
+        color: #666666;
+        line-height: 40px;
+
+        @background: "unchecked.png";
+        padding-left: 20px;
+        background-image: data-uri(@background);
+        background-repeat: no-repeat;
+        background-size: 15px 15px;
+        background-position: left center;
+
+        &.checked {
+            @background: "checked.png";
+            background-image: data-uri(@background);
+        }
+    }
+}

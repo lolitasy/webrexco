@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>摆渡星空</title>
+	<link rel="stylesheet" type="text/css" href="/webrexco/static/css/cmn/common.css">
+	<style type="text/css">
+		.g-bd{ position: relative; }
+		.messageList{ width: 600px; margin: 40px auto; }
+		.m-messageBox{ margin-top: 10px; background-color: #faf0db; }
+		.m-messageBox .hd{ padding: 6px; }
+		.m-messageBox .hd .time{ float: right; }
+		.m-messageBox .bd{  }
+		.m-messageBox .bd .cnt{ padding: 10px; }
+		.m-messageBox .bd .cnt .num{ float: right; display: block; width: 22px; height: 22px; border-radius: 50%; background-color: #f44; color: #fff; text-align: center; }
+		.m-messageBox .bd .ctrlBar{ padding-bottom: 10px; }
+		.m-chatWnd { position: absolute; left: 50%; width: 600px; margin-left: -300px; background: #ffe; box-shadow: 0 0 8px #666; }
+		.m-chatWnd .hd{ height: 30px; line-height: 30px; padding: 10px; font-size: 18px; background-color: #5ab2d7; }
+		.m-chatWnd .hd .receiver{ margin: 0 8px; color: #f99; }
+		.m-chatWnd .hd .close{ color: #fff; }
+		.m-chatWnd .bd{ padding: 10px; }
+		.m-chatWnd .bd .sep{ text-align: center; color: #999; }
+		.m-chatWnd .ft{  }
+		.m-chatWnd .ft .msgContent{ float: left; height: 60px; width: 480px; border-width: 1px 0; padding: 10px; }
+		.m-chatWnd .ft .sendMsg{ float: left; width: 100px; height: 82px; border: 1px solid #aaa; border-right: 0; cursor: pointer; }
+	</style>
+</head>
+<body>
+	<div class="g-wp">
+		<div class="g-bd">
+			<input type="hidden" id="fromUser" value="">
+			<input type="hidden" id="fromUserName" value="">
+			<div class="messageList J_messageList"></div>
+		</div>
+	</div>
+	<script type="text/template" id="tpl_msgBox">
+        <# var item = data; #>
+		<div class="m-messageBox" data-roomId="<#=item.roomId#>" data-uid="<#=item.userId#>">
+			<div class="hd">
+				<span class="name"><#=item.userName#></span>
+				<span class="time J_time"><#=util.dateFormat(item.date,"yyyy-MM-dd hh:mm:ss")#></span>
+			</div>
+			<div class="bd">
+				<div class="cnt J_message"><#=item.content#><span class="num J_unreadNum"><#=item.count#></span></div>
+				<div class="ctrlBar">
+					<a href="javascript:;" class="u-linkBtn J_reply">回复</a>
+					<a href="javascript:;" class="u-linkBtn J_agree">同意</a>
+					<a href="javascript:;" class="u-linkBtn J_deny">拒绝</a>
+				</div>
+				<div class="m-chatWnd J_chatWnd" style="display: none;"></div>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="tpl_chatWnd">
+		<div class="hd"><!-- 与<i class="receiver"><#=data.fromUserName#></i>对话中 --> <span class="u-linkBtn close f-fr J_close">关闭</span></div>
+		<div class="bd">
+			<div class="J_chatLog">
+				<# for(var j=data.msgList.length-1;j>=0;j--) { #>
+					<p class="message"><#= data.msgList[j].userName #>-<#= data.msgList[j].content #></p>
+				<# } #>
+			</div>
+		</div>
+		<div class="ft f-cf">
+			<textarea class="msgContent J_msgContent"></textarea>
+			<input type="button" class="sendMsg J_sendMsg" value="发送">
+			<input type="hidden" class="J_toUser" value="<#=data.userList[0]#>">
+		</div>
+	</script>
+	<script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+	<script type="text/javascript" src="/webrexco/static/js/cmn/socket.io.js"></script>
+	<script type="text/javascript" src="/webrexco/static/js/uc/chat/index.js"></script>
+</body>
+</html>

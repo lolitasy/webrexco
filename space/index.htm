@@ -1,0 +1,376 @@
+<% include ../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>星空会_企业社群_投资项目_摆渡星空</title>
+	<meta name="keywords" content="星空会,企业社群,投资项目" />
+	<meta name="description" content="星空会是摆渡星空内的一个企业社群空间，为企业高管对接资源，提供个性化理财服务，信用数据服务、供应链金融服务、创客投资、优质投资项目、公益项目对接服务等" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="stylesheet" type="text/css" href="/webrexco/static/css/cmn/common.css">
+	<link rel="stylesheet" type="text/css" href="/webrexco/static/css/space/index.css">
+	<script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+	<script type="text/javascript" src='/webrexco/static/js/header.js'></script>
+	<script type="text/javascript" src='/webrexco/activity/login/show.js'></script>
+	<script type="text/javascript">window.headerMap = {headerCodeMap:{"0":1}}</script>
+</head>
+<body>
+	<div class='g-hd'>
+		<% include ../cmn/header.ejs %>
+	</div>
+	<div class='g-bd'>
+		<div class='g-topBanner'>
+			<div class="g-container">
+				<div class='u-bannerTxt1 f-hide'>星空会</div>
+				<div class='u-bannerTxt2 f-hide'>打<b></b>造<b></b>企<b></b>业<b></b>城<b></b>池</div>
+				<div class='m-sendIpt clearfix f-hide'>
+					<input type="text" name="" class='J_mesDetail' placeholder='发个商务消息，找到一个引荐人，如“1000亩城市综合体项目，欢迎合作”'><a href="#" class='J_sendMes'>投送</a>
+				</div>
+				<div class='u-tipMes f-hide'>此次投送将消息随机发送至2个boss，回复率99%，建立高价值连接</div>
+				<a onclick='checkIsLogin("/webrexco/space/apply.htm")' class='u-joinUs' style='display: none;'>有引荐人，立即加入星空会企业社群</a>
+				<a href="/webrexco/help/index.htm" class='u-newComer f-hide' target="_blank" style='display: none;'>新手攻略>></a>
+			</div>
+		</div>
+		<div class='g-detailService'>
+			<div class='g-container'>
+				<div class='g-detailChance clearfix'>
+					<div class='u-detailChance first'>
+						<h1>企业用户</h1>
+						<b></b>
+						<p>星空会/董事长/总裁</p>
+						<p>CEO/总经理/高管社群</p>
+					</div>
+					<div class='u-detailChance second'>
+						<h1>务实机会</h1>
+						<b></b>
+						<p>仅对务实、有价值的商业机会</p>
+					</div>
+					<div class='u-detailChance third'>
+						<h1>创投基金</h1>
+						<b></b>
+						<p>政府主导创投基金，一站创投服务</p>
+					</div>
+				</div>
+				<div class='g-credit'>
+					<div class='clearfix'>
+						<div class='u-creditCons'>
+							<div class='u-bigHexagon'>授信<p>100万</p></div>
+							<div class='u-smallHexgon icon1' style='top:44px;left:114px;'>沟通</div>
+							<div class='u-smallHexgon icon2' style='top:251px;left:38px;'>合作</div>
+							<div class='u-smallHexgon icon3' style='top:345px;left:167px;'>机会</div>
+							<div class='u-smallHexgon icon4' style='top:62px;left:328px;'>邀请</div>
+							<div class='u-smallHexgon icon5' style='top:260px;left:395px;'>知识</div>
+						</div>
+						<div class='u-creditInfo'>
+							<p class='u-creditTitle' style='margin-bottom:20px;'>独特社群授信，给会员企业持续的资金流</p>
+							<div class='u-shortLine'></div>
+							<p class='u-creditContent'>星空会的每一次社交都增长资金授信</p>
+							<a href='https://a.cnaidai.com/webjr/borrow/loan.htm' target='_blank' class='u-joinNow J_special'>立即加入</a>
+						</div>
+					</div>
+					<div class='clearfix f-tr' style='margin-top:86px;'>
+						<div class='u-creditInfo' style='margin-left: 0;padding-top:0;'>
+							<p class='u-creditTitle'>给每一次有诚意的机会和讯息，赋予有价值的、必有回应的连接</p>
+							<div class='u-shortLine'></div>
+							<p class='u-creditContent'>这条信息发出后必有回应，并将持续巡航</p>
+							<a href='/webrexco/space/apply.htm' class='u-joinNow J_special f-fr'>立即加入</a>
+						</div>
+						<div class='u-creditPro f-fl'>
+							<div class='u-projectDia'></div>
+							<div class='u-projectBos'></div>
+						</div>
+					</div>
+					<div class='clearfix' style='margin-top:148px;'>
+						<div class='u-creditEarns clearfix'>
+							<div class='u-onebillion'>
+								<p class='u-text'>1亿进去</p>
+								<div class='u-smallMoneyPoc'></div>
+							</div>
+							<div class='u-twobillion'>
+								<p class='u-text'>2亿出来</p>
+								<div class='u-bigMoneyPoc'></div>
+							</div>
+						</div>
+						<div class='u-creditInfo' style='padding-top:0;'>
+							<p class='u-creditTitle'>严选优质投资项目，创投和理财，商业和公益，领投与跟投，任意选择</p>
+							<div class='u-shortLine'></div>
+							<p class='u-creditContent'>焦虑症没了，知道钱怎么用了吧</p>
+							<a href='https://a.cnaidai.com/webjr/invest/list.htm' target='_blank' class='u-joinNow J_special' style='margin-top:38px;'>立即加入</a>
+						</div>
+					</div>
+				</div>
+				<div class='g-part4'>
+					<div class='g-container clearfix'>
+						<div class='u-title'>他们正在活跃</div>
+						<div class='u-titleLine'></div>
+						<div class='u-activeman no1'>
+							<p class='u-activemanInfo'>李大学 <br>磁云科技CEO	</p>
+						</div>
+						<div class='u-activeman no2'>
+							<p class='u-activemanInfo'>那昕 <br>什么值得买CEO</p>
+						</div>
+						<div class='u-activeman no3'>
+							<p class='u-activemanInfo'>乙壤月 <br>天使投资人</p>
+						</div>
+						<div class='u-activeman no4' style='margin-right:0;'>
+							<p class='u-activemanInfo'>林巧 <br>锣卜科技联合创始人	</p>
+						</div>
+					</div>
+				</div>
+				<div class='g-part5'>
+					<div class="g-container">
+						<div class="u-title">开放活动</div>
+						<div class="u-titleLine"></div>
+					</div>
+				</div>
+				<div class="g-part6">
+					<div class="g-container">
+						<div class="u-title">如何加入</div>
+						<div class="u-titleLine"></div>
+						<div class='g-joinStep clearfix'>
+							<div class='u-joinStep'>
+								<div class='justBorder'>
+									<div class='u-stepTitle'>条件</div>
+									<div class='u-stepLine'></div>
+									<p>企业法人/创始人/合伙人、董事长/总裁</p>
+									<p>总经理/CEO/CPO/CFO/CTO等企业高管</p>
+									<p>投资机构、投资人</p>
+									<p>本人及所属企业信用良好</p>
+									<p>注入相应资金</p>
+								</div>
+							</div>
+							<div class='u-joinStep'>
+								<div class='justBorder'>
+									<div class='u-stepTitle'>流程</div>
+									<div class='u-stepLine'></div>
+									<a href='/webrexco/register.htm'>注册 / <span class='login_btn'>登录</span></a>
+									<a onclick='checkIsLogin("/webrexco/space/apply.htm")'>提交申请、认证（有邀请人）</a>
+									<p>5个工作日内审核</p>
+									<p>通过后完成</p>
+									<a onclick='checkIsLogin("/webrexco/space/apply.htm")'>立即进入，打造自己的企业城池>></a>
+								</div>
+							</div>
+							<div class='u-joinStep' style='margin-right:0;'>
+								<div class='justBorder'>
+									<div class='u-stepTitle'>宗旨</div>
+									<div class='u-stepLine'></div>
+									<p>打造你的企业城池</p>
+									<p>投资机会</p>
+									<p>商业机会</p>
+									<a href='/webrexco/help/index.htm'>星空会会员义务</a>
+									<a class='u-join' onclick='checkIsLogin("/webrexco/space/apply.htm")'>立即加入</a>
+								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='g-ft'>
+		<% include ../cmn/footer.ejs %>
+	</div>
+	<script type="text/template" id='tpl_firstACT'>
+		<div class='g-activity'>
+			<# var activityStatus;#>
+			<# if( data.activityStatus == 1){activityStatus="我要报名"}else if( data.activityStatus == 3){activityStatus="进行中"}else if( data.activityStatus == 4){activityStatus="活动已满额"}if( data.activityStatus == 5){activityStatus="已结束"}#>
+			<a target='_blank' href='/webrexco/events/detail.htm?id=<#= data.id #>' class='u-activityPic' style='background-image:url(<#= data.posterUrl#>);'></a>
+			<div class='f-fl'>
+				<a href='/webrexco/events/detail.htm?id=<#= data.id #>' target='_blank' class='f-tof' style='width: 768px;'><#= data.activityName #></a>
+				<p><#= data.activityStartTime.substr(0,19) #> ～ <#= data.activityEndTime.substr(0,19) #></p>
+				<p class='f-tof' style='width: 768px;'>(<#= data.activityProvince #><#= data.activityCity #>)<#= data.activityAddress #></p>
+				<h5>限额<#= data.partiNum #>人</h5>
+				<div class='u-selectAndApply clearfix'>
+					<div class='g-select'><div class='u-select'></div><span class='u-collectNum'><#= data.collectCount #></span></div>
+					<a href='/webrexco/events/detail.htm?id=<#= data.id #>' target='_blank' class='u-apply'><#= activityStatus #></a>
+				</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.login_btn').click(function(e){
+				e.preventDefault();
+				checkIsLogin();
+			})
+			messageStatus();
+			getFirstActivity();
+			$(".u-activeman").hover(function(){
+				var info = $(this).find(".u-activemanInfo");
+				if(info.is(":animated"))return;
+				info.animate({"bottom":0},200);
+			},function(){
+				var info = $(this).find(".u-activemanInfo");
+				info.animate({"bottom":-76},200);
+			});
+			$(".J_sendMes").click(function(e){
+				e.preventDefault();
+				if($(this).hasClass("disable")){
+					return;
+				}
+				var message = $(".J_mesDetail").val().replace(/</g,"&lt;").replace(/>/g,"&gt;");//替代
+				if(message==""||message==undefined){
+					util.tipsModal(2,"请输入您的投送信息")
+					return;
+				}
+				if(message.length>250){
+					util.tipsModal(2,"您的消息长度超出限制");
+					return;
+				}
+				baseModel.post({
+					url:"data/leaveMessage.cgi",
+					data:{message:message},
+					success:function(rslt){
+						if(rslt.code==401){
+							showIframe("/webrexco/activity/login/login.htm");
+							return;
+						}else if(rslt.code!=0){
+							util.tipsModal(2,rslt.message);
+						}else{
+							$(".J_mesDetail").val("");
+							$(".J_sendMes").addClass("disable");
+							$(".u-tipMes").html('亲，您已投送成功，请前往<a href="/webrexco/uc/account.htm" style="font-size:16px;color:#e4393c;">个人中心</a>查看');
+							util.tipsModal(2,rslt.message);
+						}
+
+					}
+				});
+			});
+			inOrderFadein();
+			var flag = true;
+			$(window).scroll(function(){
+				if(flag == false){
+					return;
+				}
+				if($("body").scrollTop()>600||$("html").scrollTop()>600){
+					flag = false;
+					$(".u-projectDia").animate({"opacity":1},1000,function(){
+						$('.u-projectBos').animate({"opacity":1},1000);
+
+					})
+				}
+			})
+			$(".u-joinNow.J_special").click(function(e){
+				e.preventDefault();
+				baseModel.get({
+					url : "/webrexco/news/data/checkIsLogin.cgi",
+					success : function(rslt){
+						if(rslt.code==401){
+							showIframe("/webrexco/activity/login/login.htm");
+						}else if(rslt.ventureStatus == 2&&rslt.ventureLevel == 1){
+							location.href = '/webrexco/space/charge.htm';
+						}else if(rslt.ventureStatus == 2){
+							util.tipsModal(2,"亲，您提交的入驻星空会申请正在审核中，请耐心等待");
+						}else if(rslt.ventureStatus == 3){
+							util.tipsModal(2,"亲，您申请的星空会审核失败，请联系客服：400-600-6565");
+						}else if(rslt.ventureLevel == 2){
+							util.tipsModal(2,"您已经是星空会黄金会员！");
+						}else if(rslt.ventureLevel == 0||rslt.ventureLevel == null){
+							location.href='/webrexco/space/apply.htm';
+						}else if(rslt.ventureLevel == 1){
+							location.href='/webrexco/space/charge.htm';
+						}
+					}
+				})
+			});
+		});
+		function checkIsLogin(linkUrl){
+			if(linkUrl == "/webrexco/register.htm"){
+				location.href=linkUrl;
+				return;
+			}
+			baseModel.get({
+				url : "/webrexco/news/data/checkIsLogin.cgi",
+				success : function(rslt){
+					if(rslt.code==401){
+						showIframe("/webrexco/activity/login/login.htm");
+					}else if(rslt.ventureStatus == 2&&rslt.ventureLevel == 1){
+						location.href = '/webrexco/space/charge.htm';
+					}else if(rslt.ventureStatus == 2){
+						util.tipsModal(2,"亲，您提交的入驻星空会申请正在审核中，请耐心等待");
+					}else if(rslt.ventureStatus == 3){
+						util.tipsModal(2,"亲，您申请的星空会审核失败，请联系客服：400-600-6565");
+					}else if(rslt.ventureLevel == 2){
+						util.tipsModal(2,"您已经是星空会黄金会员！");
+					}else if(rslt.ventureLevel == 0||rslt.ventureLevel == null){
+						location.href='/webrexco/space/apply.htm';
+					}else if(rslt.ventureLevel == 1){
+						location.href='/webrexco/space/charge.htm';
+					}
+				}
+			})
+		}
+		function inOrderFadein(){
+			$(".u-bannerTxt1").fadeIn(800);
+			setTimeout(function(){$(".u-bannerTxt2").fadeIn(800);},800)
+			setTimeout(function(){$(".m-sendIpt").fadeIn(800);},1600)
+			setTimeout(function(){$(".u-tipMes").fadeIn(800);},2400)
+			setTimeout(function(){$(".u-joinUs").fadeIn(800);$(".u-newComer").fadeIn(800);},3200);
+		}
+		function messageStatus(){
+			baseModel.get({
+				url : "data/messageStatus.cgi",
+				success : function(rslt){
+					if(rslt.code!=0){
+						return;
+					}
+					var tipsMes = $(".u-tipMes");
+					var status1 = "亲，您已投送成功，请前往"+"<a href='/webrexco/uc/account.htm' style='font-size:16px;color:#e4393c;'>个人中心</a>"+"查看";
+					if(rslt.data.status == 0){//未投送
+						tipsMes.html("此次投送将消息随机发送至2个boss，回复率99%，建立高价值连接");
+					}else{ //已投送
+						tipsMes.html(status1);
+						$('.J_sendMes').addClass("disable");
+					}
+				}
+			})
+		}
+		function getFirstActivity(){
+			var data = {
+				currentPage : 1,
+				pageSize : 1
+			}
+			baseModel.get({
+				url : "data/activitySearch.cgi",
+				data : data,
+				success : function(rslt){
+					if(rslt.code!=0){
+						return;
+					}
+					
+					$(".g-part5 .g-container").append(baseView.render("#tpl_firstACT",rslt.dataList[0]));
+					if(rslt.isCollect){
+						$(".u-select").addClass('active');
+					}else{
+						$(".u-select").removeClass('active');
+					}
+					$(".u-select").click(function(){
+						var _that = $(this);
+						baseModel.post({
+							url : "/webrexco/events/like.cgi",
+							data :{type : 0 ,activityId : rslt.dataList[0].id},
+							success : function(rslt){
+								if(rslt.code==401){
+									showIframe("/webrexco/activity/login/login.htm");
+									return;
+								}
+								if(rslt.code!=0){
+									alert(rslt.message);
+									return
+								}
+								if($(".u-select").hasClass('active')){
+									_that.removeClass("active");
+									$(".u-collectNum").html(parseInt($(".u-collectNum").html())-1);
+								}else{
+									_that.addClass("active");
+									$(".u-collectNum").html(parseInt($(".u-collectNum").html())+1);
+								}
+							}
+						})
+					})
+				}
+			})
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+
+var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js');
+
+exports.itfconf = function() {
+	return new CurrentAPI().conf();
+}
+exports.itfleft = function(req,res,fld,fle) {
+	return new CurrentAPI().output(req,res,fld,fle);
+}
+var CurrentAPI = gapi.AuthorizeAPI.extend({
+	conf: function() { return { auth: true,
+        	type: "json",
+        	itfs: [
+	            {
+	                host: ghost.dscm.makercenter.addr,
+	                port: ghost.dscm.makercenter.port,
+	                iurl: "/indexApp?actn=getIndexInfo",	
+	                uuid: "indexApp",            
+	                meth: "post",
+	                type: "sdcm",
+	                next: [],
+	                func: function(req,res,fld,fle){
+	                	return new CurrentAPI("indexApp").
+	                		callFunc(req,res,fld,fle);
+	                }
+	            }      		
+        	]
+    	};
+    },
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		var userId = req.session.user.userId;
+		var ip = gapi.getIPv4(req.user.addr);
+		ghost.getLogger().info("[doCallFunc]IP：%s, service: uc.indexApp, dc: indexApp.getIndexInfo, message: 'param', param: userId=%s", ip, userId);
+	    return {
+	       "claz" : "['java.lang.Long']",
+	       "json" : [userId]
+	    };
+	},
+		    
+	doOutput: function(req, res, fld, fle) {
+		var ip = gapi.getIPv4(req.user.addr);
+		if(!req.rslt['indexApp']){
+			ghost.getLogger().error("[doOutput]IP：%s, service: uc.indexApp, dc: indexApp.indexApp, message: 'rslt is null', rslt: %s", ip, JSON.stringify(req.rslt['indexApp']));
+			return gapi.toResult(500, "系统异常");
+		}
+		if(gapi.emptyNoequal(req.rslt['indexApp'].code, 0)) {
+			//这里根据后端服务返回的code值不同提示信息不同
+			if(gapi.emptyEqual(req.rslt['indexApp'].message, "")) {
+				req.rslt['indexApp'].message = "获取信息失败";
+			}
+			ghost.getLogger().error("[doOutput]IP：%s, service: uc.indexApp, dc: indexApp.indexApp, message: 'rslt error', rslt: %s", ip, JSON.stringify(req.rslt['indexApp']));
+			return gapi.toResult(1, req.rslt['indexApp'].message);
+		}
+		req.session.user.cardNo=req.rslt['indexApp'].user.cardNo;
+		req.session.user.bankCardStatus=req.rslt['indexApp'].user.bankCardStatus;
+		req.session.user.idealLevel=req.rslt['indexApp'].user.idealLevel;
+		req.session.user.ventureLevel=req.rslt['indexApp'].user.ventureLevel;
+		req.session.user.idealStatus=req.rslt['indexApp'].user.idealStatus;
+		req.session.user.ventureStatus=req.rslt['indexApp'].user.ventureStatus;
+		req.session.user.phone=req.rslt['indexApp'].user.phone;
+		return gapi.toResult(null, null, req.rslt['indexApp']);
+	}
+});

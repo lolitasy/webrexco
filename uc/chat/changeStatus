@@ -1,0 +1,60 @@
+var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js');
+
+exports.itfconf = function() {
+	return new CurrentAPI().conf();
+}
+
+exports.itfleft = function(req,res,fld,fle) {
+	return new CurrentAPI().output(req,res,fld,fle);
+}
+
+var CurrentAPI = gapi.AuthorizeAPI.extend({
+    conf: function() { return { auth: true,
+        	type: "json",
+        	itfs: [
+	            {
+	                host: ghost.dscm.makercenter.addr,
+	                port: ghost.dscm.makercenter.port,
+	                iurl: "/pcContactMsg?actn=modifyChatRoomMsgToRead",
+	                uuid: "pcContactMsg",
+	                meth: "post",
+	                type: "sdcm",
+	                next: [],
+	                func: function(req,res,fld,fle){
+	                	return new CurrentAPI("pcContactMsg").
+	                		callFunc(req,res,fld,fle);
+	                }
+	            }
+        	]
+    	};
+    },
+
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		var userId = req.session.user.userId;
+		var ip = gapi.getIPv4(req.user.addr);
+		var roomId = gapi.getParameter(req, "roomId");
+		ghost.getLogger().info("[doCallFunc]IP：%s, service: uc.chat.changeStatus, dc: pcContactMsg.getChatRoomInitInfo, message: 'param', param: userId=%s, roomId=%s", ip, userId, roomId);
+	    return {
+	       "claz" : "['java.lang.Long','java.lang.Long']",
+	       "json" : [roomId,userId]
+	    };
+	},
+
+	doOutput: function(req, res, fld, fle) {
+		var ip = gapi.getIPv4(req.user.addr);
+		if(!req.rslt['pcContactMsg']){
+			ghost.getLogger().error("[doOutput]IP：%s, service: uc.chat.getChatLog, dc: pcContactMsg.getChatRoomInitInfo, message: 'rslt is null', rslt: %s", ip, JSON.stringify(req.rslt['pcContactMsg']));
+			return gapi.toResult(500, "系统异常");
+		}
+		if(gapi.emptyNoequal(req.rslt['pcContactMsg'].code, 0)) {
+			//这里根据后端服务返回的code值不同提示信息不同
+			if(gapi.emptyEqual(req.rslt['pcContactMsg'].message, "")) {
+				req.rslt['pcContactMsg'].message = "获取信息失败";
+			}
+			ghost.getLogger().error("[doOutput]IP：%s, service: uc.chat.getChatLog, dc: pcContactMsg.getChatRoomInitInfo, message: 'rslt error', rslt: %s", ip, JSON.stringify(req.rslt['pcContactMsg']));
+			return gapi.toResult(1, req.rslt['pcContactMsg'].message);
+		}
+		return gapi.toResult(null,null,req.rslt['pcContactMsg']);
+	}
+});

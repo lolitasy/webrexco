@@ -1,0 +1,77 @@
+"use strict";
+
+const ghost = require(process.argv[2] + '/webrexco/cfg/ghost.js');
+const gapi = require(process.argv[2] + '/webrexco/cmn/gapi.js');
+
+const path = require("path");
+const name = path.relative(process.argv[2], __dirname) + path.sep + path.basename(__filename, path.extname(__filename));
+
+function trimIpAddress(ip) {
+	if (ip.startsWith("::ffff:"))
+		return ip.substr(7);
+	return ip;
+}
+
+exports.itfconf = function () {
+	return new CurrentAPI().conf();
+}
+
+exports.itfleft = function (req, res, fld, fle) {
+	return new CurrentAPI().output(req, res, fld, fle);
+}
+
+var CurrentAPI = gapi.BaseAPI.extend({
+	conf: function () {
+		return {
+			auth: false,
+			type: "json",
+			itfs: [
+				{
+					host: ghost.dscm.makercenter.addr,
+					port: ghost.dscm.makercenter.port,
+					iurl: "/pcWechatCoreApp?actn=getWeichatAppid",
+					uuid: "pcWechatCoreApp",
+					meth: "post",
+					type: "sdcm",
+					next: [],
+					func: function (req, res, fld, fle) {
+						return new CurrentAPI("pcWechatCoreApp").
+							callFunc(req, res, fld, fle);
+					}
+				}
+			]
+		};
+	},
+
+	doCallFunc: function (uuid, req, res, fld, fle) {
+		return {
+			"claz": "[]",
+			"json": []
+		};
+	},
+
+	doOutput: function (req, res, fld, fle) {
+		const ip = trimIpAddress(req.user.addr);
+		req.logger = ghost.getLogger();
+
+		const result = req.rslt["pcWechatCoreApp"];
+		if (!result) {
+			req.logger.error(`${req.id || ip} dscm-output-empty: (${name})`);
+			res.type("html").send("系统异常");
+			return;
+		}
+
+		if (result.code != 0) {
+			result.message = result.message || "数据加载失败";
+			req.logger.error(`${req.id || ip} dscm-output-error: (${name}) ${JSON.stringify(result)}`);
+			res.type("html").send(result.message);
+			return;
+		}
+
+		req.logger.info(`${req.id || ip} dscm-output: (${name}) ${JSON.stringify(result)}`);
+		const appId = result.data.appid;
+		const state = req.query["state"];
+		const redirectUri = encodeURIComponent("http://www.laixiangke.com/webrexco/oauth/wechatLogin.htm");
+		res.redirect(`https://open.weixin.qq.com/connect/qrconnect?appid=${appId}&redirect_uri=${redirectUri}&response_type=code&scope=snsapi_login&state=${state}#wechat_redirect`);
+	}
+});

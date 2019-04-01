@@ -1,0 +1,207 @@
+.g-leftSideCommon .g-container{
+	padding:12px 0 60px;
+}
+.g-leftSideCommon *{
+	max-width:733px;
+}
+.g-leftSideCommon{
+	float:left;
+	margin-left: 68px;
+	padding-top:30px;
+	width:733px;
+	overflow: hidden;
+}
+.u-articleTitle{
+	width:670px;
+	color:#222;
+	font-size:24px;
+	margin-bottom: 20px;
+	position:relative;
+}
+.u-articleInfo{
+	color:#222;
+	margin-bottom: 58px;
+}
+.u-articleInfo .u-littleCircle{
+	display: inline-block;
+	width:3px;
+	height:3px;
+	background: #222;
+	border-radius: 50%;
+	margin:0 10px 4px;
+}
+.u-videoReadCount{
+	font-size:14px;
+	position:absolute;
+	bottom:0;
+	right:-52px;
+}
+.u-articleTags{
+	border-top:1px solid #222;
+	padding-top: 15px;
+	margin-top:30px;
+	height:39px;
+}
+.u-articleTags .u-articleTag{
+	float:left;
+	padding:8px 14px;
+	border:1px solid #222;
+	border-radius: 20px;
+	margin-right: 14px;
+}
+.u-sharePart{
+	width:365px;
+	margin: 30px auto 60px;
+}
+.u-sharePart .u-wxshare{
+	width:23px;
+	height:23px;
+	background:  url(/webrexco/static/img/news/shareIcon.png) no-repeat 0 0;
+	float:left;
+	margin-right:35px;
+	position: relative;
+}
+.u-sharePart .u-wxshare:hover,.u-sharePart .u-wxshare.active{
+	background-position: 0 -34px;
+}
+.u-wxQrcode{
+	display: none;
+	width:84px;
+	height:84px;
+	background: #fff;
+	position: absolute;
+	top:-135px;
+	left:-44px;
+	padding:14px 16px;
+}
+.u-wxQrcode:after{
+	content: "";
+	display: block;
+	width:0;
+	height:0;
+	border: 20px solid transparent;
+	border-top-color:#fff;
+	position: absolute;
+	bottom:-40px;
+	left:35px; 
+}
+.u-sharePart .u-qqshare{
+	display: block;
+	width:27px;
+	height:25px;
+	background: url(/webrexco/static/img/news/shareIcon.png) no-repeat -26px 0;
+	float:left;
+	margin-right:35px;
+}
+.u-sharePart .u-qqshare:hover,.u-sharePart .u-qqshare.active{
+	background-position: -26px -35px;
+}
+.u-sharePart .u-wbshare{
+	display: block;
+	width: 29px;
+	height: 23px;
+	background:  url(/webrexco/static/img/news/shareIcon.png) no-repeat -58px 0;
+	float:left;
+	margin-right:35px;
+}
+.u-sharePart .u-wbshare:hover,.u-sharePart .u-wxshare.active{
+	background-position: -58px -35px;
+}
+.u-sharePart .u-prize{
+	width:24px;
+	height:24px;
+	background:  url(/webrexco/static/img/news/shareIcon.png) no-repeat -91px 0;
+	float:left;
+	margin-right:35px;
+	cursor: pointer;
+}
+.u-sharePart .u-prize:hover,.u-sharePart .u-prize.active{
+	background-position: -91px -34px;
+}
+.u-sharePart .u-collect{
+	width:26px;
+	height:23px;
+	background:  url(/webrexco/static/img/news/shareIcon.png) no-repeat -119px 0;
+	float:left;
+	margin-right:35px;
+	cursor: pointer;
+}
+.u-sharePart .u-collect:hover,.u-sharePart .u-collect.active{
+	background-position: -119px -34px;
+}
+.u-sharePart .u-toTop{
+	width:22px;
+	height: 28px;
+	background:  url(/webrexco/static/img/news/shareIcon.png) no-repeat -156px 0;
+	float:left;
+	margin-right:35px;
+	cursor: pointer;
+}
+.u-sharePart .u-toTop:hover,.u-sharePart .u-toTop.active{
+	background-position: -156px -34px;
+}
+
+.g-rightSideCommon{
+	float:right;
+}
+.g-rightSideCommon .u-sourcePic{
+	width:314px;
+	height:255px;
+	background:  #f0f0f0;
+	margin-bottom:37px;
+	text-align: center;
+	font-weight: bold;
+	font-size:20px;
+	color:#222;
+}
+.u-sourcePic .J_sourcePic{
+	width:110px;
+	height:110px;
+	border-radius: 50%;
+	margin-top:45px;
+	margin-bottom: 30px;
+}
+.u-sourcePic .J_sourcePic{
+}
+.g-hotTags{
+	width: 294px;
+	padding:30px 10px 0;
+	background: #f0f0f0;
+}
+.g-hotTags .g-hotTagTitle{
+	text-align: center;
+}
+.g-hotTags .g-hotTagTitle .u-tagLine{
+	 display: inline-block;
+	width: 88px;
+	height:1px;
+	background: #999;
+	margin-bottom:5px;
+}
+.g-hotTags .g-hotTagTitle .u-hotTagTitle{
+	display: inline-block;
+	font-size:18px;
+	color:#000;
+	margin:0 12px;
+}
+.g-hotTags .u-hotTagDetail{
+	margin-top:30px;
+	height: 244px;
+	overflow: hidden;
+}
+.u-hotTagDetail .u-hotTag{
+	display: block;
+	float:left;
+	padding:8px 15px;
+	border:1px solid #999;
+	font-size:15px;
+	margin-right:10px;
+	border-radius: 20px;
+	margin-bottom: 21px;
+	background-color:#fff;
+	transition:all .8s linear;
+}
+.u-hotTagDetail .u-hotTag:hover{
+	border-color:#c8a676;
+	color:#c8a676;
+}

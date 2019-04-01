@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>注册</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+</head>
+<body>
+    跳转中...
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="bind.js"></script>
+    <script type="text/javascript">
+        initialize(1);
+    </script>
+</body>
+</html>

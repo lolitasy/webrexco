@@ -1,0 +1,215 @@
+﻿<% include ../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摆渡星空</title>
+	<meta id="keywords" name="keywords">
+	<meta id="description" name="description">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="stylesheet" type="text/css" href="/webrexco/static/css/cmn/common.css">
+	<link rel="stylesheet" type="text/css" href="/webrexco/static/css/detail.css">
+	<link rel="stylesheet" type="text/css" href="/webrexco/static/css/video-js.min.css">
+	<script type="text/javascript" src='/webrexco/static/js/cmn/rexco-0.1.min.js'></script>
+	<script type="text/javascript" src='/webrexco/static/js/header.js'></script>
+	<script type="text/javascript" src="/webrexco/static/js/cmn/jquery-qrcode.min.js"></script>
+	<script type="text/javascript" src="/webrexco/static/js/video/videojs-ie8.min.js"></script>
+	<script type="text/javascript" src="/webrexco/static/js/video/video.min.js"></script>
+	<script type="text/javascript" src='/webrexco/activity/login/show.js'></script>
+	<script type="text/javascript">window.headerMap = {headerCodeMap:{"0":0}}</script>
+</head>
+<body>
+	<div class='g-hd'>
+		<% include ../cmn/header.ejs %>
+	</div>
+	<div class="g-bd">
+		<div class="g-container clearfix">
+			<div class='g-leftSideCommon'>
+				
+			</div>
+			<div class="g-rightSideCommon">
+				<div class='u-sourcePic'>
+					<img src="/webrexco/static/img/news/header.png" class='J_sourcePic'>
+					<p class='J_sourceApply'></p>
+				</div>
+				<div class='g-hotTags'>
+					<div class='g-hotTagTitle clearfix'><b class='u-tagLine'></b><p class='u-hotTagTitle'>热门标签</p><b class='u-tagLine'></b></div>
+					<div class='u-hotTagDetail clearfix'>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='g-ft'>
+		<% include ../cmn/footer.ejs %>
+	</div>
+	<script type="text/template" id='tpl_aiticleDetail'>
+		<# var content = data.article #>
+		<# if(content.type == 0) {#>
+			<div class='u-articleTitle'><#= content.title #></div>
+			<div class='u-articleInfo'>
+				<span class='articleSource'><#= content.author #></span>
+				<b class='u-littleCircle'></b>
+				<span class='articleCount'><#= content.readCount #>人阅读</span>
+				<b class='u-littleCircle'></b>
+				<span class='articleTime'><#= data.subTime #></span>
+			</div>
+			<div class="u-articleContent"><#= content.content#></div>
+		<# }else if(content.type==1){ #>
+			<div class='u-articleTitle'><#= content.title #></div>
+			<div class='u-articleInfo'>
+				<span class='articleSource'><#= content.author #></span>
+				<b class='u-littleCircle'></b>
+				<span class='articleCount'><#= content.readCount #>人阅读</span>
+				<b class='u-littleCircle'></b>
+				<span class='articleTime'><#= data.subTime #></span>
+			</div>
+			<div class="u-articleContent"><#= content.content#></div>
+		<# }else if(content.type == 2) { #>
+			<# $(".g-leftSideCommon").css({"width":"733px","margin-left":0}) #>
+			<video id='J-video' width='733' height='470' controls="controls" class='video-js vjs-default-skin vjs-big-play-centered' preload="auto" style='width:733px;height:470px;'>
+				<source src="<#= JSON.parse(content.videos)[0] #>" type='video/mp4'>
+				you browser don't support videotag
+			</video>
+			<div class='clearfix' style='margin-top: 18px;'>
+				<div class='u-articleTitle f-fl' style='margin-bottom:0;'><#= content.title #>
+
+					<div class='u-videoReadCount'><#= content.readCount #>次播放</div>
+				</div>
+			</div>
+			<div style='margin-top:26px;'><#=content.content#></div>
+		<# }#>
+			<div class='u-articleTags clearfix'>
+			<# var keywords = $.isBlank(content.keywords)?'':JSON.parse(content.keywords) #>
+				<# for(var j=0;j < keywords.length;j++ ){ #>
+					<a href="/webrexco/search.htm?keywords=<#= keywords[j]#>" target="_blank" class='u-articleTag'><#= keywords[j] #></a>
+				<# } #>
+			</div>
+			<div class='u-sharePart clearfix'>
+				<div class='u-wxshare'><div class='u-wxQrcode'><div class='J_qrcode'></div></div></div>
+				<a href='' target='_blank' class="u-qqshare"></a>
+				<a href='' target='_blank' class="u-wbshare"></a>
+				<div class="u-prize <#= data.is_assist==true?'active':'' #>" data-type='1'></div>
+				<div class="u-collect <#= data.is_collection==true?'active':''#>" data-type='0'></div>
+				<div class="u-toTop"></div>
+			</div>
+	</script>
+	<script type="text/template" id='tpl_hotTags'>
+		<# for(var  i = 0;i < data.length; i++){ #>
+			<# var item = data[i]; #>
+			<a href="<#= '/webrexco/search.htm?keywords='+item.name#>" class='u-hotTag'><#= item.name#></a>
+		<# } #>
+	</script>
+	<script type="text/javascript">
+	(function($){
+	  $.isBlank = function(obj){
+	    return(!obj || $.trim(obj) === "");
+	  };
+	})($);
+	$().ready(function(){
+		getNewsDetail();
+		getHotTags();
+	});
+	function getHotTags(){
+		baseModel.get({
+			url : "data/homePageAddAndHotTags.cgi",
+			success : function(rslt){
+				if(rslt.code!=0){
+					return;
+				}
+				baseView.render("#tpl_hotTags",rslt.result.hotWords,".u-hotTagDetail");
+				$(".u-hotTag").each(function(){if($(this).text().length>4)$(this).text($(this).text().substring(0,4)+"...")})
+			}
+		})
+	}
+	function getNewsDetail(){
+		var newsId = util.getQueryString("newsId");
+		baseModel.get({
+			url : "data/newsDetail.cgi",
+			data : {newsId: newsId},
+            success: function (rslt) {
+                if (rslt.code == 404) {
+                    location.href = "/webrexco/404.htm";
+                    return;
+                }
+
+				if(rslt.code!=0){
+					alert(rslt.message);
+					return;
+				}
+
+				document.title = rslt.article.title;
+				$("#keywords, #description").attr("content", rslt.article.title);
+
+				baseView.render("#tpl_aiticleDetail",rslt,".g-leftSideCommon");
+				if(rslt.article.type==2){
+					videojs("#J-video", {}, function(){});
+				}
+				$(".J_sourceApply").html(rslt.article.author);
+				$(".J_sourcePic").attr("src",rslt.article.headerpic||'/webrexco/static/img/news/header.png');
+				$(".u-wxshare").hover(function(){
+					$(".u-wxQrcode").fadeIn();
+				},function(){
+					$(".u-wxQrcode").fadeOut();
+				});
+				var shareLink = window.location.href;
+				var shareContent = rslt.article.title;
+				$('.J_qrcode').qrcode({
+					// render 方式: 'canvas', 'image' or 'div'//用image适配方便
+				    render: 'image',
+				    // 容错等级: 'L', 'M', 'Q' or 'H'
+				    ecLevel: 'L',
+				    // 控制canvas 偏移
+				    left: 0,
+				    top: 0,
+				    // 控制二维码尺寸
+				    size: 84,
+				    // 控制二维码颜色
+				    fill: '#000',
+				    // background color or image element, null for transparent background
+				    background: null,
+				    // 二维码内容
+				    text: shareLink,
+				    // 控制二维码的圆角: 0.0 .. 0.5
+				    radius: 0,
+				    // 边缘留空，默认0
+				    quiet: 0,
+				});
+				$(".u-qqshare").attr("href","http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url="+encodeURIComponent(shareLink)+"&title="+encodeURIComponent(shareContent)+"&desc="+encodeURIComponent(shareContent)+"&summary=&site=");
+				$(".u-wbshare").attr("href","http://service.weibo.com/share/share.php?url="+encodeURIComponent(shareLink)+"&title="+encodeURIComponent(shareContent)+"&appkey=&searchPic=");
+				$(".u-prize,.u-collect").click(function(){
+					var _that = $(this);
+					var data = {
+						newsId : newsId,
+						type : _that.data("type")
+					};
+					baseModel.get({
+						url : "data/prizeAndCollect.cgi",
+						data : data,
+						success : function(rslt){
+							if(rslt.code==401){
+								showIframe("/webrexco/activity/login/login.htm");
+								return;
+							}
+							if(rslt.code!=0){
+								alert(rslt.message);
+								return
+							}
+							_that.toggleClass("active");
+						}
+					})
+				});
+				$(".u-toTop").click(function(){
+					$("body,html").animate({
+						scrollTop : 0
+					},{duration: 500,easing:"linear"});
+				});
+			}
+		});
+	}
+	</script>
+	<script>
+  		videojs.options.flash.swf = "/webrexco/static/js/video/video-js.swf";
+	</script>
+</body>
+</html>

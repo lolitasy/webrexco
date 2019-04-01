@@ -1,0 +1,62 @@
+if pages == 0
+    .i-empty
+    .empty 您还没有收藏哦～
+else
+    each item in dataList
+        - var link
+        - if (item.isJump)
+        -     link = item.jumpUrl
+        - else if (item.type !== undefined)
+        -     link = "/webrexco/news/detail.htm?newsId=" + item.id;
+        - else
+        -     link = "/webrexco/events/detail.htm?id=" + item.id;
+        .article
+            - var c = [];
+            - var images;
+            case item.type
+                when 1
+                    - c.push("type-1");
+                    - images = item.articleLitpics != "" ? JSON.parse(item.articleLitpics) : [""];
+                    - var image = images[0]
+                    - var imageCss = "url(" + image + ")"
+                    - var imageFilter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + image + "', sizingMethod='scale');"
+                    a.poster(target="_blank" href=link style="background-image: " + imageCss + "; filter: " + imageFilter)
+                when 2
+                    - c.push("type-1");
+                    - images = item.articleVideos != "" ? JSON.parse(item.articleVideos) : [""];
+                    .poster(href=link)
+                        video.video.video-js.vjs-default-skin.vjs-big-play-centered(width="290" height="180" controls)
+                            source(src=images[0])
+                when 3
+                    - c.push("type-3")
+                    - images = item.articleLitpics != "" ? JSON.parse(item.articleLitpics) : [""];
+                when undefined
+                    - item.articleTitle = item.activityName
+                    - item.articleContent = item.activityProvince + item.activityCity + item.activityAddress
+                    - item.time = item.activityStartTime.substring(0, item.activityStartTime.length - 4) + " - " + item.activityEndTime.substring(0, item.activityEndTime.length - 4)
+                    - item.articleSource = "活动"
+                    - c.push("type-1");
+                    - var image = item.fullPosterUrl
+                    - var imageCss = "url(" + image + ")"
+                    - var imageFilter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + image + "', sizingMethod='scale');"
+                    a.poster(target="_blank" href=link style="background-image: " + imageCss + "; filter: " + imageFilter)
+                    
+            .right(class=c)
+                a.name(target="_blank" href=link)= item.articleTitle
+                .button.white(data-id=item.id data-type=item.type) 取消收藏
+
+                if item.type != 3
+                    .detail= item.articleContent
+                    if item.time
+                        .detail= item.time
+                else
+                    .images
+                        each image in images.slice(0, 3)
+                            .image(style="background-image: url(" + image +")")
+
+                .info
+                    span= item.articleSource
+                    span= item.articleReadCount + "人阅读"
+                    span= item.timeSub
+
+    script $(".video").each(function () { videojs(this); })

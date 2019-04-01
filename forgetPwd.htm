@@ -1,0 +1,478 @@
+<% include ./cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>忘记密码</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" type="text/css" href="/webrexco/static/css/index.css">
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <style type="text/css" media="screen">
+        .m-con{
+            width: 1200px;
+            height: 588px;
+            background: #fff;
+            margin: 62px auto;
+            border-radius: 5px;
+            box-shadow: 3px 3px 3px 0 #e4e6e5;
+        }
+        .m-title{
+            width: 100%;
+            height: 76px;
+            border-bottom:1px solid #d3d3d3; 
+        }
+        .m-title h1{
+            margin-top: 25px;
+            margin-left: 40px;
+            width: 64px;
+            height: 50px;
+            line-height: 50px;
+            float: left;
+            color: #201747;
+            font-size: 16px;
+            border-bottom: 3px solid #c8a676;
+        }
+        .m-main{
+            width: 330px;
+            height: 384px;
+            margin:0 auto;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding-left: 38px;
+        }
+        input[type="password"] {
+            padding-left: 38px;
+        }
+        .coninput{
+            width: 268px;
+            height: 40px;
+            line-height: 40px;
+            margin: 30px 0 0 0px;
+            padding-left: 10px;
+            border: 1px solid #d3d3d3;
+            font-size: 14px;
+            border-radius: 3px;
+            background: #fff;
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+        }
+        .u-phone{
+            width: 15px;
+            height: 18px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat 0px 0px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .u-password{
+             width: 15px;
+            height: 16px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat -1px -20px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .u-phoneCode{
+             width: 15px;
+            height: 16px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat -1px -52px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .u-valiCode{
+             width: 15px;
+            height: 16px;
+            background: url(/webrexco/static/img/uc/icon.png) no-repeat -1px -36px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 42px;
+            left: 15px;
+        }
+        .close:hover{
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+        .tips {
+            position: absolute;
+            font-size: 12px;
+            color: #c8a676;
+            line-height: 30px;
+            text-indent: 15px;
+        }
+        .proving{
+            position: absolute;
+            top: 30px;
+            left: 188px;
+            width: 118px;
+            height: 40px;
+            line-height: 35px;
+            text-align: center;
+            background: #f5f5f5;
+            color: #999;
+            text-decoration: none;
+            border: 1px solid #d3d3d3;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+        .proving img{
+            width: 100%;
+            height:100%;
+        }
+        .short {
+            width: 140px;
+            height: 40px;
+        }
+        .submit {
+            cursor: pointer;
+            width: 310px;
+            height: 42px;
+            line-height: 42px;
+            margin-top:28px;
+            margin-bottom: 20px;
+            text-align: center;
+            background: #c8a676;
+            font-size: 20px;
+            color: #fff;
+            letter-spacing: 4px;
+            border-radius: 3px;
+        }
+        .checkbox{
+            width: 18px;
+            height: 18px;
+            opacity: 0;
+            position: absolute;
+            left: -16px;
+            top: -26px;
+        }
+        .protocol {
+            position: absolute;
+            clear: both;
+            width: 200px;
+            margin-left: 16px;
+            margin-top: -5px;
+        }
+        .entry-icon{
+            width: 14px;
+            height: 14px;
+            background-size: 100px 100px;
+            display: block;
+            position: absolute;
+            top: 5px;
+            left: -18px;
+        }
+        .protocol a{
+            color: #999;
+            font-size: 14px;
+        }
+        .uncheck{
+             background: url(/webrexco/static/img/uc/icon.png) no-repeat -19px 0px;
+            
+        }
+        .check{
+           background: url(/webrexco/static/img/uc/icon.png) no-repeat -36px 0px;
+        }
+    </style>
+</head>
+<body style="background:url(/webrexco/static/img/uc/bg.png);">
+    <% include ./cmn/header.ejs %> 
+    <div class="m-con">
+        <div class="m-title">
+            <h1>重置密码</h1>
+        </div>
+        <div class="m-main">
+            <div class="g-register">
+            <form id="forgetWord">
+                <div class="f-pr">
+                    <span class="u-phone"></span>
+                    <input type="text" name="phone" id="phone" class="coninput" placeholder="请输入手机号码">
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="f-pr">
+                    <span class="u-password"></span>
+                    <input type="password" name="password" id="password" class="coninput" placeholder="新密码8-16位字母和数字">
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="f-pr">
+                    <span class="u-password"></span>
+                    <input type="password" name="passwordtwo" id="passwordtwo" class="coninput" placeholder="确认新密码">
+                    <div class="tips">
+                        <span></span>
+                </div>
+                </div>
+                <div class="f-pr">
+                    <span class="u-valiCode"></span>
+                    <input type="text" name="valiCode" id="valiCode" placeholder="请输入图形验证码" class="short coninput">
+                    <a href="javascript:;" class="proving"><img id="validimg" class="codeimg" src="login.cci?w=160&amp;h=40&amp;f=34&amp;o=60&amp;q=60" alt="点击刷新" onclick="this.src='login.cci?w=160&amp;h=40&amp;f=34&amp;o=60&amp;q=60&amp;t=' + Math.random();" align="absmiddle"></a>
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="f-pr">
+                    <span class="u-phoneCode"></span>
+                    <input type="text" name="phoneCode" id="phoneCode" placeholder="请输入手机验证码" class="short coninput">
+                    <a href="javascript:;" class="valcode proving">短信验证码</a>
+                    <div class="tips">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="submit J_btnSubmit">提&nbsp;交</div>
+            </form>
+            </div>
+        </div>
+    </div>   
+    <% include ./cmn/footer.ejs %>
+    <script type="text/javascript">
+        $(function(){
+            $(".f-pr input").mousedown(function(){
+                $(this).css('border', '1px solid #c8a676');
+                $(this).css('background-color', '#fff');
+            });
+            $(".f-pr input").blur(function(){
+                $(this).css('border', '1px solid #d3d3d3');
+                $(this).css('background-color', '#fff');
+            });
+            //验证手机格式
+            $("#phone").keyup(function(){
+                var verif=this.value;
+                if(verif.length==11){
+                    checkphone();
+                }
+            });
+            $("#phone").blur(function(){
+                checkphone();
+            });
+            $("#phone").blur(function(){
+                checkphone();
+            });
+            //密码验证
+            $("#password").blur(function(){
+                if(!checkPassword()){
+                    $(this).siblings(".tips").children("span").html("请输入8~16个字母和数字");
+                        return;
+                }
+                $(this).siblings(".tips").children().html("");
+            });
+             $('#passwordtwo').blur(function(){ 
+                confirmpsd();
+            });
+            //验证码
+            $('#valiCode').keyup(function(){
+                var verif=this.value;
+                if(verif.length==4){
+                    checkVerifyCode();
+                }
+            });
+            $('#valiCode').blur(function(){
+                checkVerifyCode();
+            });
+            $("#validimg").click(function(){
+                $('#valiCode').val("");
+            });
+            //短信检验
+            $('#phoneCode').keyup(function(){
+                phoneCode();
+            });
+            $('#phoneCode').blur(function(){
+                phoneCode();
+            });
+            // 获取短信验证码
+            $('.valcode').click(function(){
+                if($(this).html().indexOf('验证码')>0){
+                    $("#phoneCode").val("");
+                    checkphone();
+                    checkVerifyCode();
+                    var phone=$('#phone').val(),
+                        password=$('#password').val(),
+                        passwordtwo=$('#passwordtwo').val(),
+                        verifyCode =$("#valiCode").val();
+                    if(($("#phone").siblings(".tips").children("span").html().length>0)||($("#valiCode").siblings(".tips").children("span").html().length>0)){
+                        return;
+                    }
+                    sendPhoneCode();
+                    
+                }
+            });
+            $(".J_btnSubmit").click(function(){
+                checkphone();
+                checkVerifyCode();
+                var phoneCode=$("#phoneCode").val();
+                if(phoneCode == ""||undefined == phoneCode){
+                    $("#phoneCode").siblings(".tips").children("span").html('请输入手机验证码');
+                    return;
+                }
+                if(!checkPassword()){
+                    $("#password").siblings(".tips").children("span").html("请输入8~16个字母和数字");
+                        return;
+                }else{
+                    $("#password").siblings(".tips").children().html("");
+                    confirmpsd();
+                }
+                if(($("#phone").siblings(".tips").children("span").html().length>0)||($("#valiCode").siblings(".tips").children("span").html().length>0)||($("#password").siblings(".tips").children("span").html().length>0)||($("#passwordtwo").siblings(".tips").children("span").html().length>0)){
+                    return;
+                }else{
+                    newspwd();
+                }
+            });
+        });
+        //检查手机号码
+        function checkphone(){
+            var value=$("#phone").val();
+            var reg = /^1[3|4|5|7|8]\d{9}$/;//手机格式验证
+            if(value == ""){
+                $("#phone").siblings(".tips").children("span").html("手机号码不能为空");
+                return;
+            }else{
+                $("#phone").siblings(".tips").children().html("");
+            }
+            if(undefined == value||!util.isPhoneNumber(value) ||!reg.test(value) ) {
+                $("#phone").siblings(".tips").children("span").html("手机号码格式不正确");
+                return;
+            }else{
+                $("#phone").siblings(".tips").children().html("");
+            }
+        };
+        //检查密码格式
+        function checkPassword(){
+            var value = $("#password").val();
+            var reg=/[a-zA-Z]+[0-9]+/img;
+            var reg2=/[0-9]+[a-zA-Z]+/img;
+            if (value.length < 8 || value.length > 16) {
+                return false;
+            }
+            if(!reg.test(value)&&!reg2.test(value)){
+                return false;
+            }
+            return true;
+        }
+        function confirmpsd(){
+            var confirmpsd=$('#passwordtwo').val();
+            var password=$('#password').val();
+            if(confirmpsd==password){
+                $('#passwordtwo').siblings(".tips").children("span").html("");
+            }else if(confirmpsd==''||undefined==confirmpsd){
+                $('#passwordtwo').siblings(".tips").children("span").html("请输入密码");
+            }else{
+                $('#passwordtwo').siblings(".tips").children("span").html("两次输入密码不一致");
+            }
+        }
+        //图形验证码
+        function checkVerifyCode(){
+            var verifyCode =$('#valiCode').val();
+            if(undefined == verifyCode||"" == verifyCode){
+                $('#valiCode').siblings(".tips").children("span").html("验证码输入错误");
+                return;
+            }
+            var data={
+                "verifyCode":verifyCode
+            };
+            $.ajax({
+                type: "get",
+                url:"/webrexco/regist/checkVerifyCode.cgi",
+                data:data,
+                cache:false,
+                success:function(rslt){
+                    if(rslt.code!=0){//图形验证码错误,验证码刷新
+                        $('#valiCode').siblings(".tips").children("span").html("验证码输入错误");
+                        $('#validimg').attr('src',"login.cci?w=160&h=40&f=34&o=60&q=60&t=" + Math.random());//验证失败验证码刷新
+                        $('#valiCode').val("");
+                    }else{
+                        $('#valiCode').siblings(".tips").children().html("");
+                    }
+                }
+            });
+        }
+        //获取验证码js
+        function sendPhoneCode(){
+            var phone = $("#phone").val();
+            var data =  {
+                "phone": phone,
+                "type":4
+            };
+            $.ajax({
+                type: "get",
+                url:"/webrexco/phoneCodeApp.cgi",
+                data:data,
+                cache:false,
+                success: function(rslt){
+                    if (rslt.code==200) {
+                        var cd = 60;
+                        $(".valcode").html(cd +'s');
+                        countDown(cd);
+                        $('#phoneCode').siblings(".tips").children("span").html(rslt.message);
+                    }else if(rslt.code==1){
+                        $('#phoneCode').siblings(".tips").children("span").html(rslt.message);
+                    }else{
+                        $('#phone').siblings(".tips").children("span").html(rslt.message);
+                    }
+                    
+                }
+            });
+        }
+        //验证码倒计时
+        function countDown(cd){
+            var cd =cd || 60;
+            timer =setInterval(function(){
+                if(cd>0){
+                    $('.valcode').text((--cd) +'s');
+                }else{
+                    window.clearInterval(timer);
+                    $('.valcode').html('获取验证码');
+                }
+            },1000);
+        }
+        function newspwd(){
+            $(".J_btnSubmit").text('提 交');
+            var data=$("#forgetWord").serialize();
+            $.ajax({
+                type:"get",
+                url:'/webrexco/forgetLoginPassWord.cgi',
+                data:data,
+                cache:false,
+                success:function(rslt){
+                    if(rslt.code!=0){
+                        var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+                        alert(errMsg);
+                        $('#validimg').src ='login.cci?w=160&h=40&f=34&o=60&q=60&t=' + Math.random();
+                        return;
+                    }
+                    if(rslt.code==202){
+                        $("#phoneCode").siblings(".tips").children("span").html(rslt.message);
+                    }
+                    if (rslt.code==0) {
+                        util.tipsModal(1,"密码修改成功",function(){
+                            location.href="/webrexco/login.htm";
+                        });
+                        // setTimeout(function(){top.location.href="/webrexco/login.htm";},2000);
+                    }
+                },
+                complete:function(rslt){
+                    $(".J_btnSubmit").text('提 交'); 
+                }
+            })
+        }
+         //手机验证码检验
+        function phoneCode(){
+            var phoneCode=$("#phoneCode").val();
+            if(phoneCode == ""||undefined == phoneCode){
+                $("#phoneCode").siblings(".tips").children("span").html('请输入手机验证码');
+            }else{
+                $("#phoneCode").siblings(".tips").children("span").html("");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+* {
+	padding: 0;
+	margin: 0;
+	font-family: "Microsoft YaHei";
+}
+
+ul {
+	list-style: none;
+}
+
+a {
+	text-decoration-line: none;
+}
+
+.banner {
+	width: 100%;
+	height: 216px;
+	background: url(/webrexco/static/img/uc/banner.png) no-repeat center;
+	background-size: 1920px 216px;
+}
+
+.m-bg {
+	display: block;
+	width: 1200px;
+	height: 216px;
+	margin: 0 auto;
+	clear: both;
+}
+
+.m-userInfo {
+	width: 230px;
+	height: 216px;
+	position: relative;
+	float: left;
+}
+
+.user-pic {
+	width: 106px;
+	height: 106px;
+	position: absolute;
+	background-size: 106px 106px;
+	border-radius: 50%;
+	top: 34px;
+	left: 70px;
+}
+
+.m-userInfo p {
+	color: #fff;
+	text-align: center;
+	width: 136px;
+}
+
+.m-withdraw {
+	width: 560px;
+    float: left;
+    margin-left: 80px;
+    margin-top: 44px;
+    position: relative;
+
+}
+.m-withdraw p{
+	color:#fff;
+	font-size:18px;
+	line-height:68px;
+}
+.m-withdraw .u-sigh{
+	width: 20px;
+    height: 20px;
+    background: url(/webrexco/static/img/uc/sigh.png) no-repeat;
+    background-size: 20px 20px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 24px;
+    position: absolute;
+    cursor:pointer;
+}
+.u-sigh-s{
+	width: 159px;
+    line-height: 15px;
+    padding: 10px 12px;
+    display: inline-block;
+    background: #fff;
+    color: #999;
+    font-size: 12px;
+    margin-left: 35px;
+    position: absolute;
+    top: 68px;
+    display:none;
+}
+.triangle-left{
+	width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-right: 10px solid #fff;
+    border-bottom: 5px solid transparent;
+    position: absolute;
+    top: 28px;
+    left: -10px;
+}
+.m-withdraw .cashBtn{
+	width:76px;
+	text-align: center;
+	height:34px;
+	line-height:34px;
+	display:inline-block;
+	border: 2px solid #fff;
+	color:#fff;
+	margin-left:46px;
+}
+.u-rank {
+	float:left;
+	line-height: 60px;
+	height: 60px;
+	margin-left: 125px;
+	color: #fff;
+}
+
+.m-space,.m-ideal{
+	float: left;
+	text-align:center;
+	color:#fff;
+	margin-top: 68px;
+	font-size:18px;
+	display:inline-block;
+}
+.m-ideal{
+	margin-left:105px;
+}
+.un-idimg,.u-spimg,.un-spimg,.u-idimg {
+	width: 67px;
+    height: 67px;
+	display: block;
+	line-height: 100px;
+	margin-bottom: 10px;
+}
+.u-spimg{
+	background:url(/webrexco/static/img/uc/member.png) no-repeat -79px -6px;
+}
+.un-spimg{
+	background: url(/webrexco/static/img/uc/member.png) no-repeat -9px -3px;
+}
+.u-idimg{
+	background:url(/webrexco/static/img/uc/member.png) no-repeat -76px -73px;
+}
+.un-idimg {
+	background:url(/webrexco/static/img/uc/member.png) no-repeat -9px -71px;
+}
+.balance {
+	color: #1cd4c6;
+}
+
+.userName {
+	position: absolute;
+    left: 60px;
+    bottom: 38px;
+    font-size: 20px;
+}
+
+.user-mon {
+	position: absolute;
+	left: 100px;
+	bottom: 25px;
+	font-size: 16px;
+	text-indent: 14px;
+}
+
+.user_right {
+	width: 888px;
+	float: left;
+}
+
+.m-con {
+	width: 1200px;
+	margin: 0 auto;
+	margin-top: 32px;
+	clear: both;
+}
+
+.m-leftNav {
+	width: 260px;
+	height: 865px;
+	background: #f5f7f6;
+	padding-top: 9px;
+	float: left;
+}
+
+.m-leftNav .nav-menu>li {
+	width: 260px;
+	line-height: 55px;
+}
+
+.isActive {
+	background: #fff;
+	-webkit-box-shadow: 2px 2px 5px 0 #f3f3f3;
+	-moz-box-shadow: 2px 2px 5px 0 #f3f3f3;
+	box-shadow: 2px 2px 5px 0 #f3f3f3;
+}
+
+.m-leftNav .nav-menu>li .menu-title {
+	position: relative;
+	color: #000;
+	width: 260px;
+	height: 60px;
+	line-height: 60px;
+	font-size: 20px;
+	font-weight: normal;
+	text-align: left;
+	cursor: pointer
+}
+
+.m-leftNav .menu-title .title-indexIcon {
+	float: left;
+	width: 22px;
+	height: 23px;
+	margin-right: 10px;
+	margin-top: 20px;
+	margin-left: 66px;
+}
+
+.menu-title .news {
+	background: url(/webrexco/static/img/uc/bgicon.png) no-repeat -14px -8px;
+}
+
+.menu-title .active {
+	background: url(/webrexco/static/img/uc/bgicon.png) no-repeat -14px -35px;
+}
+
+.menu-title .collections {
+	background: url(/webrexco/static/img/uc/bgicon.png) no-repeat -14px -59px;
+}
+
+.menu-title .orders {
+	background: url(/webrexco/static/img/uc/bgicon.png) no-repeat -14px -91px;
+}
+
+.menu-title .probate {
+	background: url(/webrexco/static/img/uc/bgicon.png) no-repeat -12px -116px;
+}
+.menu-title .mine {
+	background: url(/webrexco/static/img/uc/bgicon.png) no-repeat -46px -9px;
+}
+.menu-title .message {
+	background: url(/webrexco/static/img/uc/bgicon.png) no-repeat -14px -144px;
+}
+.u-icon {
+	width: 4px;
+	height: 60px;
+	background: #c8a676;
+	position: absolute;
+}/*# sourceMappingURL=common.css.map */

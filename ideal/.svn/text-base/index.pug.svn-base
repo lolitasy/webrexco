@@ -1,0 +1,87 @@
+extends ../space/template.pug
+
+block title
+    - var title = "疯巢_泛创客社群_创客空间_摆渡星空"
+    meta(name="keywords" content="疯巢,泛创客社群,创客空间")
+    meta(name="description" content="疯巢是摆渡星空内的一个泛创客社群，有理想、创业梦想、生活心愿的个人、家庭、创业者都可以加入这个创业空间，成员有机会获得摆渡星空基金以及其他资助")
+
+mixin slider(name)
+    .swiper-slide
+        .img(class="p-" + id++)
+        .name=name
+        a.button.red.apply 立即加入
+
+mixin block(name, content, buttons)
+    .block
+        if id % 2 != 0
+            .half
+                .image(class="b-" + id++)
+            .half
+                .name= name
+                .description= content
+                .buttons
+                    each button in buttons
+                        a.button.apply= button
+        else
+            .half
+                .name= name
+                .description= content
+                .buttons
+                    each button in buttons
+                        a.button.apply= button
+            .half
+                .image(class="b-" + id++)
+
+block style
+    +style("ideal/swiper.min")
+    +style("ideal/index")
+    script window.headerMap = {headerCodeMap:{"0": 2 }}
+    
+block header
+    .background
+        .header
+            .title 疯巢
+            .point ·
+            .subtitle 打造创业与梦想的城池
+
+            .buttons
+                a.button(target="_blank" href="/webrexco/help/index.htm") 新手攻略
+                a.button.apply 提交你的项目，立即加入泛创客社群
+
+block content
+    .title 加入我们
+
+    .container
+        // Slider main container
+        .swiper-container
+            // Additional required wrapper
+            .swiper-wrapper
+                // Slides
+                - var id = 1;
+                +slider("智能硬件创客社")
+                +slider("文创社")
+                +slider("大数据应用兄弟社")
+                +slider("内容创作社")
+                +slider("实体店创业社")
+
+        // If we need navigation buttons
+        .swiper-button-prev
+        .swiper-button-next
+
+    .title 我们还能这样玩
+    
+    - var id = 1;
+    +block("皇包车", "基于移动互联网技术的全球中文车导服务电子商务平台", ["60天", "￥20000"])
+    +block("摆渡星空创咖", "杭州 互联网金融大厦6楼\n100个咖啡厅办公", ["申请入驻"])
+    +block("杭州创业周末", "Hangzhou Startup Weekend\n2016年12月16日 18:30 ～ 2016年12月18日 21:00", ["我要报名"])
+    +block("寻找创始合伙人", "e代泊项目\n给干股25%", ["我要报名"])
+    +block("线下用户体验", "有好的产品和服务就扔过来\n接触和跨界才是一条生路", ["我要合作"])
+    +block("VIP会员利益", "我们有美食，有福利\n书、美食还有朋友", ["我要合作"])
+
+    .title 泛创客连接
+    .link
+
+block script
+    +script("ideal/swiper.jquery")
+    script(src="/webrexco/activity/login/show.js")
+    script: include index.js

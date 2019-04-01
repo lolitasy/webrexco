@@ -1,0 +1,59 @@
+var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js');
+
+exports.itfconf = function() {
+	return new CurrentAPI().conf();
+}
+
+exports.itfleft = function(req,res,fld,fle) {
+	return new CurrentAPI().output(req,res,fld,fle);
+}
+
+var CurrentAPI = gapi.AuthorizeAPI.extend({
+    conf: function() { return { auth: true,
+        	type: "json",
+        	itfs: [
+	            {
+	                host: ghost.dscm.makercenter.addr,
+	                port: ghost.dscm.makercenter.port,
+	                iurl: "/pcActivity?actn=myReleaseActivity",
+	                uuid: "pcActivity",            
+	                meth: "post",
+	                type: "sdcm",
+	                next: [],
+	                func: function(req,res,fld,fle){
+	                	return new CurrentAPI("pcActivity").
+	                		callFunc(req,res,fld,fle);
+	                }
+	            }      		
+        	]
+    	};
+    },
+	
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		var userId = req.session.user.userId,
+			ip = gapi.getIPv4(req.user.addr);
+		var currentPage = gapi.getParameter(req,"currentPage");
+		var pageSize = gapi.getParameter(req,"pageSize");
+		if(gapi.emptyEqual(userId,"")){
+			res.jsonp(gapi.toResult(1, "请先登录"));
+			ghost.getLogger().error("[doCallFunc]IP：%s, service: uc.data.myReleaseActivity, dc: pcActivity.searchReceiver, message: 'param error', param: userId=%s", ip, userId);
+			return null;
+		}
+		ghost.getLogger().info("[doCallFunc]IP：%s, service: uc.data.myReleaseActivity, dc: pcActivity.myReleaseActivity, message: 'param', param: userId=%s", ip, userId);
+	    return {
+	       "claz":"['java.lang.Integer','java.lang.Integer','java.lang.Long']",
+	       "json":[currentPage,pageSize,userId]
+	    };
+	},
+		    
+	doOutput: function(req, res, fld, fle) {
+		var ip = gapi.getIPv4(req.user.addr);
+		if(!req.rslt['pcActivity']){
+			ghost.getLogger().error("[doOutput]IP：%s, service: uc.data.myReleaseActivity, dc: pcActivity.myReleaseActivity, message: 'rslt is null', rslt: %s", ip, JSON.stringify(req.rslt['pcActivity']));
+			return gapi.toResult(500, "系统异常");
+		}
+		ghost.getLogger().info("[doOutput]IP：%s, service: uc.data.myReleaseActivity, dc: pcActivity.myReleaseActivity, message: 'success', rslt: %s", ip, JSON.stringify(req.rslt['pcActivity']));
+		return gapi.toResult(null, null, req.rslt['pcActivity']);
+	}
+});

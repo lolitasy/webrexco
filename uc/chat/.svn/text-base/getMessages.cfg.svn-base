@@ -1,0 +1,136 @@
+var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js');
+
+exports.itfconf = function() {
+	return new CurrentAPI().conf();
+}
+
+exports.itfleft = function(req,res,fld,fle) {
+	return new CurrentAPI().output(req,res,fld,fle);
+}
+
+var CurrentAPI = gapi.AuthorizeAPI.extend({
+    conf: function() { return { auth: true,
+        	type: "json",
+        	itfs: [
+	            {
+	                host: ghost.dscm.makercenter.addr,
+	                port: ghost.dscm.makercenter.port,
+	                iurl: "/pcContactMsg?actn=getContactMsgList",
+	                uuid: "pcContactMsg",
+	                meth: "post",
+	                type: "sdcm",
+	                next: [],
+	                func: function(req,res,fld,fle){
+	                	return new CurrentAPI("pcContactMsg").
+	                		callFunc(req,res,fld,fle);
+	                }
+	            }
+        	]
+    	};
+    },
+
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		var userId = req.session.user.userId;
+		var ip = gapi.getIPv4(req.user.addr);
+		var pageIndex = gapi.getParameter(req, "pageIndex"),
+			pageSize = gapi.getParameter(req, "pageSize");
+		pageIndex=1, pageSize=11;
+		console.log("ip=%s, port=%s, userId=%s, pageIndex=%s, pageSize=%s",ghost.dscm.makercenter.addr,ghost.dscm.makercenter.port,userId,pageIndex,pageSize);
+		ghost.getLogger().info("[doCallFunc]IP：%s, service: uc.chat.getMessages, dc: wechatAccountApp.getContactMsgList, message: 'param', param: userId=%s, pageIndex=%s, pageSize=%s", ip, userId, pageIndex, pageSize);
+	    return {
+	       "claz" : "['java.lang.Long','java.lang.Long','java.lang.Integer']",
+	       "json" : [userId, pageIndex, pageSize]
+	    };
+	    // req.uuid["moc"] = true;
+	    // return null;
+	},
+
+	doOutput: function(req, res, fld, fle) {
+		var ip = gapi.getIPv4(req.user.addr);
+		if(!req.rslt['pcContactMsg']){
+			ghost.getLogger().error("[doOutput]IP：%s, service: uc.chat.getMessages, dc: wechatAccountApp.getContactMsgList, message: 'rslt is null', rslt: %s", ip, JSON.stringify(req.rslt['pcContactMsg']));
+			return gapi.toResult(500, "系统异常");
+		}
+		if(gapi.emptyNoequal(req.rslt['pcContactMsg'].code, 0)) {
+			//这里根据后端服务返回的code值不同提示信息不同
+			if(gapi.emptyEqual(req.rslt['pcContactMsg'].message, "")) {
+				req.rslt['pcContactMsg'].message = "获取信息失败";
+			}
+			ghost.getLogger().error("[doOutput]IP：%s, service: uc.chat.getMessages, dc: wechatAccountApp.getContactMsgList, message: 'rslt error', rslt: %s", ip, JSON.stringify(req.rslt['pcContactMsg']));
+			return gapi.toResult(1, req.rslt['pcContactMsg'].message);
+		}
+		req.rslt['pcContactMsg'].userId = req.session.user.userId;
+		req.rslt['pcContactMsg'].userName = req.session.user.userName;
+
+		return gapi.toResult(null, null, req.rslt['pcContactMsg']);
+		// var output = {
+		// 	"code":0,
+		// 	"message":"success",
+		// 	"data":{
+		// 		"list":[
+		// 			{
+		// 				"content":"Hi, NewYork",
+		// 				"count": 15,
+		// 				"date": 1481095084,
+		// 				"roomId":"692227-920934",
+		// 				"roomName":"房间A",
+		// 				"userId":"692227",
+		// 				"userName":"钱wan"
+		// 			},{
+		// 				"content":"Hi, NewYork",
+		// 				"count": 11,
+		// 				"date": 1480095084,
+		// 				"roomId":"692227-920934",
+		// 				"roomName":"房间B",
+		// 				"userId":"920934",
+		// 				"userName":"紫薇"
+		// 			},{
+		// 				"content":"Hi, NewYork",
+		// 				"count": 5,
+		// 				"date": 1481695084,
+		// 				"roomId":"692227-920935",
+		// 				"roomName":"房间C",
+		// 				"userId":"920936",
+		// 				"userName":"papi"
+		// 			}
+		// 		]
+		// 	}
+		// 	// "messageList":[
+		// 	// 	{
+		// 	// 		"roomId":"692227-920934",
+		// 	// 		"fromUserId":920934,
+		// 	// 		"fromUserName":"紫薇",
+		// 	// 		"status":0, // 0:未同意, 1:已同意, 2:拒绝
+		// 	// 		"chatMessages":[
+		// 	// 			{
+		// 	// 				"time":1481095084,
+		// 	// 				"content":"Hi, NewYork"
+		// 	// 			},{
+		// 	// 				"time":1481895084,
+		// 	// 				"content":"Hi, "
+		// 	// 			},{
+		// 	// 				"time":1482895084,
+		// 	// 				"content":"Hi, Bye"
+		// 	// 			}
+		// 	// 		]
+		// 	// 	},{
+		// 	// 		"roomId":"692227-920934",
+		// 	// 		"fromUserId":692227,
+		// 	// 		"fromUserName":"钱wan",
+		// 	// 		"status":0, // 0:未同意, 1:已同意, 2:拒绝
+		// 	// 		"chatMessages":[
+		// 	// 			{
+		// 	// 				"time":1481095084,
+		// 	// 				"content":"Hi, Tokyo"
+		// 	// 			},{
+		// 	// 				"time":1483895084,
+		// 	// 				"content":"Hi, baby"
+		// 	// 			}
+		// 	// 		]
+		// 	// 	}
+		// 	// ]
+		// };
+		// return gapi.toResult(0,"sss", output);
+	}
+});

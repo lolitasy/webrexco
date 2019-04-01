@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>申请疯巢会员</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#232323">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" sizes="192x192" href="/webrexco/static/img/ideal/icon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/webrexco/static/img/ideal/icon-120.png">
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/space/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/space/apply.css">
+    <script>window.headerMap = {headerCodeMap:{'0': 2 }}</script>
+  </head>
+  <body>
+     
+    <% include ../cmn/header.ejs %>
+    <div class="header">
+      <div class="title">申请疯巢会员</div>
+      <div class="subtitle">申请只需两步，第1步填写资料，第2步入资</div>
+    </div>
+    <div class="content">
+      <div class="userinfo">
+        <div class="avatar"></div>
+        <div class="username"></div>
+      </div>
+      <form class="wide" action="/webrexco/space/pay.cgi" method="post" target="_blank">
+        <div class="input">
+          <input id="level-value" type="hidden" name="grade">
+          <input id="id" type="hidden" name="applyId">
+          <input type="hidden" name="gradeType" value="1">
+          <label class="label">拟申请会员类别</label>
+          <div class="level"><span id="level-name"></span>
+            <div class="level-tip">
+              <div class="level-popup">黄金会员权益
+                <ul>
+                  <li>对接投资人</li>
+                  <li>资源服务</li>
+                  <li>人才服务</li>
+                  <li>技术服务</li>
+                </ul><a target="_blank" href="/webrexco/help/index.htm">详情</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="input">
+          <label class="label">注资方式</label>
+          <input class="checkbox" id="input-type-a" type="radio" value="0" name="costType" checked>
+          <label for="input-type-a">基金</label>
+          <input class="checkbox" id="input-type-b" type="radio" value="1" name="costType">
+          <label for="input-type-b">会费</label>
+        </div>
+        <div class="input">
+          <label class="label" id="input-money-label"></label>
+          <div id="input-money-name"></div>
+          <input id="input-money-value" type="hidden" name="money">
+          <div class="tip" id="input-money-tip"></div>
+        </div>
+        <div class="input">
+          <label class="label">选择支付方式</label>
+          <input class="box-radio" id="input-payment-a" type="radio" name="payment" value="aliPayDirectPlugin" checked>
+          <label for="input-payment-a">支付宝</label>
+        </div>
+        <div class="button wide" id="submit">立即支付</div>
+        <div class="skip">跳过</div>
+      </form>
+      <div class="wx-code"></div>
+      <div class="complete">完成</div>
+      <div class="mask">
+        <div class="popup">
+          <div class="title">
+            <p>提示</p>
+          </div>
+          <div class="close"></div>
+          <div class="popup-content">
+            <div class="bold">请在您新打开的网上银行页面上完成付款！</div>
+            <div class="line">充值账号：<span class="username"></span></div>
+            <div class="line">充值金额：<span class="amount"></span></div>
+            <div class="line">支付网关：支付宝支付</div>
+            <div class="button" id="go-step-3">已完成支付</div><a class="button white" href="/webrexco/help/index.htm">付款遇到问题</a>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <% include ../cmn/footer.ejs %>
+    <script src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script src="/webrexco/static/js/header.js"></script>
+    <script src="/webrexco/activity/login/show.js"></script>
+    <script>var type = 1, name = '疯巢'</script>
+    <script src="/webrexco/static/js/cmn/jquery-qrcode.min.js"></script>
+    <script>function query(name, url) {
+    if (!url) {
+        url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+};
+
+$("input[type=checkbox], input[type=radio]").change(function () {
+    $("input[type=checkbox], input[type=radio]").each(function () {
+        $(this).next().toggleClass("checked", this.checked);
+    });
+});
+
+var id = query("id");
+
+$.ajax({
+    url: "/webrexco/space/grade.cgi",
+    method: "POST",
+    data: { type: type },
+    success: function (data) {
+        $(".username").text(data.username);
+
+        if (data.code == 401) {
+            showIframe("/webrexco/activity/login/login.htm?refresh=1");
+            return;
+        }
+
+        if (data.code !== 0) {
+            util.tipsModal(2, data.message);
+            return;
+        }
+
+        var grade = null;
+        for (var i = 0; i < data.grades.length; i++) {
+            var item = data.grades[i];
+            if (item.fundCost != 0) {
+                grade = item;
+                break;
+            }
+        }
+
+        $("#id").val(id);
+        $("#level-value").val(grade.grade);
+        $("#level-name").text(grade.description);
+
+        $("#input-type-a, #input-type-b").change(function () {
+            if ($("#input-type-a").is(":checked")) {
+                $("#input-money-name, .amount").text("￥" + grade.fundCost.toFixed(2));
+                $("#input-money-value").val(grade.fundCost);
+                $("#input-money-label").text("注入创投基金金额");
+                $("#input-money-tip").text("会员资格的取得有赖于将资金入摆渡星空创投基金，到期可提现。");
+            } else {
+                $("#input-money-name, .amount").text("￥" + grade.moneyCost.toFixed(2));
+                $("#input-money-value").val(grade.moneyCost);
+                $("#input-money-label").text("缴入会费");
+                $("#input-money-tip").text("会员费指实际缴纳给摆渡星空的会费，每年一交，不退换，无收益。");
+            }
+        }).change();
+
+        $("#submit").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("disabled"))
+                return;
+
+            var payment = $("input[name=payment]:checked").val();
+            if (payment == "aliPayDirectPlugin") {
+                $("form").submit();
+                timeout = setTimeout(function () {
+                    util.tipsModal(2, "请求失败，请重试");
+                }, 10000);
+            } else {
+                var form = $("form");
+                $.post({
+                    url: form.attr("action"),
+                    data: form.serialize(),
+                    success: function (result) {
+                        if (data.code !== 0) {
+                            util.tipsModal(2, data.message);
+                            return;
+                        }
+
+                        orderId = result.payRes.orderSn;
+                        var link = result.payRes.code_url;
+                        $('.wx-code').qrcode({
+                            // render 方式: 'canvas', 'image' or 'div'//用image适配方便
+                            render: 'image',
+                            // 容错等级: 'L', 'M', 'Q' or 'H'
+                            ecLevel: 'L',
+                            // 控制canvas 偏移
+                            left: 0,
+                            top: 0,
+                            // 控制二维码尺寸
+                            size: 84,
+                            // 控制二维码颜色
+                            fill: '#000',
+                            // background color or image element, null for transparent background
+                            background: null,
+                            // 二维码内容
+                            text: link,
+                            // 控制二维码的圆角: 0.0 .. 0.5
+                            radius: 0,
+                            // 边缘留空，默认0
+                            quiet: 0,
+                        });
+                    }
+                })
+            }
+        });
+
+    },
+    error: function () {
+        util.tipsModal(2, "系统异常");
+    }
+});
+
+$(".skip").click(function () {
+    if (id == null) {
+        history.back();
+    } else {
+        location.href = "result.htm";
+    }
+});
+
+$("#go-step-3, .close, .complete").click(function () {
+    location.href = "result.htm?id=" + orderId;
+});
+
+var timeout;
+var orderId;
+function setOrderId(err, id) {
+    clearTimeout(timeout);
+    timeout = null;
+
+    if (err) {
+        util.tipsModal(2, err);
+        return;
+    }
+
+    orderId = id;
+    $(".mask").show();
+}
+
+    </script>
+  </body>
+</html>

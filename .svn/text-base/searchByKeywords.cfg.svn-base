@@ -1,0 +1,51 @@
+var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js');
+
+exports.itfconf = function() {
+	return new CurrentAPI().conf();
+}
+exports.itfleft = function(req,res,fld,fle) {
+	return new CurrentAPI().output(req,res,fld,fle);
+}
+var CurrentAPI = gapi.BaseAPI.extend({
+    conf: function() { return { auth: false,
+        	type: "json",
+        	itfs: [
+	            {
+	                host: ghost.dscm.makercenter.addr,
+	                port: ghost.dscm.makercenter.port,
+	                iurl: "/pcIndex?actn=searchByKeywords",
+	                uuid: "pcIndex",
+	                meth: "post",
+	                type: "sdcm",
+	                next: [],
+	                func: function(req,res,fld,fle){
+	                	return new CurrentAPI("pcIndex").
+	                		callFunc(req,res,fld,fle);
+	                }
+	            }
+        	]
+    	};
+    },
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		var userId = null;//req.session.user.userId?req.session.user.userId:null;
+		var ip = gapi.getIPv4(req.user.addr),
+			currentPage = gapi.getParameter(req,"currentPage"),
+			pageSize = gapi.getParameter(req,"pageSize"),
+			keywords = gapi.getParameter(req,"keywords"),
+			startDate = gapi.getParameter(req,"startDate")?gapi.getParameter(req,"startDate"):null;
+		ghost.getLogger().info("[doCallFunc]IP：%s, service: helpList, dc: pcIndex.searchByKeywords, message: 'param ', param:currentPage=%s,pageSize=%s,keywords=%s,type=%s,startDate=%s,userId=%s", ip,currentPage ,pageSize, keywords, startDate, userId);
+	   	return {
+	       "claz" : "['java.lang.Integer','java.lang.Integer','java.lang.String','java.lang.Long','java.lang.Long']",
+	       "json" : [currentPage ,pageSize, keywords, startDate, userId]
+	    };
+	},
+	doOutput: function(req, res, fld, fle) {
+		var ip = gapi.getIPv4(req.user.addr);
+		if(!req.rslt['pcIndex']){
+			ghost.getLogger().error("[doOutput]IP：%s, service: indexHtmService, dc: pcIndex.searchByKeywords, message: 'rslt is null', rslt: %s", ip, JSON.stringify(req.rslt['pcIndex']));
+			return gapi.toResult(500, "系统异常");
+		}
+		return gapi.toResult(null, null, req.rslt['pcIndex']);	
+	}
+});

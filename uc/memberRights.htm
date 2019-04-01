@@ -1,0 +1,310 @@
+<% include ../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>摆渡星空-账户主页</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <style type="text/css">
+        .rightsHeader{
+            min-width: 1200px;
+            height:216px;
+            background: url(/webrexco/static/img/uc/banner.png) no-repeat;
+        }
+        .g-userInfo{
+            float:left;
+            padding:30px 0 0 64px;
+            text-align: center;
+        }
+        .J_userheader{
+            width:106px;
+            height:106px;
+            border-radius: 50%;
+        }
+        .J_username{
+            color:#fff;
+            font-size:20px;
+            margin-top:10px;
+        }
+        .g-memberLevel .u-memberLevel{
+            width:103px;
+            height:117px;
+            background:url(/webrexco/static/img/uc/menberRights.png) no-repeat; 
+            float:left;
+            margin:48px 0 0 118px;
+            position: relative;
+        }
+        .g-memberLevel .u-memberLevel.now:after{
+            content: "";
+            display: block;
+            width: 0px;
+            height:0px;
+            border:24px solid transparent;
+            border-bottom-color:#fff;
+            position:  absolute;
+            bottom:-51px;
+            left:28px;
+        }
+        .g-memberLevel .u-memberLevel.iron{/*铁牌*/
+            background-position: -4px -353px;
+        }
+        .g-memberLevel .u-memberLevel.iron.unown{
+             background-position: -4px -499px;
+        }
+        .g-memberLevel .u-memberLevel.gold{/*金牌*/
+            background-position: -112px -353px;
+        }
+        .g-memberLevel .u-memberLevel.gold.unown{
+             background-position: -112px -499px;
+        }
+        .g-memberLevel .u-memberLevel.platinum{/*铂金牌*/
+            background-position: -232px -353px;
+        }
+        .g-memberLevel .u-memberLevel.platinum.unown{
+             background-position: -232px -499px;
+        }
+        .g-memberLevel .u-memberLevel.diamond{/*钻石牌*/
+            background-position: -344px -353px;
+        }
+        .g-memberLevel .u-memberLevel.diamond.unown{
+             background-position: -344px -499px;
+        }
+        .rightsBody{
+            padding-top:35px;
+        }
+        .rightsBody .u-tipMes{
+            font-size:16px;
+            color:#999;
+            text-align: center;
+        }
+        .rightsBody .u-tipMes>a{
+            color:#ff7b7b;
+        }
+        .u-rightsTitle{
+            font-size:20px;
+            color: #333;
+        }
+        .u-memberRights{
+            width:108px;
+            font-size:16px;
+            text-align: center;
+            float:left;
+            margin:70px 0 0 82px;
+            position: relative;
+            cursor: pointer;
+        }
+        .u-memberRights>p{
+            width:108px;
+        }
+        .u-memberRights.active:after{
+            content: "";
+            display: block;
+            width: 0px;
+            height:0px;
+            border:24px solid transparent;
+            border-bottom-color:#f7f8f8;
+            position:  absolute;
+            bottom:-26px;
+            left:28px;
+        }
+        .u-detailRights{
+            width:1084px;
+            padding:20px 16px 20px 100px;
+            background: #f7f8f8;
+            float:left;
+            color:#333;
+            font-size:16px;
+            margin-top:26px;
+            margin-bottom: 10px;
+        }
+        .u-memberRights>img{
+            width:47px;
+            height:43px;
+        }
+    </style>
+</head>
+<body style="background: #fff;height: auto;">
+    <% include ../cmn/header.ejs %>
+    <div class='g-bd'>
+        <div class='rightsHeader'>
+            <div class='g-container'>
+                <div class='g-userInfo'>
+                    <img src="" class='J_userheader'>
+                    <p class='J_username'></p>
+                </div>
+                <div class='g-memberLevel clearfix'>
+                    <div class='u-memberLevel iron own now' data-level='准会员' data-EngLevel='silverList'></div>
+                    <div class='u-memberLevel gold own' data-level='黄金会员' data-EngLevel='goldList'></div>
+                    <div class='u-memberLevel platinum own' data-level='白金会员' data-EngLevel='platinumList'></div>
+                    <div class='u-memberLevel diamond own' data-level='钻石会员' data-EngLevel='diamondList'></div>
+                </div>
+            </div>
+        </div>
+        <div class='rightsBody'>
+            <div class="g-container clearfix" style='padding-bottom:50px;'>
+                <!-- <p class='u-tipMes'>您还不是黄金会员，赶快去申请<a class='u-linkToApply' href="/webrexco/space/apply.htm">入驻星空会</a>吧</p> -->
+                <p class='u-rightsTitle'></p>
+                <div class='u-detailRights f-hide'></div>
+            </div> 
+        </div>
+    </div>
+    
+    <% include ../cmn/footer.ejs %>
+    <script type="text/template" id='tpl_rights_gold'>
+        <# for(var i = 0;i<data.goldlist.length;i++){#>
+            <# var item = data.goldlist[i]#>
+            <div class='u-memberRights' data-content='<#= item.description #>'>
+                <img src="<#= item.status=0?item.iconUrl:item.iconUrlLight #>">
+                <p class='f-tof' title='<#= item.name #>'><#= item.name#></p>
+            </div>
+        <#}#> 
+    </script>
+    <script type="text/template" id='tpl_rights_silver'>
+        <# for(var j = 0;j<data.silverlist.length;j++){#>
+            <# var item = data.silverlist[j]#>
+            <div class='u-memberRights' data-content='<#= item.description #>'>
+                <img src="<#= item.status=0?item.iconUrl:item.iconUrlLight #>">
+                <p class='f-tof' title='<#= item.name #>'><#= item.name#></p>
+            </div>
+        <#}#>
+    </script>
+    <script type="text/template" id='tpl_rights_platinum'>
+        <# for(var j = 0;j<data.platinumlist.length;j++){#>
+            <# var item = data.silverlist[j]#>
+            <div class='u-memberRights' data-content='<#= item.description #>'>
+                <img src="<#= item.status=0?item.iconUrl:item.iconUrlLight #>">
+                <p class='f-tof' title='<#= item.name #>'><#= item.name#></p>
+            </div>
+        <#}#>
+    </script>
+    <script type="text/template" id='tpl_rights_diamond'>
+        <# for(var j = 0;j<data.diamondlist.length;j++){#>
+            <# var item = data.silverlist[j]#>
+            <div class='u-memberRights' data-content='<#= item.description #>'>
+                <img src="<#= item.status=0?item.iconUrl:item.iconUrlLight #>">
+                <p class='f-tof' title='<#= item.name #>'><#= item.name#></p>
+            </div>
+        <#}#>
+    </script>
+    <script type="text/template" id='tpl_rights_message'>
+        <# var urlType = util.getQueryString("memberType");#>
+
+        <#if(urlType==0){#>
+            <#if(data.status==2){#>
+                <p class='u-tipMes'>亲，您提交的入驻星空会申请正在审核中，请耐心等待</p>
+            <#}else if(data.status==3){#>
+                <p class='u-tipMes'>亲，您申请的星空会审核失败，请联系客服：400-600-6565</p>
+            <#}else if(data.level<1||data.status!=1){#>
+                <p class='u-tipMes'>亲，您还未入驻星空会，赶快去申请<a class='u-linkToApply' href="/webrexco/space/apply.htm">入驻星空会</a>吧</p>
+            <#}else if(data.level == 1&&data.status==1){#>
+                <p class='u-tipMes'>亲，你已经成功成为星空会的准会员，可充值成为星空会的黄金会员,<a class='u-linkToApply' href="/webrexco/space/charge.htm">立即充值</a></p>
+            <#}else{#>
+
+            <#}#>
+       <# }else if(urlType == 1){#>
+            <#if(data.status==2){#>
+                <p class='u-tipMes'>亲，您提交的入驻疯巢申请正在审核中，请耐心等待</p>
+            <#}else if(data.status==3){#>
+                <p class='u-tipMes'>亲，您申请的疯巢审核失败，请联系客服：400-600-6565</p>
+            <#}else if(data.level<1||data.status!=1){#>
+                <p class='u-tipMes'>亲，您还未入驻疯巢，赶快去申请<a class='u-linkToApply' href="/webrexco/ideal/apply.htm">入驻疯巢</a>吧</p>
+           <# }else if(data.level == 1&&data.status==1){#>
+                <p class='u-tipMes'>亲，你已经成功成为疯巢的准会员，可充值成为疯巢的黄金会员,<a class='u-linkToApply' href="/webrexco/ideal/charge.htm">立即充值</a></p>
+            <#}else{#>
+
+            <#} #>
+        <#}#>
+    </script>
+    <script type="text/javascript">
+        $().ready(function(){
+            getUserLevel();
+        });
+        function getUserLevel(){
+            baseModel.get({
+                url : "data/bannerUserInfo.cgi",
+                success : function(rslt){
+                    if(rslt.code==401){
+                        location.href='/webrexco/login.htm';
+                        return;
+                    }
+                    if(rslt.code!=0){
+                        return;
+                    }
+                    levelInfo();
+                }
+            })
+        }
+        function levelInfo(){
+            var memberType = util.getQueryString("memberType");
+            baseModel.get({
+                url : "data/getMemberRights.cgi",
+                data : {type : memberType},
+                success : function(rslt){
+                    if(rslt.code== 401){
+                        location.href='/webrexco/login.htm';
+                        return;
+                    }
+                    if(rslt.code!=0){
+                        return null;
+                    }
+                    $('.J_userheader').attr("src","http://adtp.cnaidai.com/data/avatar/"+rslt.userId+"_avatar_middle.jpg");
+                    $(".J_username").html(rslt.username);
+                    for(var i = rslt.level||0;i<4;i++){
+                        $(".u-memberLevel").eq(i).addClass("unown").removeClass("own");
+                    }
+                    $(".u-memberLevel").removeClass('now').eq(rslt.level?(rslt.level-1>=0?rslt.level-1:0):0).addClass("now");
+                    $(".u-rightsTitle").html((memberType==0?"星空会":"疯巢") + $(".u-memberLevel").eq(rslt.level?(rslt.level-1>=0?rslt.level-1:0):0).data("level")+"特权");
+                    $(".u-rightsTitle").before(baseView.render("#tpl_rights_message",rslt));
+                    var templateMolde = $(".now").hasClass("iron")?"#tpl_rights_silver":"#tpl_rights_gold";
+                    $(".u-detailRights").before(baseView.render(templateMolde,rslt.data));
+                    $(".u-memberLevel").click(function(){
+                        if($(this).hasClass("iron")){
+                            templateMolde = "#tpl_rights_silver";
+                        }else if($(this).hasClass("gold")){
+                            templateMolde = "#tpl_rights_gold";
+                        }else if($(this).hasClass("platinum")){
+                            templateMolde = "#tpl_rights_platinum";
+                            util.tipsModal(2,"该功能暂未开放");
+                            return;
+                        }else if($(this).hasClass("diamond")){
+                            templateMolde = "#tpl_rights_diamond";
+                            util.tipsModal(2,"该功能暂未开放");
+                            return
+                        }
+                        $(".u-rightsTitle").html((memberType==0?"星空会":"疯巢")+$(this).data("level")+"特权");//修改会员等级特权标题文案
+                        $('.u-detailRights').hide();//隐藏特权详情文案
+                        $(".u-memberRights").off("click");//防止多次点击重复绑定
+                        $(".u-memberLevel").removeClass("now");
+                        $(this).addClass("now");//为当前点击目标加上下方三角形样式
+                        $(".u-memberRights").remove();//删除当前所有权益
+                        $(".u-detailRights").before(baseView.render(templateMolde,rslt.data));
+                        changeIcon();
+                    });
+                    changeIcon();
+                }
+            });
+        }
+        function changeIcon(){
+            $(".u-memberRights").click(function(){
+                var index = $(this).index();
+                var lineNum = parseInt((index-2)/6);
+                var detail = $('.u-detailRights');
+                if($(this).hasClass("active")){
+                    $(this).removeClass("active"); 
+                    $('.u-detailRights').slideUp();
+                    return;
+                }
+                $(".u-memberRights").removeClass("active");
+                $(this).addClass("active");
+                $('.u-detailRights').hide().html($(this).data("content"));
+                var x = $(".u-memberRights").length>(6*(lineNum+1))?(lineNum+1)*6-1:$(".u-memberRights").length-1;
+                $(".u-memberRights").eq(x).after($('.u-detailRights'))
+                $('.u-detailRights').slideDown();
+            })
+        }
+    </script>
+</body>
+</html>

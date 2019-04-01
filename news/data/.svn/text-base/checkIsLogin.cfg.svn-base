@@ -1,0 +1,50 @@
+var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js');
+
+exports.itfconf = function() {
+	return new CurrentAPI().conf();
+}
+
+exports.itfleft = function(req,res,fld,fle) {
+	return new CurrentAPI().output(req,res,fld,fle);
+}
+
+var CurrentAPI = gapi.AuthorizeAPI.extend({
+    conf: function() { return { auth: true,
+        	type: "json",
+        	itfs: [
+	            {
+	                host: ghost.dscm.makercenter.addr,
+	                port: ghost.dscm.makercenter.port,
+	                iurl: "/pcArticle?actn=getArticleInfo",
+	                uuid: "pcArticle",
+	                meth: "post",
+	                type: "sdcm",
+	                next: [],
+	                func: function(req,res,fld,fle){
+	                	return new CurrentAPI("pcArticle").
+	                		callFunc(req,res,fld,fle);
+	                }
+	            }
+        	]
+    	};
+    },
+
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		var ip = gapi.getIPv4(req.user.addr),
+			userId = req.session.user.userId;
+		var output = {
+			userName : req.session.user.userName,
+			ventureStatus : req.session.user.ventureStatus,
+			ventureLevel : req.session.user.ventureLevel,
+			idealStatus : req.session.user.idealStatus,
+			idealLevel : req.session.user.idealLevel
+		}
+		res.jsonp(gapi.toResult(0,"success",output));
+		return null ;
+	},
+
+	doOutput: function(req, res, fld, fle) {
+		
+	}
+});

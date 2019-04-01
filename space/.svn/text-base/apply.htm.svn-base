@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>申请星空会会员</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#232323">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" sizes="192x192" href="/webrexco/static/img/ideal/icon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/webrexco/static/img/ideal/icon-120.png">
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/space/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/space/apply.css">
+    <script>window.headerMap = {headerCodeMap:{'0': 1 }}</script>
+  </head>
+  <body>
+     
+    <% include ../cmn/header.ejs %>
+    <div class="header">
+      <div class="title">申请星空会会员</div>
+      <div class="subtitle">申请只需两步，第1步填写资料，第2步入资</div>
+    </div>
+    <div class="content">
+      <div class="userinfo">
+        <div class="avatar"></div>
+        <div class="username"></div>
+      </div>
+      <form>
+        <div class="input">
+          <label class="label" for="input-referer">引荐人</label>
+          <input id="input-referer" type="text" data-name="引荐人" maxlength="32" placeholder="请填写引荐人" name="toUserName" required>
+        </div>
+        <div class="input">
+          <label class="label" for="input-company">公司名称</label>
+          <input id="input-company" type="text" data-name="公司全称" maxlength="32" placeholder="请填写公司全称" name="companyName" required>
+        </div>
+        <div class="input">
+          <label class="label" for="input-money">注册资本</label>
+          <input class="wan" id="input-money" type="text" data-name="注册资本" maxlength="16" pattern="\d+(\.\d{1,2})?" placeholder="请填写注册资本" name="registeredCapital" required>
+          <label class="wan" for="input-money">万元</label>
+        </div>
+        <div class="input">
+          <label class="label" for="input-industry">行业类型</label>
+          <input id="input-industry" type="text" data-name="行业类型" maxlength="16" placeholder="请填写行业类型" name="industryType" required>
+        </div>
+        <div class="input">
+          <label class="label" for="input-name">真实姓名</label>
+          <input id="input-name" type="text" data-name="您的真实姓名" maxlength="16" placeholder="请填写真实姓名" name="realName" required>
+        </div>
+        <div class="input">
+          <label class="label">性别</label>
+          <select id="input-gender" data-id="input-gender-select" name="gender" data-name="您的性别" required>
+            <option disabled selected>请选择性别</option>
+            <option value="0">男</option>
+            <option value="1">女</option>
+          </select>
+        </div>
+        <div class="input">
+          <label class="label" for="input-phone">手机号码</label>
+          <input id="input-phone" type="text" inputmode="tel" pattern="1[34578]\d{9}" maxlength="11" data-name="手机号码" placeholder="请填写手机号码" name="phone" required>
+        </div>
+        <div class="input">
+          <label class="label">职位</label>
+          <select id="input-position" data-id="input-position-select" data-name="您的职位" required>
+            <option disabled selected value="">请选择职位</option>
+            <option value="法人/创始人">法人/创始人</option>
+            <option value="合伙人">合伙人</option>
+            <option value="总裁">总裁</option>
+            <option value="执行总裁">执行总裁</option>
+            <option value="董事长">董事长</option>
+            <option value="董事">董事</option>
+            <option value="CEO">CEO</option>
+            <option value="总经理">总经理</option>
+            <option value="副总经理">副总经理</option>
+            <option value="总监">总监</option>
+            <option value="自定义">自定义</option>
+          </select>
+          <input id="input-position-value" maxlength="10" type="text" data-name="您的职位" placeholder="请填写职位" name="position" required>
+        </div>
+        <div class="input">
+          <label class="label">上传名片</label>
+          <input id="input-file" type="file" data-name="您的名片" name="nameCardPath" accept=".jpg, .jpeg, .png, .gif" required>
+          <label class="file-label" id="input-file-label" for="input-file">
+            <div class="file-label-name placeholder" id="input-file-name">请上传名片</div>
+            <div class="file-label-button">浏览</div>
+          </label>
+          <div class="tip">* 最大5M，jpg、png、gif</div>
+        </div>
+        <div class="input">
+          <label class="label">名片反面</label>
+          <input id="input-file-2" type="file" data-name="您的名片反面" name="namecardPathOpposite" accept=".jpg, .jpeg, .png, .gif" required>
+          <label class="file-label" id="input-file-2-label" for="input-file-2">
+            <div class="file-label-name placeholder" id="input-file-2-name">请上传名片反面</div>
+            <div class="file-label-button">浏览</div>
+          </label>
+          <div class="tip">* 最大5M，jpg、png、gif</div>
+        </div>
+        <div class="button" id="submit">下一步</div>
+      </form>
+    </div>
+     
+    <% include ../cmn/footer.ejs %>
+    <script src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script src="/webrexco/static/js/header.js"></script>
+    <script src="/webrexco/static/js/space/select.js"></script>
+    <script src="/webrexco/activity/login/show.js"></script>
+    <script>var type = 0, name = '星空会'</script>
+    <script>$("select").select();
+
+if (typeof FormData === "undefined") {
+    util.tipsModal(1, "您的浏览器版本过旧，请使用更新的浏览器", function () {
+        history.back();
+    }, function () {
+        history.back();
+    });
+}
+
+function step2(id) {
+    location.href = "charge.htm?id=" + id;
+}
+
+$.ajax({
+    url: "/webrexco/" + (type == 0 ? "space" : "ideal") + "/info.cgi",
+    method: "POST",
+    timeout: 10000,
+    success: function (result) {
+        $(".avatar").css("background-image", "url(//adtp.cnaidai.com/data/avatar/" + result.userId + "_avatar_middle.jpg)");
+        $(".username").text(result.username);
+
+        if (result.code == 401) {
+            showIframe("/webrexco/activity/login/login.htm?refresh=1");
+            return;
+        }
+
+        // 引荐人还未同意你的申请
+        if (result.code == 6025) {
+            util.tipsModal(1, result.message, function () {
+                history.back();
+            }, function () {
+                history.back();
+            });
+            return;
+        }
+
+        // 未认证
+        if (result.code == 4003 || result.code == 4004) {
+            util.tipsModal(1, result.message, function () {
+                location.href = "/webrexco/uc/account.htm";
+            }, function () {
+                location.href = "/webrexco/uc/account.htm";
+            });
+            return;
+        }
+
+        // 已申请成功
+        if (result.code == 6026 || result.code == 6027) {
+            if (result.level == 1) {
+                step2();
+                return;
+            }
+
+            util.tipsModal(1, result.message, function () {
+                history.back();
+            }, function () {
+                history.back();
+            });
+            return;
+        }
+
+        // 已入资
+        if (result.code == 6034 || result.code == 6035) {
+            util.tipsModal(1, result.message, function () {
+                history.back();
+            }, function () {
+                history.back();
+            });
+            return;
+        }
+
+        // 已填写资料
+        if (result.code == 6029) {
+            step2(result.applyId);
+            return;
+        }
+
+        // 审核被拒绝
+        if (result.code == 6031 || result.code == 6032) {
+            util.tipsModal(1, result.message, function () {
+                history.back();
+            }, function () {
+                history.back();
+            });
+            return;
+        }
+
+        if (result.code != 6036 && result.code !== 0) {
+            util.tipsModal(2, result.message);
+            return;
+        }
+
+        var custom = false;
+
+        // 有保存的资料记录
+        if (result.code == 6036) {
+            var user = result.owner;
+            $("#input-name").val(user.realName);
+            $("#input-gender")[0].selectedIndex = user.gender + 1;
+            $("#input-company").val(user.companyName);
+            $("#input-type")[0].selectedIndex = ["web产品", "app应用", "web和app都有", "公众微信号", "有实体"].indexOf(user.companyType) + 1;
+
+            var index = ["法人/创始人", "合伙人", "总裁", "执行总裁", "董事长", "董事", "CEO", "总经理", "副总经理", "总监"].indexOf(user.position);
+            if (index == -1) {
+                index = 10;
+                custom = true;
+            }
+            $("#input-position")[0].selectedIndex = index + 1;
+            $("#input-position-value").val(user.position);
+
+            $("#input-indroduction").val(user.projectIntroduction);
+            $("#input-advantage").val(user.productAdvantage);
+            $("#input-target").val(user.targetUser);
+            $("#input-team").val(user.teamAdvantage);
+        }
+
+        var user = type == 0 ? result.iOwner : result.bOwner;
+        if (user) {
+            if (user.referer)
+                $("#input-referer").attr("readonly", "readonly").val(user.referer);
+
+            $("#input-name").attr("readonly", "readonly").val(user.realName);
+            $("#input-gender").attr("readonly", "readonly")[0].selectedIndex = user.gender + 1;
+            $("#input-company").attr("readonly", "readonly").val(user.companyName);
+
+            var index = ["法人/创始人", "合伙人", "总裁", "执行总裁", "董事长", "董事", "CEO", "总经理", "副总经理", "总监"].indexOf(user.position);
+            if (index == -1) {
+                index = 10;
+                custom = true;
+            }
+            $("#input-position").attr("readonly", "readonly")[0].selectedIndex = index + 1;
+            $("#input-position-value").attr("readonly", "readonly").val(user.position);
+        }
+
+        $("select").each(function () {
+            $("#" + $(this).data("id")).remove();
+        }).select();
+
+        if (custom)
+            $("#input-position-select").addClass("custom");
+
+        $("#input-type").change(function () {
+            var $this = $(this);
+            var text = $this.children(":selected").text();
+            $("#input-type-value").val(text);
+        }).change();
+
+        $("#input-position").change(function () {
+            var $this = $(this);
+            var text = $this.children(":selected").text();
+            if (text == "自定义") {
+                if ($("#input-position-select").is(".custom"))
+                    return;
+                $("#input-position-value").val("").change();
+                $("#input-position-select").addClass("custom");
+            }
+            else {
+                $("#input-position-value").val(text).change();
+                $("#input-position-select").removeClass("custom");
+            }
+        });
+
+        if (type == 0) {
+            $("#input-file").change(function () {
+                var fileName = this.value.split('\\').pop();
+                if (fileName != "")
+                    $("#input-file-name").removeClass("placeholder").text(fileName).attr("title", fileName);
+                else
+                    $("#input-file-name").addClass("placeholder").text("请上传名片").attr("title", "");
+            }).change();
+
+            $("#input-file-2").change(function () {
+                var fileName = this.value.split('\\').pop();
+                if (fileName != "")
+                    $("#input-file-2-name").removeClass("placeholder").text(fileName).attr("title", fileName);
+                else
+                    $("#input-file-2-name").addClass("placeholder").text("请上传名片反面").attr("title", "");
+            }).change();
+        } else {
+            $("#input-file").change(function () {
+                var fileName = this.value.split('\\').pop();
+                if (fileName != "")
+                    $("#input-file-name").removeClass("placeholder").text(fileName).attr("title", fileName);
+                else
+                    $("#input-file-name").addClass("placeholder").text("选填，如果有完整的计划书，更能得到投资人青睐").attr("title", "");
+            }).change();
+        }
+
+        $("input, select, textarea").focus(function () {
+            var $this = $(this);
+            if (!$this.is("[required]"))
+                return;
+
+            var val = $this.val();
+            if (val == null || $.trim(val) == "")
+                $this.addClass("invalid");
+        }).on("input change", function () {
+            var $this = $(this);
+            var val = $this.val();
+            if ($this.is("[required]") &&
+                (val == null || $.trim(val) == "")) {
+                if ($this.is("select") || $this.is("[type=file]"))
+                    $this.data("error", "请选择" + $this.data("name"));
+                else
+                    $this.data("error", "请填写" + $this.data("name"));
+                $this.addClass("invalid");
+                return;
+            }
+
+            var pattern = $this.attr("pattern");
+            if (pattern && !val.match("^" + pattern + "$")) {
+                $this.data("error", "请正确填写" + $this.data("name"));
+                $this.addClass("invalid");
+                return;
+            }
+
+            var maxlength = $this.attr("maxlength");
+            if (maxlength && val.length > maxlength) {
+                $this.data("error", $this.data("name") + "超出长度限制");
+                $this.addClass("invalid");
+                return;
+            }
+
+            var accept = $this.attr("accept");
+            if (accept) {
+                var list = accept.split(", ");
+                var ext = $this.val();
+                if (ext != "") {
+                    ext = ext.substr(ext.lastIndexOf("."));
+                    if (list.indexOf(ext) == -1) {
+                        $this.data("error", $this.data("name") + "的文件类型被禁止");
+                        $this.addClass("invalid");
+                        return;
+                    }
+                }
+            }
+
+            $this.removeClass("invalid");
+        });
+
+        $("#submit").click(function () {
+            var $this = $(this);
+            if ($this.hasClass("disabled"))
+                return;
+
+            $("input, select, textarea").change();
+            var invalid = $(".invalid");
+            if (invalid.length) {
+                util.tipsModal(2, invalid.data("error"));
+                return;
+            }
+
+            $this.addClass("disabled").text("正在提交");
+
+            if (type == 1 && $("#input-file").val() == "") {
+                var input = $("#input-file");
+                var name = input.attr("name");
+                var accept = input.attr("accept");
+                var data = input.data("name");
+
+                var next = input.next();
+                input.remove();
+                next.before($("<input>").attr({ id: "input-file", type: "hidden", name: name, value: "", "data-accept": accept, "data-name": data }));
+            }
+
+            var data = new FormData($("form")[0]);
+            $.ajax({
+                url: "/webrexco/" + (type == 0 ? "space" : "ideal") + "/apply.cfi",
+                method: "POST",
+                timeout: 10000,
+                contentType: false,
+                data: data,
+                processData: false,
+                success: function (data) {
+                    if (data.code == 401) {
+                        showIframe("/webrexco/activity/login/login.htm");
+                        return;
+                    }
+
+                    if (data.code == -300000) {
+                        if (data.message == "fileerr")
+                            util.tipsModal(2, "文件类型被禁止");
+                        else
+                            util.tipsModal(2, "文件大小超出限制");
+                    }
+
+                    if (data.code !== 0) {
+                        util.tipsModal(2, data.message);
+                        $this.removeClass("disabled").text("下一步");
+
+                        if (type == 1 && $("#input-file").val() == "") {
+                            var input = $("#input-file");
+                            var name = input.attr("name");
+                            var accept = input.data("accept");
+                            var data = input.data("name");
+
+                            var next = input.next();
+                            input.remove();
+                            next.before($("<input>").attr({ id: "input-file", type: "file", accept: accept, name: name, "data-name": data }));
+                        }
+
+                        return;
+                    }
+
+                    step2(data.applyId);
+                },
+                error: function () {
+                    util.tipsModal(2, "系统异常");
+                    $this.removeClass("disabled").text("下一步");
+                    if (type == 1 && $("#input-file").val() == "") {
+                        var name = $("#input-file").attr("name");
+                        $("#input-file").after($("<input>").attr({ id: "input-file", type: "file", accept: "image/*", name: name })).remove();
+                    }
+                }
+            });
+        });
+
+        $(".step-1").show();
+    },
+    error: function () {
+        util.tipsModal(2, "系统异常");
+    }
+});
+
+function loginCanceled() {
+    history.back();
+}
+
+    </script>
+  </body>
+</html>

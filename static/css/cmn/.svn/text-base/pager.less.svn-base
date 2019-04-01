@@ -1,0 +1,26 @@
+.prev, .page, .next {
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 8px;
+    min-width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #999999;
+    text-align: center;
+    border: 1px solid #E3E3E3;
+    user-select: none;
+    border-radius: 3px;
+    margin-right: 4px;
+    cursor: pointer;
+
+    &.current, &:hover {
+        background-color: #c8a676;
+        color: #FFFFFF;
+    }
+}
+
+.next {
+    margin-right: 0;
+}

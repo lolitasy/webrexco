@@ -1,0 +1,79 @@
+﻿var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js');
+
+exports.itfconf = function() {
+    return new CurrentAPI().conf();
+}
+
+exports.itfleft = function(req,res,fld,fle) {
+    return new CurrentAPI().output(req,res,fld,fle);
+}
+
+var CurrentAPI = gapi.BaseAPI.extend({
+    conf: function() { return { auth: false,
+            type: "json",
+            itfs: [
+                {
+                    host: ghost.dscm.makercenter.addr,
+                    port: ghost.dscm.makercenter.port,
+                    iurl: "/appPhoneCodeApp?actn=sendSms",
+                    uuid: "appPhoneCodeApp",
+                    meth: "post",
+                    type: "sdcm",
+                    next: [],
+                    func: function(req,res,fld,fle){
+                        return new CurrentAPI("appPhoneCodeApp").
+                            callFunc(req,res,fld,fle);
+                    }
+                }
+            ]
+        };
+    },
+
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		var phone = gapi.getParameter(req, "username");
+		var ip = gapi.getIPv4(req.user.addr);
+		if(gapi.emptyEqual(phone,"")) {
+			res.jsonp(gapi.toResult(1, "手机号不能为空"));
+			ghost.getLogger().info("[doCallFunc]IP：%s, service: login.sendPhoneCode, dc:appPhoneCodeApp.sendSms, message: 'param error', param: phone=%s", ip, phone);
+			return null;
+		}
+		if(req.session.vCode&&phone!=req.session.vCode.phone) {
+		 	req.session.vCode = null;
+		}
+		if(req.session.vCode&&req.session.vCode.expire&&Date.now()<req.session.vCode.expire) {
+			res.jsonp(gapi.toResult(1, "发送验证码太频繁，请稍后再试"));
+			ghost.getLogger().info("[doCallFunc]IP：%s, service: login.sendPhoneCode, dc:appPhoneCodeApp.sendSms, message: 'too many sendSms call'", ip);
+			return null;
+		}
+		ghost.getLogger().info("[doCallFunc]IP：%s, service: login.sendPhoneCode, dc:appPhoneCodeApp.sendSms, message: 'param', param: phone=%s", ip, phone);
+		return {
+			"claz" : "['java.lang.String']",
+			"json" : [phone]
+		};
+	},
+	doOutput: function(req, res, fld, fle) {
+		var ip = gapi.getIPv4(req.user.addr);
+		if(!req.rslt['appPhoneCodeApp']){
+			ghost.getLogger().error("[doOutput]IP：%s, service: login.sendPhoneCode, dc:appPhoneCodeApp.sendSms, message: 'rslt is null', rslt: %s", ip, JSON.stringify(req.rslt['appPhoneCodeApp']));
+			return gapi.toResult(500, "系统异常");
+		}
+		if(gapi.emptyNoequal(req.rslt['appPhoneCodeApp'].code, 0)) {
+			//这里根据后端服务返回的code值不同提示信息不同
+			if(gapi.emptyEqual(req.rslt['appPhoneCodeApp'].message, "")) {
+				req.rslt['appPhoneCodeApp'].message = "失败";
+			}
+			ghost.getLogger().error("[doOutput]IP：%s, service: login.sendPhoneCode, dc:appPhoneCodeApp.sendSms, message: 'rslt error', rslt: %s", ip, JSON.stringify(req.rslt['appPhoneCodeApp']));
+			return gapi.toResult(202, req.rslt['appPhoneCodeApp'].message);
+		}
+		//TODO 保存验证码到session中 
+		req.session.vCode = {
+			"expire":Date.now()+60*1000,//对比时间
+		 	"vCode":req.rslt['appPhoneCodeApp'].valicode,//验证码
+			"phone": gapi.getParameter(req, "username")?gapi.getParameter(req,"username"):req.session.vCode.phone
+		};
+		console.log(req.session.vCode);
+		ghost.getLogger().info("[doOutput]IP：%s, service: login.sendPhoneCode, dc: appPhoneCodeApp.sendSms, message: 'vCode for test', rslt: %s", ip, JSON.stringify(req.rslt['appPhoneCodeApp']));
+		return gapi.toResult(200, "发送成功");
+	}
+});

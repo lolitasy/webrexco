@@ -1,0 +1,123 @@
+<% include ../../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>摆渡星空-账户主页</title>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/uc/common.css"/>
+    <link rel="stylesheet" href="/webrexco/static/css/uc/style.css"/>
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script src="/webrexco/static/js/cmn/pager.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <script type="text/javascript">
+        window.tplObj={
+            "data":{
+                "menuMap":{"0":1}
+            }
+        };
+    </script>
+    <style type="text/css">
+        .pager{
+            text-align: center;
+            margin: 20px 0 20px 0;
+        }
+    </style>
+</head>
+<body style="background: #fff;height: auto;">
+    <% include ../../cmn/header.ejs %>
+    <% include ../../cmn/user_banner.ejs %>
+    <div class="m-con clearfix">
+        <div class="m-leftNav">
+            <% include ../../cmn/user_left.ejs %>
+        </div>
+        <div class="user_right"> 
+            <div class="user_right_menu f-cf">
+                <ul id="tab" class="list-tab clearfix f-fl">
+                    <li class="tabactive">
+                        <a class="one titleover">我的参与</a> 
+                    </li>
+                    <li>
+                        <a class="two" href="/webrexco/uc/events/release.htm">我的发起</a>
+                    </li>
+                </ul>
+                <div class="m-startupUrl f-fr">
+                    <a href="/webrexco/uc/events/startup.htm">发布活动</a>
+                </div>
+            </div>
+            <div class="m-con-activity J_activity">
+                <div class="J_list J_joinTpl">
+                    <div class="J_noactivity" style="display: none;">
+                        <img src="/webrexco/static/img/uc/noactivity.png">
+                        <p>你还没有参与任何活动，立即<a href="/webrexco/news/index.htm?activity=1">查看活动</a></p>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    <% include ../../cmn/footer.ejs %>
+    <script type="text/javascript" src="/webrexco/static/js/uc/index.js"></script>
+    <script type="text/template" id="tpl_join">
+        <# for(var i=0;i<data.myJoinActivity.list.length;i++) { #>
+        <# var item = data.myJoinActivity.list[i]; #>
+        <div class="m-list-activity f-ofh">
+            <div class="m-left-activity f-fl">
+                <img src="<#=item.posterUrl#>">
+            </div>
+            <div class="m-right-activity f-fl">
+                <h2><#=item.name#></h2>
+                <p><#=item.startTime.substring(0, 19)#> ～ <#=item.endTime.substring(0, 19)#></p>
+                <p>（<#=item.province#><#=item.city#>）<#=item.address#></p>
+                <a href="/webrexco/events/detail.htm?id=<#=item.id#>"><p class="u-btn-activity">查看详情</p></a>
+            </div>
+        </div> 
+        <# } #>
+        <div class="pager"></div>
+    </script>
+     
+    <script type="text/javascript">
+        $().ready(function(){
+            join(1);
+        })
+        
+        function join(pageIndex){
+            var data={
+                "pageSize": 5,
+                "currentPage": pageIndex
+            };
+            baseModel.get({
+                url: "/webrexco/uc/data/myJoinActivity.cgi",
+                data:data,
+                success: function(rslt){
+                    if(rslt.code!=0&&rslt.code!=401){
+                        util.tipsModal(2,rslt.message);
+                    }else if(rslt.code==401){
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else if(rslt.code==0) {
+                        if (rslt.myJoinActivity.list.length>0) {
+                            var page=rslt.myJoinActivity.page;
+                            var current=rslt.myJoinActivity.page.currentPage;
+                            baseView.render("#tpl_join",rslt,".J_joinTpl");
+                            if (page.pages) {
+                                $(".pager").empty().pager({
+                                    current:pageIndex,
+                                    total:page.pages
+                                }).on("page", function (e, current) {
+                                    join(current);
+                                });
+                            } else {
+                                $(".pager").hide();
+                            }
+                        }else{
+                            $(".J_noactivity").show();
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<% include ../../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>实名认证</title>
+	<link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/uc/common.css"/>
+    <link rel="stylesheet" href="/webrexco/static/css/uc/style.css"/>
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/uc/index.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/uc/realName/area.js"></script>
+	<style type="text/css">
+	 	/**步骤效果**/
+	 	.findpwdTips{
+	 		font-size:16px;
+	 		line-height:86px; 
+	 		width: 910px; 
+	 		margin: 0 auto;
+	 		margin-top: 60px;
+	 	}
+	 	.findpwdTips .setpShort{
+	 		float: left;
+		    display: inline-block;
+		    width: 105px;
+		    height: 10px;
+		    margin-top: 38px;
+		    background: url(/webrexco/static/img/uc/realname.png) no-repeat -472px -48px;
+		}
+		.unsetpShort{
+	 		float: left;
+		    display: inline-block;
+		    width: 105px;
+		    height: 10px;
+		    margin-top: 38px;
+		    background: url(/webrexco/static/img/uc/realname.png) no-repeat -472px -30px;
+		}
+		.J_line3{
+			 background: url(/webrexco/static/img/uc/realname.png) no-repeat -472px -30px;
+		}
+		.findpwdTips .setpLong{
+			float: left;
+			display: inline-block;
+			width: 168px;
+			height: 10px;
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -472px -1px;
+			margin-top: 38px;
+        }
+        .findpwdTips .unsetpLong{
+			float: left;
+			display: inline-block;
+			width: 168px;
+			height: 10px;
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -472px -15px;
+			margin-top: 38px;
+        }
+        .findpwdTips .realstep{
+        	float: left;
+			display: inline-block;
+			width: 80px;
+			height: 86px;
+			margin: 0 20px;
+        }
+        .findone{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -186px -0px;
+		}
+		.findtwo{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -279px -0px;
+		}
+		.findthree{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -370px -0px;
+		}
+		.findone{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -186px -0px;
+		}
+		.finduntwo{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -0px -0px;
+		}
+		.findunthree{
+			background: url(/webrexco/static/img/uc/realname.png) no-repeat -92px -0px;
+		}
+        .findpwd-title{font-size:24px;line-height:86px;border-bottom:2px solid #ccc;}
+        .findpwdProcess{padding:23px 82px;}
+        
+        .findpwdTips1{color:#333;font-size:16px;}
+		.findPwdStepOne, .findPwdStepTwo, .findPwdStepThree{width:400px;margin:36px auto;text-align: center;}
+		.coninput {
+		    width: 286px;
+		    height: 40px;
+		    line-height: 40px;
+		    padding-left: 15px;
+		    border: 1px solid #d3d3d3;
+		    font-size: 14px;
+		    border-radius: 3px;
+		    background: #fff;
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+		}
+		.f-pr{
+			position: relative;
+			margin: 30px 0 0 0;
+		}
+		.u-input{
+			float: left;
+			line-height: 40px;
+			width: 98px;
+			height: 40px;
+			text-align: right;
+			padding-right: 20px;
+		}
+		.short {
+		    width: 154px;
+		    height: 40px;
+		}
+		.proving {
+		    position: absolute;
+		    left: 292px;
+		    width: 118px;
+		    height: 40px;
+		    line-height: 35px;
+		    text-align: center;
+		    background: #f5f5f5;
+		    color: #999;
+		    text-decoration: none;
+		    border: 1px solid #d3d3d3;
+		    border-radius: 3px;
+		    font-size: 16px;
+		}
+		.m-phone{
+			width: 417px;
+    		margin: 0 auto;
+    		margin-top: 120px;
+		}
+		.m-idCard{
+			width: 417px;
+			margin: 0 auto;
+    		margin-top: 120px;
+		}
+		.m-onCard{
+			width: 417px;
+			margin: 0 auto;
+			margin-top: 76px; 
+		}   
+		.nextbtn{
+			width: 298px;
+			height: 40px;
+			background: #c8a676;
+			line-height: 40px;
+			border-radius: 3px;
+			border: 0px;
+			color: #fff;
+			font-size: 18px;
+			float: right;
+			cursor: pointer;
+			text-align: center;
+		}
+		.u-red{
+			color:#fd2337;
+		}
+		.tips {
+            position: absolute;
+            font-size: 12px;
+            color: #c8a676;
+            line-height: 30px;
+            text-indent: 15px;
+            margin-left: 114px;
+        }
+        .f-pr #province,.f-pr #city{
+        	width: 145px;
+		    height: 40px;
+		    line-height: 40px;
+		    padding-left: 15px;
+		    border: 1px solid #d3d3d3;
+		    font-size: 14px;
+		    border-radius: 3px;
+		    appearance:none;
+			-moz-appearance:none; /* Firefox */
+			-webkit-appearance:none; /* Safari 和 Chrome */
+			background:url(/webrexco/static/img/uc/down.png) no-repeat 116px center;
+        }
+        .f-pr #bank{
+        	width: 298px;
+		    height: 40px;
+		    line-height: 40px;
+		    padding-left: 15px;
+		    border: 1px solid #d3d3d3;
+		    font-size: 14px;
+		    border-radius: 3px;
+		    appearance:none;
+			-moz-appearance:none; /* Firefox */
+			-webkit-appearance:none; /* Safari 和 Chrome */
+			background:url(/webrexco/static/img/uc/down.png) no-repeat 270px center;
+        }
+        .f-pr span{
+        	line-height: 40px;
+        }
+        .name-error,.usercard{
+        	position: absolute;
+    		left: 0;
+    		top: 0;
+    		width: 984px;
+        }
+   
+	</style>
+	<script type="text/javascript">
+        window.tplObj={
+            "data":{
+                "menuMap":{"0":0}
+            }
+        };
+    </script>
+</head>
+<body style="background: #fff;height: auto;">
+	<div class='g-hd'>
+		<% include ../../cmn/header.ejs %>
+	</div>
+	<div class='g-bd'>
+		<% include ../../cmn/user_banner.ejs %>
+		<div class="m-con clearfix">
+	        <div class="m-leftNav">
+	            <% include ../../cmn/user_left.ejs %>
+	        </div>
+	        <div class="user_right"> 
+	           	<div class='findpwdTips f-cf'>
+                    <b class='setpShort'></b>
+                    <span class='realstep findone'></span>
+                    <b class='setpLong J_line2'></b>
+                    <span class='realstep findtwo J_step2'></span>
+                    <b class='setpLong J_line2'></b>
+                    <span class='realstep findunthree J_step3'></span>
+                    <b class='unsetpShort J_line3'></b>
+                </div>
+                <!--身份认证-->
+                <div class="m-idCard">
+                    <form class="idCardfFrom">
+                        <div class="f-pr clearfix">
+                            <span class="u-input">真实姓名</span>
+                            <input type="text" name="realname" id="realname" placeholder="请输入您的真实姓名" class="coninput"/>
+                            <div class="tips">
+	                            <span class="name-error"></span>
+	                        </div>
+                        </div>
+                        <div class="f-pr clearfix">
+                            <span class="u-input">身份证号码</span>
+                            <input type="text" name="idCard" id="idCard" placeholder="请输入您的身份证号码" class="coninput">
+                            <div class="tips">
+	                            <span class="usercard"></span>
+	                        </div>
+                        </div>
+                        <div class="f-pr clearfix">
+                            <span class="u-valiCode u-input">验证码</span>
+	                        <input type="text" name="valiCode" id="valiCode" placeholder="请输入图形验证码" class="short coninput">
+	                        <a href="javascript:;" class="proving"><img id="validimg" class="codeimg" src="login.cci?w=160&amp;h=40&amp;f=34&amp;o=60&amp;q=60" alt="点击刷新" onclick="this.src='login.cci?w=160&amp;h=40&amp;f=34&amp;o=60&amp;q=60&amp;t=' + Math.random();" align="absmiddle"></a>
+	                        <div class="tips">
+	                            <span></span>
+	                        </div>
+                        </div>
+                        <div class="f-pr clearfix">
+							<span id="btnidcard" class="nextbtn">下一步</span>
+                        </div>
+                    </form>
+                </div>
+        	</div> 
+	    </div> 
+	</div>
+	<div class='g-ft'>
+		<% include ../../cmn/footer.ejs %>
+	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		getRealName();
+		//光标进入的时候，显示叉叉，移除的时候叉叉小时消失
+	    $(".f-pr input").mousedown(function(){
+	        $(this).css('border', '1px solid #c8a676');
+	        $(this).css('background-color', '#fff');
+	    });
+	    $(".f-pr input").blur(function(){
+	        $(this).css('border', '1px solid #d3d3d3');
+	        $(this).css('background-color', '#fff');
+	    });
+	    $("#realname").keyup(function(){
+        	isrealName();
+	    });
+	    $("#realname").blur(function(){
+	        isrealName();
+	    });
+	    //判断输入时候的身份证号码
+	    $("#idCard").keyup(function(){
+	        isIDCard();
+	    });
+	    //判断身份证号码
+	    $("#idCard").blur(function(){
+	       isIDCard();
+	    });
+	    //验证码
+	    $('#valiCode').keyup(function(){
+	        var verif=this.value;
+	        if(verif.length==4){
+	            checkVerifyCode();
+	        }
+	    });
+	    $('#valiCode').blur(function(){
+	        checkVerifyCode();
+	    });
+	    $("#validimg").click(function(){
+	        $('#valiCode').val("");
+	    });
+	      // 实名
+	    $("#btnidcard").click(function(){
+	        isrealName();
+	        checkVerifyCode();
+	        isIDCard(); 
+	        if(($(".name-error").html().length>0 )|| ($("#idCard").siblings(".tips").children("span").html().length>0 )||($("#valiCode").siblings(".tips").children("span").html().length>0)){
+	            return;
+	        }else{
+	        	cardidSubmit();
+	        }
+	        if ($('#btnidcard').hasClass('norealName')) {
+	        	getRealName();
+	        }
+	        
+	    });
+	});
+	//图形验证码
+	function checkVerifyCode(){
+	    var verifyCode =$('#valiCode').val();
+	    if(undefined == verifyCode||"" == verifyCode){
+	        $('#valiCode').siblings(".tips").children("span").html("验证码输入错误");
+	        return;
+	    }
+	    var data={
+	        "verifyCode":verifyCode
+	    };
+	    $.ajax({
+	        type: "get",
+	        url:"/webrexco/regist/checkVerifyCode.cgi",
+	        data:data,
+	        cache:false,
+	        success:function(rslt){
+	            if(rslt.code!=0){//图形验证码错误,验证码刷新
+	                $('#valiCode').siblings(".tips").children("span").html("验证码输入错误");
+	                $('#validimg').attr('src',"login.cci?w=160&h=40&f=34&o=60&q=60&t=" + Math.random());//验证失败验证码刷新
+	                $('#valiCode').val("");
+	            }else{
+	                $('#valiCode').siblings(".tips").children().html("");
+	            }
+	        }
+	    });
+	}
+	function isrealName(){
+	    var name=/^[\u4e00-\u9fa5]{1,6}$/;//检验姓名：姓名是2-15字的汉字
+	    var realname=$('#realname').val();
+	    if(realname==''||undefined==realname){
+	        $("#realname").siblings(".tips").children("span").html("真实姓名不能为空");
+	        return;
+	    }
+	    if (!name.test(realname)) {
+	        $("#realname").siblings(".tips").children("span").html("真实姓名格式不正确");
+	    }else{
+	        $("#realname").siblings(".tips").children("span").html("");
+	    }
+	}
+	function isIDCard(){
+	    var uesrIdcard=/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/;//检验是否为身份证号码
+	    var idCard=$('#idCard').val();
+	    if(idCard==''||undefined==idCard){
+	        $("#idCard").siblings(".tips").children("span").html("身份证号码不能为空");
+	        return;
+	    }
+	    if (!uesrIdcard.test(idCard)) {
+	        $("#idCard").siblings(".tips").children("span").html("身份证号码格式不正确");
+	        return;
+	    }else{
+	        $("#idCard").siblings(".tips").children("span").html("");
+	    }
+	}
+	function cardidSubmit(){
+	    var data=$(".idCardfFrom").serialize();
+	    $('#btnidcard').html("实名认证中...");
+	    $.ajax({
+	        type:"get",
+	        url:'/webrexco/uc/data/cardidSubmit.cgi',
+	        data:data,
+	        cache:false,
+	        success:function(rslt){
+	            if(rslt.code==0){
+	            	util.tipsModal(1,"请稍等，大概需要几秒",function(){
+	            		location.href="/webrexco/uc/account.htm"
+	            		$('#btnidcard').removeClass('norealName');
+	            	});
+	            	$('#btnidcard').addClass('norealName');
+	                return;
+	            }else if(rslt.code==401){
+	            	var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+	                return;
+	            }else if(rslt.code==-1) {
+	            	$('#idCard').siblings(".tips").children("span").html(rslt.message);
+	            }else{
+	                var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+	               	$(".name-error").html(errMsg);
+	                $("#phoneCode").val("");
+	                return;
+	            }
+	        },
+	        complete:function(rslt){
+                 $("#btnidcard").text('下一步'); 
+            }
+	    })
+	}
+	function getRealName(){
+	    $.ajax({
+	        type:"get",
+	        url:'/webrexco/uc/data/getRealName.cgi',
+	        cache:false,
+	        success:function(rslt){
+	            if(rslt.code==0){
+	            	if (rslt.realStatus==1) {
+	            		if ($('#btnidcard').hasClass('norealName')) {
+	            			location.href="/webrexco/uc/realName/onCard.htm"
+	            		}else{
+	            			util.tipsModal(1,"实名已认证，无需再认证",function(){
+            					location.href="/webrexco/uc/realName/onCard.htm";
+            				});
+            				$('.u-modalClose').click(function(){
+            					location.href="/webrexco/uc/account.htm";
+            				});
+	            		}
+                    }
+                    if (rslt.realStatus==0) {
+                    	return;
+                    }
+	            }else if(rslt.code==401){
+	                var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+	                return;
+	            }else{
+	                var errMsg = rslt.message||"返回数据异常,请刷新重试!";
+	                console.log(errMsg);
+	                return;
+	            }
+	        }
+	    })
+	}
+	</script>
+</body>
+</html>

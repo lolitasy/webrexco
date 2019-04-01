@@ -1,0 +1,30 @@
+.button {
+    box-sizing: border-box;
+    margin-top: 55px;
+    margin-right: 25px;
+    height: 35px;
+    line-height: 35px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 20px;
+    border: none;
+    border-radius: 3px;
+    background-color: #c8a676;
+    font-size: 18px;
+    color: #FFFFFF;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+
+    &.white {
+        background-color: #FFFFFF;
+        border: 1px solid #c8a676;
+        color: #666666;
+    }
+
+    &[disabled] {
+        cursor: default;
+        background-color: #AAAAAA;
+    }
+}

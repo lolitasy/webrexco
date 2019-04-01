@@ -1,0 +1,28 @@
+extends template.pug
+
+block title
+    - var type = 0
+    block type
+    - var typename = type == 0 ? "星空会" : "疯巢"
+    - var title = "申请" + typename + "会员"
+
+block style
+    +style("space/apply")
+    script= "window.headerMap = {headerCodeMap:{'0': " + (type + 1) + " }}"
+    
+block header
+    .header
+        .title= title
+        .subtitle 申请只需两步，第1步填写资料，第2步入资
+    
+block content
+    block userinfo
+        .userinfo
+            .avatar
+            .username
+
+    block form
+
+block script
+    script(src="/webrexco/activity/login/show.js")
+    script= "var type = " + type + ", name = '" + typename + "'"

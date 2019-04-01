@@ -1,0 +1,101 @@
+<% include ../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>摆渡星空-账户主页</title>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/uc/common.css"/>
+    <link rel="stylesheet" href="/webrexco/static/css/uc/style.css"/>
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+    <script type="text/javascript">
+        window.tplObj={
+            "data":{
+                "menuMap":{"0":3}
+            }
+        };
+    </script>
+    
+</head>
+<body style="background: #fff;height: auto;">
+    <% include ../cmn/header.ejs %>
+    <% include ../cmn/user_banner.ejs %>
+    <div class="m-con clearfix">
+        <div class="m-leftNav">
+            <% include ../cmn/user_left.ejs %>
+        </div>
+        <div class="user_right"> 
+            <div class="user_right_menu">
+                <ul id="tab" class="list-tab clearfix">
+                    <li class="tabactive">
+                        <a class="one titleover">我的消息</a> 
+                    </li>
+                </ul>
+            </div>
+            <div class="user_right_main">
+                <div class="J_notice"></div>
+                <div class="m-noNotice" style="display: none;">
+                    <img src="/webrexco/static/img/uc/notice.png">
+                    <p>暂无消息</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% include ../cmn/footer.ejs %>
+    <script type="text/template" id="tpl_notice">
+        <# for(var i=0;i<data.list.length;i++) { #>
+        <# var item = data.list[i]; #>
+        <div class="system-notice">
+            <img src="/webrexco/static/img/uc/hd-icon.png" class="f-fl">
+            <div class="system-notice-right f-fl">
+                <p class="u-tit-notice"><#=item.from#><span class="u-time"><#=item.date#></span></p>
+                <div class="m-notice">
+                    <img src="/webrexco/static/img/uc/jiaojiao.png">
+                    <p class="u-con u-hd"><#=item.content#></p>
+                    <p class="u-state"><span class="J_detail">详情</span><span class="J_up" style="display: none;">收起</span></p>
+                </div>
+            </div>
+            <div class="f-cb"></div>
+        </div>
+        <# } #>
+    </script>
+    <script type="text/javascript" src="/webrexco/static/js/uc/index.js"></script>
+    <script type="text/javascript">
+        $().ready(function(){
+            getList();
+        })
+        function getList(){
+            baseModel.get({
+                url:"/webrexco/uc/data/getList.cgi",
+                success:function(rslt){
+                    if(rslt.code!=0&&rslt.code!=401){
+                        util.tipsModal(2,rslt.message);
+                    }else if(rslt.code==401){
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else{
+                        baseView.render("#tpl_notice",rslt.data,".J_notice");
+                        $(".J_detail").click(function(){
+                            $(this).parent().siblings(".u-con").removeClass("u-hd");
+                            $(this).hide().siblings().show();
+
+                        });
+                        $(".J_up").click(function(){
+                            $(this).parent().siblings(".u-con").addClass("u-hd");
+                            $(this).hide().siblings().show();
+                        });
+                        if(rslt.data.list.length<1){
+                            $(".m-noNotice").show();
+                        }
+
+                    }
+                    
+                }
+            });
+        }
+    </script>
+</body>
+</html>

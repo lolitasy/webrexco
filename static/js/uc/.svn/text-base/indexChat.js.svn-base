@@ -1,0 +1,345 @@
+(function ($) {
+    var chatCode = {
+        SUCC : 0,
+        NOLOGIN : 1,
+        FAIL : 2,
+        SENDSUC : 3,
+        SENDERR : 4,
+        LEAVING : 5,
+        OTHER : 6
+    };
+
+    var chatType = {
+        ONLINE : 0,    //用户是否在线
+        SDCM : 1      //普通消息
+    };
+    init();
+    var socket = io((document.location.origin||document.location.protocol+'//'+document.location.host)+'/sdcmnp');
+    window.tplObj={
+        "rooms":{},
+        "chatCode":chatCode,
+        "chatType":chatType,
+        "socket":socket,
+        "tag": "im-laixiangke"
+    };
+
+    socket.on('dscm', function (code, type, room, uuid, message, from) {
+        if(type == chatType.ONLINE){
+            if(code==chatCode.NOLOGIN){
+                util.tipsModal(2,"请登录");
+                return;
+            } else {
+                $('#fromUser').val(from);
+            }
+        } else if(code == chatCode.SUCC||code == chatCode.LEAVING && type == chatType.SDCM){
+            messageObj = JSON.parse(message);
+            if(!window.tplObj.rooms[room]){
+                window.tplObj.rooms[room]={
+                    "from":from
+                };
+                //渲染对话列表
+                var data={
+                    "content":messageObj.content,
+                    "count":0,
+                    "date":Date.now()/1000,
+                    "roomId":room,
+                    "roomName":"",
+                    "userId":from,
+                    "userName":messageObj.fromUserName,
+                    "type":messageObj.type
+                };
+                var messageBoxHtml = baseView.render("#tpl_msgBox", data);
+                $('.J_messageList').prepend(messageBoxHtml);
+                var events={
+                    'click .J_reply' : 'replay',
+                    'click .J_agree' : 'agree',
+                    'click .J_deny' : 'deny',
+                    'click .J_chatWnd .J_close' : 'hideChatWnd',
+                    'click .J_sendMsg' : 'sendMsg'
+                };
+                baseView.delegateEvents(events);
+                //渲染对话窗口
+                var data={
+                    "msgList":[{
+                        "userName":messageObj.fromUserName,
+                        "content":messageObj.content,
+                        "createDate":messageObj.createDate,
+                        "userId":from,
+                        "type":messageObj.type
+                    }],
+                    "userList":[from]
+                }
+                baseView.render("#tpl_chatWnd", data, '.J_messageList > .m-messageBox[data-roomId="'+room+'"] .J_chatWnd');
+                var events={
+                    'click .J_chatWnd .J_close' : 'hideChatWnd',
+                    'click .J_sendMsg' : 'sendMsg'
+                };
+                baseView.delegateEvents(events);
+                window.tplObj.rooms[room].rendered=true;
+                var h = $(".m-chatWnd .J_chatLog").height()+9999;
+                $(".bd").scrollTop(h);
+            } else {
+                //刷新对话列表
+                $('.J_messageList > .m-messageBox[data-roomId="'+room+'"] .J_time').html(util.dateFormat(Date.now()/1000,"MM-dd hh:mm:ss"));
+                var unreadNum = $('.J_messageList > .m-messageBox[data-roomId="'+room+'"] .J_unreadNum').html();
+                if(messageObj.type==2){
+                    var messageHtml = '[图片]';
+                }else{
+                    var messageHtml = _.escape(messageObj.content);
+                }
+                // var messageHtml = _.escape(messageObj.content);
+                $('.J_messageList > .m-messageBox[data-roomId="'+room+'"] .J_message').html(messageHtml);
+                //刷新对话窗口
+                if(!window.tplObj.rooms[room].rendered){
+                    var data={
+                        "msgList":[{
+                            "userName":messageObj.fromUserName,
+                            "content":messageObj.content,
+                            "createDate":messageObj.createDate,
+                            "userId":from,
+                            "type":messageObj.type
+                        }],
+                        "userList":[from]
+                    }
+                    baseView.render("#tpl_chatWnd", data, '.J_messageList > .m-messageBox[data-roomId="'+room+'"] .J_chatWnd');
+                    var events={
+                        'click .J_chatWnd .J_close' : 'hideChatWnd',
+                        'click .J_sendMsg' : 'sendMsg'
+                    };
+                    baseView.delegateEvents(events);
+                    window.tplObj.rooms[room].rendered=true;
+                    var h = $(".m-chatWnd .J_chatLog").height()+9999;
+                    $(".bd").scrollTop(h);
+                } else {
+                    var fromUserId=$('#fromUser').val();
+                    if(fromUserId!=from){
+                        if(messageObj.type==1){
+                            var chatHtml='<div class="m-msgBox f-cf"><div class="m-leftHd f-fl"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon f-fl"><p class="u-user">'+
+                        _.escape(messageObj.fromUserName)+'<span>'+util.dateFormat(messageObj.createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message u-message2">'+_.escape(messageObj.content)+'</p><img src="/webrexco/static/img/uc/jiaojiao.png" class="u-arrow1"></div></div>';
+                        }else{
+                            var chatHtml='<div class="m-msgBox f-cf"><div class="m-leftHd f-fl"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon f-fl"><p class="u-user">'+
+                        _.escape(messageObj.fromUserName)+'<span>'+util.dateFormat(messageObj.createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message u-message2"><img src="'+_.escape(messageObj.content)+'"></p><img src="/webrexco/static/img/uc/jiaojiao.png" class="u-arrow1"></div></div>';
+                        }
+                        // var chatHtml='<div class="m-msgBox f-cf"><div class="m-leftHd f-fl"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon f-fl"><p class="u-user">'+
+                        // _.escape(messageObj.fromUserName)+'<span>'+util.dateFormat(messageObj.createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message u-message2">'+_.escape(messageObj.content)+'</p><img src="/webrexco/static/img/uc/jiaojiao.png" class="u-arrow1"></div></div>';
+                    }else{
+                        if(messageObj.type==1){
+                            var chatHtml='<div class="m-msgBox f-cf"><div class="m-leftHd f-fr"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon m-rightCon2 f-fr"><p class="u-user">'+
+                        _.escape(messageObj.fromUserName)+'<span>'+util.dateFormat(messageObj.createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message">'+_.escape(messageObj.content)+'</p><img src="/webrexco/static/img/uc/jiaojiao3.png" class="u-arrow2"></div></div>';
+
+                        }else{
+                            var chatHtml='<div class="m-msgBox f-cf"><div class="m-leftHd f-fr"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon m-rightCon2 f-fr"><p class="u-user">'+
+                        _.escape(messageObj.fromUserName)+'<span>'+util.dateFormat(messageObj.createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message"><img src="'+_.escape(messageObj.content)+'"></p><img src="/webrexco/static/img/uc/jiaojiao3.png" class="u-arrow2"></div></div>';
+
+                        }
+                        // var chatHtml='<div class="m-msgBox f-cf"><div class="m-leftHd f-fr"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon m-rightCon2 f-fr"><p class="u-user">'+
+                        // _.escape(messageObj.fromUserName)+'<span>'+util.dateFormat(messageObj.createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message">'+_.escape(messageObj.content)+'</p><img src="/webrexco/static/img/uc/jiaojiao3.png" class="u-arrow2"></div></div>';
+                    }      
+                    $('.J_messageList > .m-messageBox[data-roomId="'+room+'"] .J_chatLog').append(chatHtml);
+                    var h = $(".m-chatWnd .J_chatLog").height()+9999;
+                    $(".bd").scrollTop(h);
+                }
+            }
+        }
+    });
+
+    function init(){
+        baseModel.get({
+            url:"/webrexco/uc/chat/getMessages.cgi",
+            data:"",
+            success:function(rslt){
+                console.log(rslt);
+                if(rslt.code!=0){
+                    util.tipsModal(2,rslt.message);
+                    // baseModel.errorCode(rslt.code, rslt.message);
+                    return;
+                }
+                $("#fromUserName").val(rslt.userName);
+                var messageListHtml = "";
+                for(var i=0;i<rslt.data.list.length;i++){
+                    messageListHtml += baseView.render("#tpl_msgBox", rslt.data.list[i]);
+                    window.tplObj.rooms[rslt.data.list[i].roomId]={opened:false,rendered:false};
+                }
+                $(".J_messageList").html(messageListHtml);
+                var events={
+                    'click .J_reply' : 'replay',
+                    'click .J_agree' : 'agree',
+                    'click .J_deny' : 'deny',
+                    'click .J_chatWnd .J_close' : 'hideChatWnd',
+                    'click .J_sendMsg' : 'sendMsg'
+                };
+                baseView.delegateEvents(events);
+            }
+        });
+    }
+    
+}(jQuery));
+function replay(e){
+    console.log("aaa");
+    $(".J_messageList .J_chatWnd").hide();
+    $(".user_right_main").hide();
+    $(".J_chatWnd").siblings().hide();
+    $(".J_chatWnd").parent().siblings(".hd").hide();
+    $(this).parent().siblings(".J_chatWnd").show();
+    $(".J_chatWnd").parent().parent().removeClass("m-messageBoxNow");
+    $(".one").removeClass("titleover");
+    $(".two").addClass("titleover");
+    $(this).parent().siblings(".J_message").find(".J_unreadNum").text("0");
+    var roomId = $(this).parent().parent().parent().attr("data-roomId");
+    if(!window.tplObj.rooms[roomId].opened){
+        window.tplObj.rooms[roomId].opened=true;
+        getChatLog(roomId);
+    }
+    
+}
+function agree(e){
+    var uid = $(this).parent().parent().parent(".m-messageBox").attr("data-uid");
+    console.log("agree uid:"+uid);
+    baseModel.get({
+        "url":"/webrexco/uc/chat/accept.cgi",
+        "data":{accept:true,uid:uid},
+        "success":function(rslt){
+            console.log(rslt);
+        }
+    });
+}
+function deny(e){
+    var uid = $(this).parent().parent().parent(".m-messageBox").attr("data-uid");
+    console.log("deny uid:"+uid);
+    baseModel.get({
+        "url":"/webrexco/uc/chat/accept.cgi",
+        "data":{accept:false,uid:uid},
+        "success":function(rslt){
+            console.log(rslt);
+        }
+    });
+}
+function hideChatWnd(e){
+    $(this).parent().parent().hide();
+    var roomId = $(this).parent().parent().parent().parent().attr("data-roomId");
+    baseModel.get({
+        url:"/webrexco/uc/chat/changeStatus.cgi",
+        data:{roomId:roomId},
+        success:function(rslt){
+            console.log(rslt);
+        }
+    });
+    list();
+}
+function sendMsg(e){
+    var fromUser = $('#fromUser').val();
+    var toUser = $(this).siblings(".J_toUser").val();
+    var room = $(this).parent().parent().parents().parent(".m-messageBox").attr("data-roomId");
+    var content = $(this).siblings('.J_msgContent').val();
+    if(content==""){
+        util.tipsModal(2,"请输入内容");
+        return;
+    }
+    $(this).siblings('.J_msgContent').val('');
+    console.log("0");
+    if (toUser.length > 0) {
+        var uuid = fromUser+Date.now()+Math.random();
+        var fromUserName = $("#fromUserName").val();
+        var createDate=Date.now()/1000;
+        var message = {content:content,fromUserName:fromUserName,createDate:createDate,"toUserName":"ff",type:1};
+        window.tplObj.socket.emit('dscm', window.tplObj.tag, toUser, window.tplObj.chatType.SDCM, room, uuid, JSON.stringify(message));
+    }
+}
+function sendMsg2(dom,str){
+    var fromUser = $('#fromUser').val();
+    var toUser = dom.siblings(".J_toUser").val();
+    var room = dom.parent().parent().parents().parent(".m-messageBox").attr("data-roomId");
+    var content = str;
+    if(content==""){
+        util.tipsModal(2,"请输入内容");
+        return;
+    }
+    dom.siblings('.J_msgContent').val('');
+    console.log("1");
+    if (toUser.length > 0) {
+        var uuid = fromUser+Date.now()+Math.random();
+        var fromUserName = $("#fromUserName").val();
+        var createDate=Date.now()/1000;
+        var message = {content:content,fromUserName:fromUserName,createDate:createDate,"toUserName":"ff",type:2};
+        window.tplObj.socket.emit('dscm', window.tplObj.tag, toUser, window.tplObj.chatType.SDCM, room, uuid, JSON.stringify(message));
+    }
+}
+function sendMsg3(str,room){
+    var fromUser = $('#fromUser').val();
+    var toUser = $(".J_sendToUser").attr("data-id");
+    var room = room;
+    var content = str;
+    if(content==""){
+        util.tipsModal(2,"请输入内容");
+        return;
+    }
+    console.log("2");
+    if (toUser.length > 0) {
+        var uuid = fromUser+Date.now()+Math.random();
+        var fromUserName = $("#fromUserName").val();
+        var createDate=Date.now()/1000;
+        var message = {content:content,fromUserName:fromUserName,createDate:createDate,"toUserName":"ff",type:1};
+        window.tplObj.socket.emit('dscm', window.tplObj.tag, toUser, window.tplObj.chatType.SDCM, room, uuid, JSON.stringify(message));
+    }
+}
+function getChatLog(roomId){
+    baseModel.get({
+        url: "/webrexco/uc/chat/getChatLog.cgi",
+        data: {roomId:roomId},
+        success: function(rslt){
+            console.log(rslt);
+            if (rslt.code!=0) {
+                baseModel.errorCode(rslt.code, rslt.message);
+                return;
+            }
+            if(!window.tplObj.rooms[roomId].rendered){
+                baseView.render("#tpl_chatWnd", rslt.data, '.J_messageList > .m-messageBox[data-roomId="'+roomId+'"] .J_chatWnd');
+                var events={
+                    'click .J_chatWnd .J_close' : 'hideChatWnd',
+                    'click .J_sendMsg' : 'sendMsg'
+                };
+                baseView.delegateEvents(events);
+                var chatHtml = '<p class="sep">-----------以上是历史消息-----------</p>';
+                $('.J_messageList > .m-messageBox[data-roomId="'+roomId+'"] .J_chatLog').append(chatHtml);
+                window.tplObj.rooms[roomId].rendered=true;
+                var height=$(".J_chatWnd").height()+9999;
+                $(".bd").scrollTop(height);
+            } else {
+                var chatHtml = "";
+                for(var j=rslt.data.msgList.length-1;j>=0;j--) {
+                    var fromUserId=$('#fromUser').val();
+                    var from=_.escape(from);
+                    if(fromUserId!=from||from==undefined){
+                        if(rslt.data.msgList.type==1){
+                            chatHtml+='<div class="m-msgBox f-cf"><div class="m-leftHd f-fl"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon f-fl"><p class="u-user">'+
+                        _.escape(rslt.data.msgList[j].userName)+'<span>'+util.dateFormat(rslt.data.msgList[j].createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message u-message2">'+_.escape(rslt.data.msgList[j].content)+'</p><img src="/webrexco/static/img/uc/jiaojiao.png" class="u-arrow1"></div></div>';
+                        }else{
+                            chatHtml+='<div class="m-msgBox f-cf"><div class="m-leftHd f-fl"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon f-fl"><p class="u-user">'+
+                        _.escape(rslt.data.msgList[j].userName)+'<span>'+util.dateFormat(rslt.data.msgList[j].createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message u-message2"><img src="'+_.escape(rslt.data.msgList[j].content)+'"></p><img src="/webrexco/static/img/uc/jiaojiao.png" class="u-arrow1"></div></div>';
+                        }
+                    }else{
+                        if(rslt.data.msgList.type==1){
+                            chatHtml+='<div class="m-msgBox f-cf"><div class="m-leftHd f-fr"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon m-rightCon2 f-fr"><p class="u-user">'+
+                        _.escape(rslt.data.msgList[j].userName)+'<span>'+util.dateFormat(rslt.data.msgList[j].createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message">'+_.escape(rslt.data.msgList[j].content)+'</p><img src="/webrexco/static/img/uc/jiaojiao3.png" class="u-arrow2"></div></div>';
+                            
+                        }else{
+                            chatHtml+='<div class="m-msgBox f-cf"><div class="m-leftHd f-fr"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon m-rightCon2 f-fr"><p class="u-user">'+
+                        _.escape(rslt.data.msgList[j].userName)+'<span>'+util.dateFormat(rslt.data.msgList[j].createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message"><img src="'+_.escape(rslt.data.msgList[j].content)+'"></p><img src="/webrexco/static/img/uc/jiaojiao3.png" class="u-arrow2"></div></div>';
+                        }
+                    }
+                    // if(fromUserId!=from){
+                    //     chatHtml+='<div class="m-msgBox f-cf"><div class="m-leftHd f-fl"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon f-fl"><p class="u-user">'+
+                    //     _.escape(rslt.data.msgList[j].userName)+'<span>'+util.dateFormat(rslt.data.msgList[j].createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message u-message2">'+_.escape(rslt.data.msgList[j].content)+'</p><img src="/webrexco/static/img/uc/jiaojiao.png" class="u-arrow1"></div></div>';
+                    // }else{
+                    //     chatHtml+='<div class="m-msgBox f-cf"><div class="m-leftHd f-fr"><img src="http://adtp.cnaidai.com/data/avatar/'+_.escape(from)+'_avatar_middle.jpg" data-uuid="'+_.escape(from)+'"></div><div class="m-rightCon m-rightCon2 f-fr"><p class="u-user">'+
+                    //     _.escape(rslt.data.msgList[j].userName)+'<span>'+util.dateFormat(rslt.data.msgList[j].createDate,"MM-dd hh:mm:ss")+'</span></p><p class="u-message">'+_.escape(rslt.data.msgList[j].content)+'</p><img src="/webrexco/static/img/uc/jiaojiao3.png" class="u-arrow2"></div></div>';
+                    // }
+                }
+                chatHtml += '<p class="sep">-----------以上是历史消息-----------</p>';
+                $('.J_messageList > .m-messageBox[data-roomId="'+roomId+'"] .J_chatLog').prepend(chatHtml);
+                var h = $(".m-chatWnd .J_chatLog").height()+9999;
+                $(".bd").scrollTop(h);
+            }   
+        }
+    });
+}

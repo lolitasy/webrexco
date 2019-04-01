@@ -1,0 +1,80 @@
+<% include ../cfg/envpath.ejs %>
+<div class='g-header'>
+		<div class='g-nav'>
+			<div class='g-container'>
+				<!-- <div class='u-openAdd'><b>ABOUT</b><b class='u-arrows'></b></div> -->
+				<a  href='/webrexco/news/index.htm'>
+					<img class='u-companyLogo' src="/webrexco/static/img/header/logo.png">
+				</a>
+				<ul class='g-navItem'>
+					<li>
+						<a href='/webrexco/news/index.htm' style="display: inline-block;">风向</a>
+						<b class='u-slideIcon'></b>
+						<div class='g-detailNav ajax'>
+							<div class='after'></div>
+						</div>
+					</li>
+					<li><a href='/webrexco/space/index.htm'>星空会</a></li>
+					<li><a href='/webrexco/ideal/index.htm'>疯巢</a></li>
+					<!--<li>
+						<a href='https://a.cnaidai.com/webjr/index.htm' target='_blank' style="display: inline-block;">爱贷网</a>
+						<b class='u-slideIcon'></b>
+						<div class='g-detailNav aidai'>
+							<a href='https://a.cnaidai.com/webjr/invest/list.htm' target='_blank' class='u-detailNav'>我要理财</a>
+							<a href='https://a.cnaidai.com/webjr/borrow/loan.htm' target='_blank' class='u-detailNav' style='border:none'>我要借款</a>
+						</div>
+					</li>-->
+				</ul>
+				<div class='g-loginContent clearfix'>
+					<!-- <b class='u-shortLine'></b>
+					<div class='m-somePart'>
+						<div class='u-exeIcon'></div>
+						<a href="javascript:void(0);" class='u-somePartText'>客户端</a>
+						<div class='u-exeCode'><img src="/webrexco/static/img/header/exe.png"></div>
+					</div> -->
+					<b class='u-shortLine'></b>
+					<div class='m-somePart login' style='width:103px'>
+						<div class='u-loginIcon'></div>
+						<% if (user.user) { %>
+							<a id='J_topUserName' href="/webrexco/uc/account.htm" class='u-somePartText J_topUserName f-tof user_islogin' title='<%= user.user.userName%>'><%= user.user.userName %></a>
+						<% } else { %>
+							<a id='J_topUserName' href="/webrexco/login.htm" class='u-somePartText J_topUserName f-tof'>登录</a>
+						<% } %>
+					</div>
+					<b class='u-shortLine'></b>
+					<div class='m-somePart'>
+						<% if (user.user) { %>
+							<div class='u-registIcon hasLogin'></div>
+							<a id='J_topLoginOut' href="/webrexco/uc/data/logout.cgi" class='u-somePartText J_registOrLoginOut'>退出</a>
+						<% } else { %>
+							<div class='u-registIcon'></div>
+							<a id='J_topLoginOut' href="/webrexco/register.htm" class='u-somePartText J_registOrLoginOut'>注册</a>
+						<% } %>
+					</div>
+					<b class='u-shortLine'></b>
+				</div>
+				<div class='u-navSearchBtn'>
+					<b class='u-searchIcon'></b>
+					<b class='u-btnLine'></b>
+					<input type='text' style='padding:0;' class='u-searchContent' placeholder='Search'/>
+					<ul class='g-hotSearch f-hide'>
+						<li style='border-bottom: 1px dotted #ccc;' class='u-hotSearch title'>热门推荐</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/template" id='tpl_hotSearchList'>
+		<# for(var i = 0;i < data.length; i++){ #>
+			<# var item = data[i]; #>
+			<li class='u-hotSearch f-tof'><a target="_blank" href="<#= '/webrexco/news/detail.htm?newsId='+item.articleId #>"><#= item.sort + "." + item.tittle #></a></li>
+		<# } #>
+	</script>
+	<script type="text/template" id="tpl_topSite">
+		<# for(var i = 0;i< data.length;i++){#>
+			<# var item = data[i] #>
+			<# var href,target ;#>
+			<# if(item.isJump == true){href=item.jumpUrl;target="_blank"}else{href = "/webrexco/news/index.htm?linkId="+item.id;target='_self'} #>
+				<a href="<#= href #>" data-id='<#= item.id #>' target='<#= target #>'  class='u-detailNav'><#= item.name #></a>
+		<# } #>
+	</script>

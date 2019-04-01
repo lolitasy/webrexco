@@ -1,0 +1,18 @@
+extends apply.template.pug
+
+block header
+    .spacer
+
+block userinfo
+
+block form
+    .title 提示
+    .subtitle= "您的" + typename + "会员申请已经提交成功，我们将在48个工作时内反馈结果。"
+
+    a#reload.button 继续充值 >
+    a#home.button(href="/webrexco/uc/index.htm") 去个人中心首页 >
+    a.button.white(href="/webrexco/news/index.htm") 去首页 >
+    a.button.white(href="/webrexco/uc/memberRights.htm?memberType=" + type) 查看权益 >
+
+block append script
+    script: include result.js

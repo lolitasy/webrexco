@@ -1,0 +1,304 @@
+<% include ../../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>摆渡星空-账户主页</title>
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/uc/common.css"/>
+    <link rel="stylesheet" href="/webrexco/static/css/uc/style.css"/>
+    <link rel="stylesheet" href="/webrexco/static/css/events/detail.css"/>
+    <script type="text/javascript" src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/cmn/area.js"></script>
+    <script type="text/javascript" src="/webrexco/events/detail.part.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/uc/jedate/jedate.js"></script>
+    <script type="text/javascript" src="/webrexco/static/js/header.js"></script>
+</head>
+<body style="background: #fff;height: auto;">
+    <% include ../../cmn/header.ejs %>
+    <% include ../../cmn/user_banner.ejs %>
+    <div class="m-con clearfix">
+        <div class="m-con-startup">
+            <div class="m-tit-startup">
+                <p>发布活动</p>
+            </div> 
+            <div class="m-form-startup">
+                <form>
+                    <div class="m-info-startup f-ofh">
+                        <div class="m-left-startup f-fl">
+                            <p><span>*</span>填写名称</p>
+                        </div>
+                        <div class="m-right-startup f-fl">
+                            <input type="text" name="name" placeholder="活动标题（不少于5个字）" class="u-title-startup J_name">
+                        </div>
+                    </div> 
+                    <div class="m-info-startup f-ofh">
+                        <div class="m-left-startup f-fl">
+                            <p><span>*</span>选择地点</p>
+                        </div>
+                        <div class="m-right-startup f-fl">
+                            <select name="province" id="province" class="u-address-startup"></select>&nbsp;   
+                            <select name="city" id="city"  class="u-address-startup"></select>&nbsp;
+                            <select name="area" id="area" style="display: none"></select>
+                            <input type="hidden" id="userProvince" val="${b.province}">
+                            <input type="hidden" id="userCity" val="${b.city}">
+                            <input type="hidden" id="userArea" val="${b.area}"> 
+                            <input type="text" name="address" placeholder="请填写详细地址" class="u-area-startup J_address"> 
+                        </div>
+                    </div> 
+                    <div class="m-info-startup f-ofh">
+                        <div class="m-left-startup f-fl">
+                            <p><span>*</span>活动时间</p>
+                        </div>
+                        <div class="m-right-startup f-fl">
+                            <input type="text" placeholder="起始时间" id="startTime" name="startTime" data-id="doTime1" value="" size="26" class="js-datetime" readonly="readonly"> - <input type="text" placeholder="截止日期" id="endTime" data-id="doTime2" value="" size="26" class="js-datetime" name="endTime" readonly="readonly"> 
+                        </div>
+                    </div>
+                    <div class="m-info-startup f-ofh">
+                        <div class="m-left-startup f-fl">
+                            <p><span>*</span>主办方</p>
+                        </div>
+                        <div class="m-right-startup f-fl">
+                            <input type="text" name="host" placeholder="请输入主办方"  class="u-title-startup J_host">
+                        </div>
+                    </div> 
+                    <div class="m-info-startup m-file f-ofh">
+                        <div class="m-left-startup f-fl">
+                            <p><span>*</span>上传海报</p>
+                        </div>
+                        <div class="m-right-startup f-fl">
+                            <img src="/webrexco/static/img/uc/startup.png" class="activityUrl">
+                            <div class="m-upload">
+                                <input type="file" name="pic" id="upload" onchange="handleFiles(this.files)">上传
+                            </div>
+                            <div class="m-term-startup">
+                                <p>图片小于2M，jpg/png/gif，尺寸不可小于500*296px</p>
+                                <p class="u-depict">一张漂亮的海报，能让你的活动锦上添花，带来更多用户报名及增加传播效果，也将影响其在摆渡星空上被推荐的几率！</p>
+                            </div>
+                            
+                        </div>
+                    </div> 
+                    <div class="m-info-startup f-ofh">
+                        <div class="m-left-startup f-fl">
+                            <p><span>*</span>活动人数</p>
+                        </div>
+                        <div class="m-right-startup f-fl">
+                            <input type="text" name="partiNum" class="u-people-startup J_partiNum" onkeyup="this.value=this.value.replace(/\D/g,'')">人
+                        </div>
+                    </div>
+                    <div class="m-info-startup m-editor f-ofh">
+                        <div class="m-left-startup f-fl">
+                            <p><span>*</span>详细内容</p>
+                        </div>
+                        <div class="m-right-startup f-fl">
+                            <script id="content" name="content" style="line-height: 1.5" type="text/plain"></script>
+                            <script>
+                                window.UEDITOR_HOME_URL = "/webrexco/static/js/plugins/ueditor/";
+                            </script>
+                            <script type="text/javascript" charset="utf-8" src="/webrexco/static/js/plugins/ueditor/ueditor.config.js"> </script>
+                            <script type="text/javascript" charset="utf-8" src="/webrexco/static/js/plugins/ueditor/ueditor.all.min.js"></script>
+                            <script type="text/javascript">
+                                var ue = UE.getEditor('content');
+                            </script>
+                        </div>
+                    </div>
+                </form>
+                <div class="m-btn-startup f-ofh">
+                    <p class="startup f-fl">发布</p>
+                    <p class="look f-fl">预览</p>
+                </div>      
+            </div>
+        </div>
+    </div>
+    <div class="m-mask" style="display: none;">
+        <div class="lookbox">
+            <img src="/webrexco/static/img/uc/close.png" class="u-close">
+            <div class="J_lookbox">
+            </div>
+        </div>
+    </div>
+    <style type="text/css">
+        .button{
+            width: 88px;
+            height: 30px;
+            line-height: 30px;
+            background-color: #63d0c6;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+    <% include ../../cmn/footer.ejs %>
+    <script type="text/javascript" src="/webrexco/static/js/uc/index.js"></script>
+    <script type="text/javascript">
+        $().ready(function(){
+            var userProvince=$("#province").attr("val"),
+                userCity=$("#city").attr("val"),
+                userArea=$("#area").attr("val");
+            addressInit('province', 'city', 'area', userProvince, userCity, userArea);
+            $('#startTime').click(function() {
+                jeDate({dateCell:'#startTime',isTime:true,format:'YYYY-MM-DD hh:mm:ss'});
+            });
+            $('#endTime').click(function() {
+                jeDate({dateCell:'#endTime',isTime:true,format:'YYYY-MM-DD hh:mm:ss'});
+            });
+            //点击浏览效果
+            $(".look").click(function(){
+                if(check()){
+                    var posterUrl=$(".activityUrl").attr("src");
+                    var name=$(".J_name").val();
+                    var startTime=$("#startTime").val();
+                    var endTime=$("#endTime").val();
+                    var province=$("#province").children(":selected").text();
+                    var city=$("#city").children(":selected").text();
+                    var address=$(".J_address").val();
+                    var partiNum=$(".J_partiNum").val();
+                    var host=$(".J_host").val();
+                    var content=ue.getContent();//副文本的插件
+                    //发布预览参数
+                    $(".J_lookbox").html(detail({
+                        poster: posterUrl,
+                        title: name,
+                        startTime: startTime,
+                        endTime:endTime,
+                        address: province + city + ""+address,
+                        people: "限额" + partiNum + "人",
+                        host: host + " 主办",
+                        detail: content,
+                        share: false
+                    }));
+                    $(".info").css({"width":"400px"});
+                    $(".m-mask").show();
+                }
+                
+            });
+            $(".u-close").click(function(){
+                $(".m-mask").hide();
+            });
+            $(".startup").click(function(){
+                if(check()){
+                    releaseActivity();
+                }
+            });
+            
+        })
+        function check(){
+            var partiNum=$(".J_partiNum").val();
+                var posterUrl=$(".activityUrl").attr("src");
+                var name=$(".J_name").val();
+                var startTime=$("#startTime").val();
+                var endTime=$("#endTime").val();
+                var startTime1 = Date.parse(new Date(startTime)) / 1000;
+                var endTime1 = Date.parse(new Date(endTime)) / 1000;
+                var timestamp = Date.parse(new Date())/ 1000;
+                var province=$("#province").children(":selected").text();
+                var city=$("#city").children(":selected").text();
+                var address=$(".J_address").val();
+                var partiNum=$(".J_partiNum").val();
+                var host=$(".J_host").val();
+                var content=ue.getContent();
+                if(name==""){
+                    util.tipsModal(2,"请填写活动名称");
+                    return false;
+                }else if(name.length<5){
+                    util.tipsModal(2,"活动名称不能少于5个字");
+                    return false;
+                }else if(name.length>128){
+                    util.tipsModal(2,"活动名称不能多于128个字");
+                    return false;
+                }else if(province==""){
+                    util.tipsModal(2,"请选择省份");
+                    return false;
+                }else if(city==""){
+                    util.tipsModal(2,"请选择市");
+                    return false;
+                }else if(address==""){
+                    util.tipsModal(2,"请选择详细地址");
+                    return false;
+                }else if(address.length>128){
+                    util.tipsModal(2,"详细地址不能多于128个字");
+                    return false;
+                }else if(startTime==""){
+                    util.tipsModal(2,"请选择开始时间");
+                    return false;
+                }else if(endTime==""){
+                    util.tipsModal(2,"请选择结束时间");
+                    return false;
+                }else if(host==""){
+                    util.tipsModal(2,"请填写主办方");
+                    return false;
+                }else if(host.length>128){
+                    util.tipsModal(2,"主办方不能多于128个字");
+                    return false;
+                }else if(posterUrl==""){
+                    util.tipsModal(2,"请上传活动海报");
+                    return false;
+                }else if(partiNum==""){
+                    util.tipsModal(2,"请填写活动人数");
+                    return false;
+                }else if(partiNum==0){
+                    util.tipsModal(2,"活动人数不能为0");
+                    return false;
+                }else if(content==""){
+                    util.tipsModal(2,"请填写详细内容");
+                    return false;
+                }else if(startTime1>endTime1||startTime1==endTime1){
+                    util.tipsModal(2,"结束时间应晚于开始时间");
+                    return false;
+                }else if(startTime1<timestamp){
+                    util.tipsModal(2,"活动时间不能早于当前时间");
+                    return false;
+                }else if(posterUrl=="/webrexco/static/img/uc/startup.png"){
+                    util.tipsModal(2,"请选择海报");
+                    return false;
+                }else{
+                    return true;
+                }
+        }
+        //图片展示
+        function handleFiles(files) {
+            var file = files[0];
+            if(file.size>2*1024*1024){
+                alert("请选择低于2兆的图片");
+                $("#upload").replaceWith($("#upload").val('').clone(true));
+                return;
+            }
+            var imageType = /^image\//;
+            if (!imageType.test(file.type)) {//判断图片类型
+              return;
+            }
+            var img=$(".activityUrl")[0];
+            img.file = file;
+            var reader = new FileReader();//图片展示
+            reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+            reader.readAsDataURL(file);
+        }
+        function releaseActivity(){
+            var data = new FormData($("form")[0]);
+            baseModel.post({
+                url:"/webrexco/uc/data/releaseActivity.cfi",
+                contentType: false,
+                data:data,
+                processData: false,
+                success:function(rslt){
+                    if(rslt.code!=0&&rslt.code!=401){
+                        util.tipsModal(2,rslt.message);
+                    }else if(rslt.code==401){
+                        var backUrl=location.href;
+                        location.href='/webrexco/login.htm?backUrl='+encodeURIComponent(backUrl);
+                        return;
+                    }else{
+                        util.tipsModal(1,rslt.message,function(){location.href="/webrexco/uc/events/release.htm";},function(){location.href="/webrexco/uc/events/release.htm";});
+                        ;
+                    }
+                    
+                }
+            });
+        }
+        
+    </script>
+    
+</body>
+</html>

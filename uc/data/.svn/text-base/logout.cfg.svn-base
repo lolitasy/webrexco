@@ -1,0 +1,56 @@
+var ghost = require(process.argv[2]+'/webrexco/cfg/ghost.js'); 
+var gapi = require(process.argv[2]+'/webrexco/cmn/gapi.js'); 
+
+exports.itfconf = function() {
+	return new CurrentAPI().conf();
+}
+
+exports.itfleft = function(req,res,fld,fle) {
+	return new CurrentAPI().output(req,res,fld,fle);
+}
+
+var CurrentAPI = gapi.BaseAPI.extend({
+    conf: function() { return { auth: false,
+        	type: "html",
+        	itfs: [
+	            {
+	                host: ghost.dscm.makercenter.addr,
+	                port: ghost.dscm.makercenter.port,
+	                iurl: "/userApp?actn=doLogin",	
+	                uuid: "userApp",            
+	                meth: "post",
+	                type: "sdcm",
+	                next: [],
+	                func: function(req,res,fld,fle){
+	                	return new CurrentAPI("userApp").
+	                		callFunc(req,res,fld,fle);
+	                }
+	            }      		
+        	]
+    	};
+    },
+	
+	doCallFunc: function(uuid, req, res, fld, fle) {
+		// var backUrl = gapi.getParameter(req, "backUrl")+"";
+		// var loginUrl = ghost.webphHost.url+"/login.htm";
+		// backUrl = backUrl.indexOf(ghost.webphHost.url)==0?backUrl:loginUrl;	//跳转URL白名单
+		req.session.destroy();
+		req.session = null;
+		res.writeHead(302, {
+			'Location': "/webrexco/login.htm"
+		});
+		res.end();
+	    return null;
+	},
+		    
+	doOutput: function(req, res, fld, fle) {
+		req.session.destroy();
+		req.session = null;
+		res.writeHead(302, {
+			'Location': "/webjr/login.htm"
+		});
+		res.end();
+		return null;
+	}
+});
+

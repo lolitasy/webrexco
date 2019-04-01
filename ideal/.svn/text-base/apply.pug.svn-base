@@ -1,0 +1,83 @@
+extends ../space/apply.pug
+
+block type
+    - type = 1
+
+block form
+    form
+        - var id;
+        - var name;
+
+        .input
+            - id = "input-name";
+            label.label(for=id) 真实姓名
+            input(id=id type="text" maxlength="16" data-name="您的真实姓名" placeholder="请填写真实姓名" name="realName" required)
+
+        .input
+            - id = "input-gender";
+            label.label 性别
+            select(id=id data-id=id + "-select" name="gender" data-name="您的性别" required)
+                option(disabled selected) 请选择性别
+                option(value="0") 男
+                option(value="1") 女
+        
+        hr
+
+        .input
+            - id = "input-company"
+            label.label(for=id) 公司名称
+            input(id=id type="text" maxlength="32" data-name="公司全称" placeholder="请填写公司全称" name="companyName" required)
+
+        .input
+            - id = "input-type"
+            - name = "companyType";
+            label.label(for=id) 公司类型
+            select(id=id data-id=id + "-select" data-name="公司类型" name=name required)
+                option(disabled selected value="") 请选择公司类型
+
+                each value in ["web产品", "app应用", "web和app都有", "公众微信号", "有实体"]
+                    option(value=value)= value
+
+        .input
+            - id = "input-position";
+            label.label 职位
+            select(id=id data-id=id + "-select" data-name="您的职位" required)
+                option(disabled selected value="") 请选择职位
+
+                each value in ["法人/创始人", "合伙人", "总裁", "执行总裁", "董事长", "董事", "CEO", "总经理", "副总经理", "总监", "自定义"]
+                    option(value=value)= value
+
+            input(id=id + "-value" maxlength="10" type="text" data-name="您的职位" placeholder="请填写职位" name="position" required)
+
+        hr
+
+        .input
+            - id = "input-indroduction"
+            label.label(for=id) 项目介绍
+            input(id=id type="text" maxlength="128" placeholder="一句话介绍你的项目" name="projectIntroduction")
+
+        .input
+            - id = "input-advantage"
+            label.label(for=id) 产品优势
+            textarea(id=id max-length="500" placeholder="介绍一下产品亮点、解决的痛点、市场差异（500字以内）" name="productAdvantage")
+
+        .input
+            - id = "input-target"
+            label.label(for=id) 目标用户
+            textarea(id=id max-length="500" placeholder="说市场规模、目标用户，服务人群和典型用户（500字以内）" name="targetUser")
+
+        .input
+            - id = "input-team"
+            label.label(for=id) 团队优势
+            textarea(id=id max-length="500" placeholder="团队做这个项目的优势，团队成员的工作背景及分工等（500字以内）" name="teamAdvantage")
+
+        .input
+            - id = "input-file";
+            label.label 项目计划书
+            input(id=id type="file" data-name="项目计划书" name="projectPlanningPath" accept=".doc, .docx, .ppt, .pptx, .pps, .jpg, .jpeg, .pdf")
+            label.file-label(id=id + "-label" for=id)
+                div.file-label-name.placeholder.wide(id=id + "-name") 选填，如果有完整的计划书，更能得到投资人青睐
+                div.file-label-button 浏览
+            .tip * 最大2M，doc/.docx、ppt/.pptx/.pps、jpg、pdf
+
+        .button#submit 下一步

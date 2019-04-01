@@ -1,0 +1,87 @@
+//- pug -E htm -P charge.pug
+
+extends apply.template.pug
+
+block form
+    form.wide(action="/webrexco/space/pay.cgi" method="post" target="_blank")
+        - var id = ""
+
+        .input
+            input#level-value(type="hidden" name="grade")
+            input#id(type="hidden" name="applyId")
+            input(type="hidden" name="gradeType" value=type)
+            label.label 拟申请会员类别
+            .level
+                span#level-name
+                .level-tip
+                    .level-popup
+                        | 黄金会员权益
+                        ul
+                            - if (type == 0)
+                                li 高端企业社圈
+                                li 唯城学院
+                                li 企业授信
+                                li 供应链金融
+                            - else
+                                li 对接投资人
+                                li 资源服务
+                                li 人才服务
+                                li 技术服务
+                        a(target="_blank" href="/webrexco/help/index.htm") 详情
+
+        .input
+            - var _name = "costType"
+            label.label 注资方式
+            - id = "input-type-a"
+            input.checkbox(id=id type="radio" value="0" name=_name checked)
+            label(for=id) 基金
+            - id = "input-type-b"
+            input.checkbox(id=id type="radio" value="1" name=_name)
+            label(for=id) 会费
+
+        .input
+            label.label#input-money-label
+            #input-money-name
+            input#input-money-value(type="hidden" name="money")
+            .tip#input-money-tip
+
+        .input
+            - _name = "payment"
+            label.label 选择支付方式
+            
+            - id = "input-payment-a"
+            input.box-radio(id=id type="radio" name=_name value="aliPayDirectPlugin" checked)
+            label(for=id) 支付宝
+
+            //- - id = "input-payment-b"
+            //- input.box-radio(id=id type="radio" name=_name value="weixinCodePayPlugin")
+            //- label(for=id) 微信支付
+
+        .button#submit.wide 立即支付
+        .skip 跳过
+
+    .wx-code
+    .complete 完成
+
+    .mask
+        .popup
+            .title
+                p 提示
+            .close
+
+            .popup-content
+                .bold 请在您新打开的网上银行页面上完成付款！
+                .line
+                    | 充值账号：
+                    span.username
+                .line
+                    | 充值金额：
+                    span.amount
+                .line 支付网关：支付宝支付
+
+                .button#go-step-3 已完成支付
+                a.button.white(href="/webrexco/help/index.htm") 付款遇到问题
+
+block append script
+    +script("cmn/jquery-qrcode.min")
+    script: include charge.js

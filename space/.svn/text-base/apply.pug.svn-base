@@ -1,0 +1,81 @@
+//- pug -E htm -P apply.pug
+
+extends apply.template.pug
+
+block form
+    form
+        - var id = ""
+
+        .input
+            - id = "input-referer"
+            label.label(for=id) 引荐人
+            input(id=id type="text" data-name="引荐人" maxlength="32" placeholder="请填写引荐人" name="toUserName" required)
+
+        .input
+            - id = "input-company"
+            label.label(for=id) 公司名称
+            input(id=id type="text" data-name="公司全称" maxlength="32" placeholder="请填写公司全称" name="companyName" required)
+
+        .input
+            - id = "input-money"
+            label.label(for=id) 注册资本
+            input.wan(id=id type="text" data-name="注册资本" maxlength="16" pattern="\\d+(\\.\\d{1,2})?" placeholder="请填写注册资本" name="registeredCapital" required)
+            label.wan(for=id) 万元
+
+        .input
+            - id = "input-industry"
+            label.label(for=id) 行业类型
+            input(id=id type="text" data-name="行业类型" maxlength="16" placeholder="请填写行业类型" name="industryType" required)
+
+        .input
+            - id = "input-name";
+            label.label(for=id) 真实姓名
+            input(id=id type="text" data-name="您的真实姓名" maxlength="16" placeholder="请填写真实姓名" name="realName" required)
+
+        .input
+            - id = "input-gender";
+            label.label 性别
+            select(id=id data-id=id + "-select" name="gender" data-name="您的性别" required)
+                option(disabled selected) 请选择性别
+                option(value="0") 男
+                option(value="1") 女
+
+        .input
+            - id = "input-phone"
+            label.label(for=id) 手机号码
+            input(id=id type="text" inputmode="tel" pattern="1[34578]\\d{9}" maxlength="11" data-name="手机号码" placeholder="请填写手机号码" name="phone" required)
+
+        .input
+            - id = "input-position";
+            label.label 职位
+            select(id=id data-id=id + "-select" data-name="您的职位" required)
+                option(disabled selected value="") 请选择职位
+
+                each value in ["法人/创始人", "合伙人", "总裁", "执行总裁", "董事长", "董事", "CEO", "总经理", "副总经理", "总监", "自定义"]
+                    option(value=value)= value
+
+            input(id=id + "-value" maxlength="10" type="text" data-name="您的职位" placeholder="请填写职位" name="position" required)
+
+        .input
+            - id = "input-file";
+            label.label 上传名片
+            input(id=id type="file" data-name="您的名片" name="nameCardPath" accept=".jpg, .jpeg, .png, .gif" required)
+            label.file-label(id=id + "-label" for=id)
+                div.file-label-name.placeholder(id=id + "-name") 请上传名片
+                div.file-label-button 浏览
+            .tip * 最大5M，jpg、png、gif
+
+        .input
+            - id = "input-file-2";
+            label.label 名片反面
+            input(id=id type="file" data-name="您的名片反面" name="namecardPathOpposite" accept=".jpg, .jpeg, .png, .gif" required)
+            label.file-label(id=id + "-label" for=id)
+                div.file-label-name.placeholder(id=id + "-name") 请上传名片反面
+                div.file-label-button 浏览
+            .tip * 最大5M，jpg、png、gif
+
+        .button#submit 下一步
+
+block append script
+    +script("space/select")
+    script: include apply.js

@@ -1,0 +1,229 @@
+<% include ../cfg/envpath.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>摆渡星空_为企业和个人用户提供金融场景服务</title>
+	<meta name="keywords" content="摆渡星空,供应链金融,项目路演,泛娱乐,fintech,创客,摆渡空间" />
+	<meta name="description" content="摆渡星空为企业及高管实现经营目标提供供应链金融服务、创客项目路演、Fintech、泛娱乐等项目资本解决方案，具有特色的体验空间和摆渡空间线上平台" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="stylesheet" type="text/css" href="/webrexco/static/css/cmn/common.css">
+	<link rel="stylesheet" type="text/css" href="/webrexco/static/css/index.css">
+	<link rel="stylesheet" type="text/css" href="/webrexco/static/css/video-js.min.css">
+	<script type="text/javascript" src='/webrexco/static/js/cmn/rexco-0.1.min.js'></script>
+	<script type="text/javascript" src='/webrexco/static/js/header.js'></script>
+	<script type="text/javascript" src='/webrexco/static/js/news/index.js'></script>
+	<script type="text/javascript" src="/webrexco/static/js/video/videojs-ie8.min.js"></script>
+	<script type="text/javascript" src="/webrexco/static/js/video/video.min.js"></script>
+	<script type="text/javascript">window.headerMap = {headerCodeMap:{"0":0}}</script>
+</head>
+<body>
+	<div class='g-hd'>
+		<% include ../cmn/header.ejs %>
+	</div>
+	<div class='g-bd'>
+		<div class='g-bannerPart'>
+			<div class='g-container clearfix'>
+				<div class='f-fl'>
+					<div class="g-carouselContainer">
+						<div class='g-carousel'>
+						</div>
+					</div>
+					<div class='g-carouselIndex clearfix'>
+					</div>
+				</div>	
+				<div class='g-sideNews'>
+					
+				</div>
+				<div class='g-rightNews'>
+					<div class='u-24HNews'>
+						<p class='u-newsTitle'>快讯</p>
+						<div class='newsFlash'>
+							<div class='J_slideNews'>
+								
+							</div> 
+						</div>
+					</div>
+					<div class='g-hotTag clearfix'>
+						<p class='u-tagTitle'>热门标签</p>
+					</div>
+					<div class='g-fixNews'>
+						
+						<div class='g-to clearfix'>
+							<img class='u-erweima' width='76' height='76' src='/webrexco/static/img/news/rexcoQrcode.png'>
+							<div class='u-toMessage'>
+								<p>关注微信公众号</p>
+								<h3>获取最新最热行业咨询</h3>
+								<a href="#" class='u-clickToBlowUp'>马上扫描</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='g-newsPart clearfix'>
+			<div class='g-container'>
+				<div class='u-newsNav clearfix'>
+					<div class='u-newNavItem all active'>全部资讯</div>
+					<a href="#" class='u-newNavItem activity'>活动</a>
+					<!-- <a href="#" class='u-newNavItem'>摆渡星空商城</a> -->
+					<!-- <a href="#" class='u-update'>更新了12条新资讯</a> -->
+				</div>
+				<div class='g-detailNews'>
+
+				</div>
+				<div class='u-loadMore'>
+					<div class='u-clickToLoad'>More</div>
+				</div>
+			</div>
+		</div>
+		<div class='g-fixedIcon'>
+			<!-- <a class='u-connectQQ' target="_blank" href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzkzODA1MzQwN180NDgwMTdfNDAwMDU5MDE4OF8yXw"></a> -->
+			<div class='u-toBodyTop'></div>
+		</div>
+	</div>
+	<div class='g-ft'>
+		<% include ../cmn/footer.ejs %>
+	</div>
+	<script type="text/template" id='tpl_picList'>
+		<# for(var i = 0; i < data.length;i++){ #>
+			<# var picItem = data[i]; #>
+			<a class='u-carousel' target='_blank' href="<#= picItem.url #>" style='background-image: url(<#= picItem.path #>)'>
+				<p class='u-carouselTitle'><#= picItem.title #></p>
+			</a>
+		<# } #>
+	</script>
+	<script type="text/template" id='tpl_sidePicList'>
+		<# for(var i = 0; i < data.length;i++){ #>
+			<# var picItem = data[i]; #>
+				<a target='_blank' href="<#= picItem.url #>" class='u-sideNews' style='background-image: url(<#= picItem.path #>)'>
+					<div class='u-newsTitle'><#= picItem.title #></div>
+				</a>
+		<# } #>
+	</script>
+	<script type="text/template" id='tpl_tagPicList'>
+		<# for(var i = 0; i < data.length;i++){ #>
+			<# var picItem = data[i]; #>
+				<a target='_blank' href="<#= picItem.url #>" class='u-newsContent' style='background-image: url(<#= picItem.path #>)'><!-- <p class='u-newsFrom'><#= picItem.title #></p> --></a>
+		<# } #>
+	</script>
+	<script type="text/template" id='tpl_newsList'>
+		<# for(var i = 0;i < data.length ; i++) {#>
+			<# var item = data[i] #>
+			<# if(item.type == null||item.type ==99){ #>
+				<# var activityStatus;#>
+				<# if( item.activityStatus == 1){activityStatus="我要报名"}else if( item.activityStatus == 3){activityStatus="进行中"}else if( item.activityStatus == 4){activityStatus="活动已满额"}if( item.activityStatus == 5){activityStatus="已结束"}#>
+				<div class='u-detailNews'>
+					<div class='J_infoType clearfix'>
+						<a target='_blank' href="<#=  item.isJump==true?item.jumpUrl:'/webrexco/events/detail.htm?id='+item.id #>" class='u-newsposter' style='background-image:url(<#= item.posterUrl #>);'>
+							<p class='u-newsComeFrom'>活动</p>
+						</a>
+						<div class='u-newsItem'>
+							<a target='_blank' href="<#= item.isJump==true?item.jumpUrl:'/webrexco/events/detail.htm?id='+item.id #>" class='u-detailNewsTitle f-tof'><#= item.activityName #></a>
+							<div class='u-newsDetail'><div class='f-tof' style='width:538px;'>(<#= item.activityProvince #><#= item.activityCity #>)<#= item.activityAddress #></div><#= item.activityStartTime.substr(0,19) #>~<#= item.activityEndTime.substr(0,19)#></div>
+							<a target='_blank' href="<#= item.isJump==true?item.jumpUrl:'/webrexco/events/detail.htm?id='+item.id #>" class='u-clickToApply'><#= activityStatus #></a>
+							<div class='u-newsInfo'>
+								<span class='J_newsAfford'><#= item.articleSource #></span>
+								<span><span class='J_newsReaderNum'><#= item.articleReadCount #></span>人阅读</span>
+								<span><span class='J_newsTime'><#= item.timeSub #></span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			<# }else if (item.type == 0) {#>
+				<div class='u-detailNews special clearfix'>
+					<div class='u-newsItem'>
+						<a target='_blank' href="<#= item.isJump==true?item.jumpUrl:'/webrexco/news/detail.htm?newsId='+item.id #>" class='u-detailNewsTitle f-tof' style='width:828px;'><#= item.articleTitle #></a>
+						<div class='u-newsDetail'><#= item.articleContent #></div>
+						<div class='u-newsInfo'>
+							<span class='J_newsAfford'><#= item.articleSource#></span>
+							<span><span class='J_newsReaderNum'><#= item.articleReadCount #></span>人阅读</span>
+							<span><span class='J_newsTime'><#= item.timeSub #></span></span>
+						</div>
+					</div>
+				</div>
+			<# }else if (item.type == 1) {#>
+				<div class='u-detailNews clearfix'>
+					<a target='_blank' href="<#= item.isJump==true?item.jumpUrl:'/webrexco/news/detail.htm?newsId='+item.id #>" class='u-newsposter' style='background-image:url(<#= $.isBlank(item.articleLitpics)?"":JSON.parse(item.articleLitpics)[0] #>);'>
+						<p class='u-newsComeFrom'><#= item.articleSource#></p>
+					</a>
+					<div class='u-newsItem'>
+						<a target='_blank' href="<#= item.isJump==true?item.jumpUrl:'/webrexco/news/detail.htm?newsId='+item.id #>" class='u-detailNewsTitle f-tof' style='width:538px;'><#= item.articleTitle #></a>
+						<div class='u-newsDetail'><#= item.articleContent #></div>
+						<div class='u-newsInfo'>
+							<span class='J_newsAfford'><#= item.articleSource#></span>
+							<span><span class='J_newsReaderNum'><#= item.articleReadCount #></span>人阅读</span>
+							<span><span class='J_newsTime'><#= item.timeSub #></span></span>
+						</div>
+					</div>
+				</div>
+
+			<# }else if (item.type == 2) {#>
+				<div class='u-detailNews video'>
+					<div class='J_infoType video clearfix'>
+						<!-- <a href="<#= item.isJump==true?item.jumpUrl:'/webrexco/news/detail.htm?newsId='+item.id #>" class='u-newsposter video' style='background-image:url(<#= item.posterUrl #>);'>
+							<div class="f-pr">
+								<b class='u-videoPause'></b>
+							</div>
+						</a> -->
+						<video id='J-video' width='290' height='180' controls="controls" class='video-js vjs-default-skin vjs-big-play-centered f-fl' preload="auto" style='width:290px;height:180px;'>
+							<source src="<#= JSON.parse(item.articleVideos)[0] #>" type='video/mp4'>
+							you browser don't support videotag
+						</video>
+						<div class='u-newsItem video'>
+							<a target='_blank' href="<#= item.isJump==true?item.jumpUrl:'/webrexco/news/detail.htm?newsId='+item.id #>" class='u-detailNewsTitle video f-tof' '><#= item.articleTitle #></a>
+							<div class='u-newsDetail video'><#= item.articleContent #></div>
+							<div class='u-newsInfo video'>
+								<span class='J_newsAfford'><#= item.articleSource #></span>
+								<span><span class='J_newsReaderNum'><#= item.articleReadCount #></span>人阅读</span>
+								<span><span class='J_newsTime'><#= item.timeSub #></span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<# }else if (item.type == 3) {#>
+				<div class='u-detailNews picture'>
+					<a target='_blank' href="<#= item.isJump==true?item.jumpUrl:'/webrexco/news/detail.htm?newsId='+item.id #>" class='u-detailNewsTitle'><#= item.articleTitle #></a>
+					<div class='f-pr'>
+						<# var articleLitpics = JSON.parse(item.articleLitpics); #>
+						<# for(var key in articleLitpics ){ #>
+							<# if(key == 1){ #>
+								<img width='270px' height="170px" style='margin:0 14px;' src="<#= articleLitpics[key] #>">
+							<# }else if(key==3){ break; #>
+							<# }else{ #>
+								<img width='270px' height="170px" src="<#= articleLitpics[key] #>">
+							<# } #>
+						<# } #>
+						<div class='u-picNum'>共<span class='J_picNum'><#= articleLitpics.length #></span>张</div>
+					</div>
+				</div>
+
+			<# } #>
+		<# } #>
+	</script>
+	<script type="text/template" id='tpl_hotTags'>
+		<# for(var  i = 0;i < data.length;i++){ #>
+			<# var item = data[i]; #>
+			<a target='_blank' href="<#= '/webrexco/search.htm?keywords='+item.name#>" target="_blank" class='u-tags'><#= item.name#></a>
+		<# } #>
+	</script>
+	<script type="text/template" id='tpl_newsFlashList'>
+		<# for(var i = 0;i< data.length;i++){ #>
+			<# var item = data[i]; #>
+			<a target='_blank' href="/webrexco/news/detail.htm?newsId=<#= item.articleId#>" class='u-newsContent f-tof'><b class='u-sixBorder'></b><span><#= item.tittle#></span></a>
+		<# } #>
+	</script>
+	<script type="text/template" id="tpl_site">
+		<# for(var i = 0;i< data.length;i++){#>
+			<# var item = data[i] #>
+			<# var href,target ;#>
+			<# if(item.isJump == true){href=item.jumpUrl;target="_blank"}else{href = "javascript:void(0);";target='_self'} #>
+				<a href="<#= href #>" data-id='<#= item.id #>' target='<#= target #>'  class='u-newNavItem J_site'><#= item.name #></a>
+		<# } #>
+	</script>
+	<script>
+  		videojs.options.flash.swf = "/webrexco/static/js/video/video-js.swf";
+	</script>
+</body>
+</html>

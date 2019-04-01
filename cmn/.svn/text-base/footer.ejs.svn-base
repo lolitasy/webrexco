@@ -1,0 +1,66 @@
+<% include ../cfg/envpath.ejs %>
+
+<div class='g-footer'>
+	<div class='g-container'>
+		<img class='u-companyLogo' src="/webrexco/static/img/header/logo.png">
+		<div class='g-contact clearfix'>
+			<a class='u-contactUs' target='_blank' href="/webrexco/help/aboutUs.htm">关于我们</a>
+			<a class='u-contactUs' target='_blank' href="/webrexco/help/index.htm">加入我们</a>
+			<a class='u-contactUs connect' target='_blank'>联系我们</a>
+			<a class='u-contactUs last' href="/webrexco/help/index.htm" target='_blank'>常见问题解答</a>
+			<div style='clear:both;'></div>
+			<div class='u-eMailAdd'>反馈建议：laixiangke@cnaidai.com</div>
+		</div>
+		<div class='m-footerSearch'>
+			<input type="text" name="" class='u-footerSearchBtn' placeholder='Search'>
+			<div class='u-footerSearchCon'>
+				<div class='u-footerSearchSub'></div>
+			</div>
+		</div>
+	</div>
+	<div class='g-companyAdd f-hide clearfix'>
+		<ul class='g-companyInfo f-cl'>
+			<li class='clearfix'>
+				<div class='u-infoItem'>Address</div>
+				<div class='u-detailInfo'>
+					<h3>中国:杭州</h3>
+					<p>西湖区华星路96号 互联网金融大厦6楼</p>
+				</div>
+			</li>
+			<li class='clearfix'>
+				<div class='u-infoItem'>Hotline</div>
+				<div class='u-detailInfo'>
+					<h3>400-600-6565</h3>
+					<p>商务合作：0571 8808 8808</p>
+				</div>
+			</li>
+			<li class='clearfix'>
+				<div class='u-infoItem'>Email</div>
+				<div class='u-detailInfo'>
+					<h3>service_media@kr.com</h3>
+				</div>
+			</li>
+			<li>
+				<div class='u-companyMap'></div>
+			</li>
+		</ul>
+		<!-- <div class='g-companyCode clearfix'>
+			<div class='u-loadHeader'>摆渡星空APP下载</div>
+			<div class='u-appSource'>
+				<img src="/webrexco/static/img/header/app.png">
+				<p>苹果客户端</p>
+			</div>
+			<div class='u-appSource'>
+				<img src="/webrexco/static/img/header/app.png">
+				<p>安卓客户端</p>
+			</div>
+			<div class='u-appSource'>
+				<img src="/webrexco/static/img/header/app.png">
+				<p>微信客户端</p>
+			</div>
+		</div> -->
+	</div>
+	<div class='g-policeInfo'>
+		@摆渡星空  浙ICP备16033023号-1  │  <img src="http://www.beian.gov.cn/portal/download" style='vertical-align: middle;'>浙公网安备 <a style='color: #666;' href='http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010602008239' target='_blank'>33010602008239 号</a>
+	</div>
+</div>

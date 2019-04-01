@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+  <head>
+    <meta charset="utf-8">
+    <title>申请疯巢会员</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="theme-color" content="#232323">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" sizes="192x192" href="/webrexco/static/img/ideal/icon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/webrexco/static/img/ideal/icon-120.png">
+    <link rel="stylesheet" href="/webrexco/static/css/cmn/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/space/common.css">
+    <link rel="stylesheet" href="/webrexco/static/css/space/apply.css">
+    <script>window.headerMap = {headerCodeMap:{'0': 2 }}</script>
+  </head>
+  <body>
+     
+    <% include ../cmn/header.ejs %>
+    <div class="spacer"></div>
+    <div class="content">
+      <div class="title">提示</div>
+      <div class="subtitle">您的疯巢会员申请已经提交成功，我们将在48个工作时内反馈结果。</div><a class="button" id="reload">继续充值 ></a><a class="button" id="home" href="/webrexco/uc/index.htm">去个人中心首页 ></a><a class="button white" href="/webrexco/news/index.htm">去首页 ></a><a class="button white" href="/webrexco/uc/memberRights.htm?memberType=1">查看权益 ></a>
+    </div>
+     
+    <% include ../cmn/footer.ejs %>
+    <script src="/webrexco/static/js/cmn/rexco-0.1.min.js"></script>
+    <script src="/webrexco/static/js/header.js"></script>
+    <script src="/webrexco/activity/login/show.js"></script>
+    <script>var type = 1, name = '疯巢'</script>
+    <script>!function () {
+    function query(name, url) {
+        if (!url) {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    };
+
+    $(".userinfo").hide();
+
+    var id = query("id");
+
+    if (!id) {
+        $(".subtitle").text("您提交的资料待后台审核，我们将在48个工作时内反馈结果。");
+        $("#reload").hide();
+        return;
+    }
+
+    $.ajax({
+        url: "/webrexco/space/result.cgi",
+        method: "POST",
+        timeout: 10000,
+        data: { orderSn: id },
+        success: function (data) {
+            if (data.code == 401) {
+                showIframe("/webrexco/activity/login/login.htm");
+                return;
+            }
+
+            if (data.code !== 0) {
+                util.tipsModal(2, data.message);
+                return;
+            }
+
+            switch (data.status) {
+                case 1:
+                    $(".subtitle").text("您的" + name + "黄金会员充值待支付。");
+                    $("#home").hide();
+                    break;
+                case 3:
+                    $("#reload").hide();
+                    if (id == null) {
+                        $(".subtitle").text("您的" + name + "黄金会员充值成功，欢迎成为" + name + "黄金会员。");
+                    } else {
+                        $(".subtitle").text("您的" + name + "黄金会员充值成功，您提交的资料待后台审核，我们将在48个工作时内反馈结果。");
+                    }
+                    break;
+                case 4:
+                    $(".subtitle").text("您的" + name + "黄金会员充值支付失败。");
+                    break;
+            }
+        },
+        error: function () {
+            util.tipsModal(2, "系统异常");
+            $this.removeClass("disabled").text("立即支付");
+        }
+    });
+
+    $("#reload").click(function () {
+        location.reload();
+    });
+}();
+
+    </script>
+  </body>
+</html>
